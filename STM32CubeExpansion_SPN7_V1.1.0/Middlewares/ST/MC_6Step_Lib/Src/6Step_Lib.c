@@ -343,13 +343,31 @@ void MC_SixStep_NEXT_step()
 /**
   * @} 
   */
+  
+ 
+/** @defgroup MC_SixStep_Change_Direction    MC_SixStep_Change_Direction
+  *  @{
+    * @brief Change target direction to opposite
+    * @retval None
+  */
+void MC_SixStep_Change_Direction(){
+	if (SIXSTEP_parameters.CW_CCW == 1){
+		SIXSTEP_parameters.CW_CCW = 0;
+	}
+	else{
+		SIXSTEP_parameters.CW_CCW = 1;
+	}
+}
+
+/**
+  * @} 
+  */
 
 /** @defgroup MC_SixStep_RESET    MC_SixStep_RESET
   *  @{
     * @brief Reset all variables used for 6Step control algorithm
     * @retval None
   */
-
 void MC_SixStep_RESET()
 {   
  SIXSTEP_parameters.CMD = TRUE; 
@@ -1068,7 +1086,7 @@ void MC_SixStep_Init_main_data()
   SIXSTEP_parameters.ACCEL = ACC;
   SIXSTEP_parameters.KP = KP_GAIN;   
   SIXSTEP_parameters.KI = KI_GAIN;
-  SIXSTEP_parameters.CW_CCW = DIRECTION;
+  SIXSTEP_parameters.CW_CCW = 0;
   SIXSTEP_parameters.Potentiometer = POTENTIOMETER;  
 }
 

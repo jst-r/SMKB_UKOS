@@ -56,10 +56,10 @@
                        ###### BASIC PARAMETERS ######
  ============================================================================== 
 **************************************************************************** */   
-#define NUM_POLE_PAIRS                       7      /*!< Number of Motor Pole pairs */
-#define DIRECTION                            0      /*!< Set motor direction CW = 0 and CCW = 1*/ 
-#define TARGET_SPEED                      3000      /*!< Target speed in closed loop control */ 
-#define POTENTIOMETER                        1      /*!< Enable (1)/Disable (0) the potentiometer */ 
+#define NUM_POLE_PAIRS                       4      /*!< Number of Motor Pole pairs */
+
+#define TARGET_SPEED                      1400      /*!< Target speed in closed loop control */
+#define POTENTIOMETER                        0      /*!< Enable (1)/Disable (0) the potentiometer */
 
 
 /* **************************************************************************** 
@@ -69,7 +69,7 @@
 **************************************************************************** */  
 /*!< ********************* Open loop control *********************************/
 #define STARTUP_CURRENT_REFERENCE         2000      /*!< StartUP Currente Reference (2000 = 2.2A)*/
-#define ACC                             600000      /*!< Mechanical acceleration rate (setting available in manual mode, LOAD_TYPE = 0) */ 
+#define ACC                             6000      /*!< Mechanical acceleration rate (setting available in manual mode, LOAD_TYPE = 0) */
 #define MINIMUM_ACC                        500      /*!< Mechanical acceleration rate for BIG load application */ 
 #define NUMBER_OF_STEPS                  20000      /*!< Number of elements for motor start-UP (max value 65535)*/ 
 #define TIME_FOR_ALIGN                     500      /*!< Time for alignment (msec)*/ 
@@ -83,8 +83,8 @@
 #define KI_DIV                            4096      /*!< Ki parameter divider for PI regulator */   
 #define LOWER_OUT_LIMIT                    120      /*!< Low Out value of PI regulator */      
 #define UPPER_OUT_LIMIT                   2000      /*!< High Out value of PI regulator */    
-#define MAX_POT_SPEED                    10000      /*!< Maximum Speed regulated by potentiometer */
-#define MIN_POT_SPEED                     1000      /*!< Minimum Speed regulated by potentiometer */
+#define MAX_POT_SPEED                    1400      /*!< Maximum Speed regulated by potentiometer */
+#define MIN_POT_SPEED                     1400      /*!< Minimum Speed regulated by potentiometer */
 #define VAL_POT_SPEED_DIV                    2      /*!< Validation potentiometer speed divider */
 #define INITIAL_DEMAGN_DELAY                10      /*!< Initial value for delay time during startup for Bemf detection */
 
