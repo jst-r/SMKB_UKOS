@@ -906,62 +906,9 @@ void MC_Task_Speed()
 void MC_Set_Speed(uint16_t speed_value)
 {
  
-#if (POTENTIOMETER == 1)
-  uint8_t change_target_speed = 0;
-  int16_t reference_tmp = 0;
-  
-  if (SIXSTEP_parameters.Speed_Ref_filtered > SIXSTEP_parameters.Speed_target_ramp)
-  {
-    if ((SIXSTEP_parameters.Speed_Ref_filtered - SIXSTEP_parameters.Speed_target_ramp) > ADC_SPEED_TH) 
-    {
-      change_target_speed = 1;
-    }
-    else
-    {
-      /* Not change target speed because less than threshold */
-    }
-  }
-  else
-  {
-    if ((SIXSTEP_parameters.Speed_target_ramp - SIXSTEP_parameters.Speed_Ref_filtered) > ADC_SPEED_TH)
-    {
-      change_target_speed = 1;
-    }
-    else
-    {
-      /* Not change target speed because less than threshold */
-    }
-  }
-  if (change_target_speed == 1)
-  {
-    SIXSTEP_parameters.Speed_target_ramp = SIXSTEP_parameters.Speed_Ref_filtered;
-        
-    if(SIXSTEP_parameters.CW_CCW == 0)
-    {
-      reference_tmp = SIXSTEP_parameters.Speed_Ref_filtered * MAX_POT_SPEED / 4096;
-       if(reference_tmp <= MIN_POT_SPEED)
-       {
-         PI_parameters.Reference = MIN_POT_SPEED;
-       }
-       else 
-       {
-         PI_parameters.Reference =  reference_tmp;
-       }
-    }
-    else
-    {
-      reference_tmp = -(SIXSTEP_parameters.Speed_Ref_filtered * MAX_POT_SPEED / 4096);
-       if(reference_tmp >=- MIN_POT_SPEED)
-       {
-         PI_parameters.Reference = -MIN_POT_SPEED;
-       }
-       else 
-       {
-         PI_parameters.Reference=  reference_tmp;
-       }      
-    }
-
-  }
+#if (POTENTIOMETER == 1) //I've killed potentiometer)
+  if(speed_value != 0)
+    PI_parameters.Reference = speed_value;
 #else
    if(speed_value != 0)
     PI_parameters.Reference = speed_value;
