@@ -161,7 +161,7 @@ void MC_SixStep_Speed_Val_target_potentiometer(void);
     * @retval None
   */
 
-void MC_SixStep_TABLE(uint8_t step_number)
+void MC_SixStep_TABLE(uint8_t step_number)   /*Area of further work*/
 { 
  if(GPIO_COMM == 1)
  {
@@ -970,6 +970,8 @@ void MC_StopMotor()
   HF_TIMx.Instance->CR1 &= ~(TIM_CR1_CEN);
   HF_TIMx.Instance->CNT = 0;  
   MC_SixStep_DisableInput_CH1_D_CH2_D_CH3_D();
+//MC_SixStep_EnableInput_CH1_E_CH2_E_CH3_D(); /*For improved breaking*/
+	
   HAL_TIM_Base_Stop_IT(&LF_TIMx);  
   HAL_ADC_Stop_IT(&ADCx);
   MC_SixStep_Current_Reference_Stop();
