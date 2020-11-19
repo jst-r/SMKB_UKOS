@@ -49,7 +49,7 @@ TIM_HandleTypeDef htim15;
 UART_HandleTypeDef huart3;
 
 /* USER CODE BEGIN PV */
-volatile FCLK = 720000;
+volatile uint32_t F_CLK = 720000;
 volatile uint16_t NESS_FQ = 1;
 volatile uint16_t gu8_State = 0;
 volatile uint8_t IDLE = 0;
@@ -58,7 +58,7 @@ volatile uint8_t DONE = 1;
 volatile uint16_t gu16_TIM2_OVC = 0;
 volatile uint32_t gu32_T2 = 0;
 volatile uint8_t gu32_Ticks = 0;
-volatile uint16_t 
+volatile uint16_t  gu32_Freq = 0;
 
 /* USER CODE END PV */
 
@@ -131,7 +131,7 @@ int main(void)
   * @brief System Clock Configuration
   * @retval None
   */
-void SystemClock_Config(void)
+void SystemClock_Config()
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
@@ -452,8 +452,8 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-void HAL_GPIO_EXTI_IRQHandler(INT_GPIO_Port)
-{
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{ if (GPIO_Pin == INT_GPIO_Pin){
 	if(NESS_FQ > 0){
 		TIM15->CCR1=0;
 		if(gu8_State == IDLE)
@@ -469,9 +469,9 @@ void HAL_GPIO_EXTI_IRQHandler(INT_GPIO_Port)
 			gu32_Freq = (uint32_t)(F_CLK/(gu32_Ticks * 720));
 			gu8_State = IDLE;
 		}
-	NESS_FQ--;
+	NESS_FQ--;}
 } else {
-}	
+}	   
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
