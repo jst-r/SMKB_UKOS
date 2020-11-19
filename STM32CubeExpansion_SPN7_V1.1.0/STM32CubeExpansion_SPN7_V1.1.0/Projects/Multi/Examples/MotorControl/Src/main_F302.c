@@ -324,7 +324,7 @@ static void MX_TIM1_Init(void)
   htim1.Instance = TIM1;
   htim1.Init.Prescaler = 0;
   htim1.Init.CounterMode = TIM_COUNTERMODE_CENTERALIGNED1;
-  htim1.Init.Period = 719;
+  htim1.Init.Period = 1150;
   htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim1.Init.RepetitionCounter = 0;
   htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -543,7 +543,7 @@ static void MX_TIM16_Init(void)
 }
 
 /* USART2 init function */
-static void MX_USART2_UART_Init(void)
+/*static void MX_USART2_UART_Init(void)
 {
 
   huart2.Instance = USART2;
@@ -561,7 +561,7 @@ static void MX_USART2_UART_Init(void)
     _Error_Handler(__FILE__, __LINE__);
   }
 
-}
+}*/
 
 /** Configure pins as 
         * Analog 
