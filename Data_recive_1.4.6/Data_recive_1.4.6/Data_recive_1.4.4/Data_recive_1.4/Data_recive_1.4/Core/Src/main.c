@@ -734,7 +734,7 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef* htim)
 }	
 }
 
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim1)
 {
 	gu16_TIM2_OVC++;
 }
