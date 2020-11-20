@@ -44,6 +44,7 @@ RTC_HandleTypeDef hrtc;
 
 TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim2;
+TIM_HandleTypeDef htim6;
 TIM_HandleTypeDef htim15;
 
 UART_HandleTypeDef huart3;
@@ -58,7 +59,9 @@ volatile uint8_t DONE = 1;
 volatile uint16_t gu16_TIM2_OVC = 0;
 volatile uint32_t gu32_T2 = 0;
 volatile uint8_t gu32_Ticks = 0;
-volatile uint16_t  gu32_Freq = 0;
+volatile uint16_t status = 0;
+volatile uint16_t zero = 0;
+volatile uint16_t one = 0;
 
 /* USER CODE END PV */
 
@@ -69,6 +72,7 @@ static void MX_TIM1_Init(void);
 static void MX_USART3_UART_Init(void);
 static void MX_RTC_Init(void);
 static void MX_TIM2_Init(void);
+static void MX_TIM6_Init(void);
 static void MX_TIM15_Init(void);
 /* USER CODE BEGIN PFP */
 
@@ -111,6 +115,7 @@ int main(void)
   MX_USART3_UART_Init();
   MX_RTC_Init();
   MX_TIM2_Init();
+  MX_TIM6_Init();
   MX_TIM15_Init();
   /* USER CODE BEGIN 2 */
 
@@ -119,7 +124,8 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
-  {
+  {HAL_TIM_Base_Start_IT(&htim15);
+	
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -131,7 +137,7 @@ int main(void)
   * @brief System Clock Configuration
   * @retval None
   */
-void SystemClock_Config()
+void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
@@ -348,6 +354,44 @@ static void MX_TIM2_Init(void)
 }
 
 /**
+  * @brief TIM6 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM6_Init(void)
+{
+
+  /* USER CODE BEGIN TIM6_Init 0 */
+
+  /* USER CODE END TIM6_Init 0 */
+
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM6_Init 1 */
+
+  /* USER CODE END TIM6_Init 1 */
+  htim6.Instance = TIM6;
+  htim6.Init.Prescaler = 7200;
+  htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim6.Init.Period = 65535;
+  htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim6) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim6, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM6_Init 2 */
+
+  /* USER CODE END TIM6_Init 2 */
+
+}
+
+/**
   * @brief TIM15 Initialization Function
   * @param None
   * @retval None
@@ -366,9 +410,9 @@ static void MX_TIM15_Init(void)
 
   /* USER CODE END TIM15_Init 1 */
   htim15.Instance = TIM15;
-  htim15.Init.Prescaler = 7200;
+  htim15.Init.Prescaler = 0;
   htim15.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim15.Init.Period = 10000;
+  htim15.Init.Period = 7200;
   htim15.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim15.Init.RepetitionCounter = 0;
   htim15.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -443,41 +487,42 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
-  /*Configure GPIO pin : INT_GPIO_Pin */
-  GPIO_InitStruct.Pin = INT_GPIO_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(INT_GPIO_GPIO_Port, &GPIO_InitStruct);
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin : PC2 */
+  GPIO_InitStruct.Pin = GPIO_PIN_2;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PB12 */
+  GPIO_InitStruct.Pin = GPIO_PIN_12;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 }
 
 /* USER CODE BEGIN 4 */
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
-{ if (GPIO_Pin == INT_GPIO_Pin){
-	if(NESS_FQ > 0){
-		TIM15->CCR1=0;
-		if(gu8_State == IDLE)
-		{
-			gu32_T1 = TIM15->CCR1;
-			gu16_TIM2_OVC = 0;
-			gu8_State = DONE;
-		}
-		else if(gu8_State == DONE)
-		{
-			gu32_T2 = TIM15->CCR1;
-			gu32_Ticks = gu32_T2 - gu32_T1;
-			gu32_Freq = (uint32_t)(F_CLK/(gu32_Ticks * 720));
-			gu8_State = IDLE;
-		}
-	NESS_FQ--;}
-} else {
-}	   
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+uint8_t i = 0;	
+if (htim->Instance == TIM15) {
+	if((HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == SET) & status == 0){
+	one +=1;
+	status = 1;
+	//for (i = 0; i++; i<1000){}
+	}
+	if ((HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == RESET) & status == 1){
+		zero += 1;
+		status = 0;
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_SET);
+		//for (i = 0; i++; i<1000){}
+}
+}
 }
 
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
-{
-	gu16_TIM2_OVC++;
-}
 /* USER CODE END 4 */
 
 /**
