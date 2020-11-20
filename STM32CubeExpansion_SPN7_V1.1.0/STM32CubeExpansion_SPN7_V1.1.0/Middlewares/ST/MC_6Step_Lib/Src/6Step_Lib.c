@@ -125,7 +125,6 @@ void MC_SixStep_NEXT_step(void);
 void MC_Speed_Filter(void);
 void MC_SixStep_ARR_step(void);
 void MC_SixStep_TABLE(uint8_t);
-void MC_SixStep_Speed_Potentiometer(void);
 void MC_Set_PI_param(SIXSTEP_PI_PARAM_InitTypeDef_t *);
 void MC_Task_Speed(void); 
 void MC_SixStep_Alignment(void);
@@ -152,7 +151,6 @@ void UART_Set_Value(void);
 void UART_Communication_Task(void);
 void MC_SixStep_Init_main_data(void);
 void CMD_Parser(char* pCommandString);
-void MC_SixStep_Speed_Val_target_potentiometer(void);
 
 /** @defgroup MC_SixStep_TABLE    MC_SixStep_TABLE
   *  @{
@@ -404,8 +402,8 @@ void MC_SixStep_RESET()
  SIXSTEP_parameters.Regular_channel[3] = ADC_Bemf_CH3;   /*BEMF3*/
  SIXSTEP_parameters.ADC_SEQ_CHANNEL[0] = ADC_CH_1;       /*CURRENT*/
  SIXSTEP_parameters.ADC_SEQ_CHANNEL[1] = ADC_CH_2;       /*SPEED*/
- SIXSTEP_parameters.ADC_SEQ_CHANNEL[2] = ADC_CH_3;       /*VBUS*/
- SIXSTEP_parameters.ADC_SEQ_CHANNEL[3] = ADC_CH_4;       /*TEMP*/
+ //SIXSTEP_parameters.ADC_SEQ_CHANNEL[2] = ADC_CH_3;       /*VBUS*/
+ //SIXSTEP_parameters.ADC_SEQ_CHANNEL[3] = ADC_CH_4;       /*TEMP*/
  
  SIXSTEP_parameters.step_position = 0;
  SIXSTEP_parameters.demagn_counter = 0; 
@@ -673,7 +671,7 @@ void MC_SixStep_Alignment()
    LF_TIMx.Init.Period = SIXSTEP_parameters.ARR_value;
    LF_TIMx.Instance->ARR = (uint32_t)LF_TIMx.Init.Period;
    SIXSTEP_parameters.STATUS = ALIGNMENT;    
-   MC_SixStep_Speed_Val_target_potentiometer();
+   //MC_SixStep_Speed_Val_target_potentiometer();
    index_align++;
    if(index_align >= TIME_FOR_ALIGN+1) 
     { 
@@ -687,57 +685,6 @@ void MC_SixStep_Alignment()
     }
 }
 
-/**
-  * @} 
-  */
-
-/** @defgroup MC_SixStep_Speed_Val_target_potentiometer    MC_SixStep_Speed_Val_target_potentiometer
-  *  @{
-    * @brief Calculate the Motor Speed validation threshold according with the potentiometer value
-    * @retval None
-*/
-
-void MC_SixStep_Speed_Val_target_potentiometer()
-{  
-  target_speed = SIXSTEP_parameters.ADC_Regular_Buffer[1] * MAX_POT_SPEED/ 4096;  
-
-  if(target_speed < MIN_POT_SPEED)
-    target_speed = MIN_POT_SPEED;
-   
-  if(target_speed > (MAX_POT_SPEED/VAL_POT_SPEED_DIV)) 
-    target_speed = (MAX_POT_SPEED/VAL_POT_SPEED_DIV);
-}
-/**
-  * @} 
-  */
-
-/** @defgroup MC_SixStep_Speed_Potentiometer    MC_SixStep_Speed_Potentiometer
-  *  @{
-    * @brief Calculate the potentiometer value to set the Motor Speed
-    * @retval None
-*/
-
-void MC_SixStep_Speed_Potentiometer()
-{  
-  uint16_t i=0;
-  uint32_t sum = 0;
-  uint16_t mean = 0;
-  uint16_t max = 0;
-  for (i = 0; i < HFBUFFERSIZE; i++)
-  {
-    uint16_t val = HFBuffer[i];
-    sum += val;
-    if (val > max)
-    {
-      max = val;
-    }
-  }
-  sum -= max;
-  mean = sum / (HFBUFFERSIZE - 1);  
-  
-  SIXSTEP_parameters.Speed_Ref_filtered = MC_Potentiometer_filter(mean);
-  
-}
 
 /**
   * @} 
@@ -900,68 +847,11 @@ void MC_Task_Speed()
 */
 void MC_Set_Speed(uint16_t speed_value)
 {
- 
-#if (POTENTIOMETER == 1)
-  uint8_t change_target_speed = 0;
-  int16_t reference_tmp = 0;
-  
-  if (SIXSTEP_parameters.Speed_Ref_filtered > SIXSTEP_parameters.Speed_target_ramp)
-  {
-    if ((SIXSTEP_parameters.Speed_Ref_filtered - SIXSTEP_parameters.Speed_target_ramp) > ADC_SPEED_TH) 
-    {
-      change_target_speed = 1;
-    }
-    else
-    {
-      /* Not change target speed because less than threshold */
-    }
-  }
-  else
-  {
-    if ((SIXSTEP_parameters.Speed_target_ramp - SIXSTEP_parameters.Speed_Ref_filtered) > ADC_SPEED_TH)
-    {
-      change_target_speed = 1;
-    }
-    else
-    {
-      /* Not change target speed because less than threshold */
-    }
-  }
-  if (change_target_speed == 1)
-  {
-    SIXSTEP_parameters.Speed_target_ramp = SIXSTEP_parameters.Speed_Ref_filtered;
-        
-    if(SIXSTEP_parameters.CW_CCW == 0)
-    {
-      reference_tmp = SIXSTEP_parameters.Speed_Ref_filtered * MAX_POT_SPEED / 4096;
-       if(reference_tmp <= MIN_POT_SPEED)
-       {
-         PI_parameters.Reference = MIN_POT_SPEED;
-       }
-       else 
-       {
-         PI_parameters.Reference =  reference_tmp;
-       }
-    }
-    else
-    {
-      reference_tmp = -(SIXSTEP_parameters.Speed_Ref_filtered * MAX_POT_SPEED / 4096);
-       if(reference_tmp >=- MIN_POT_SPEED)
-       {
-         PI_parameters.Reference = -MIN_POT_SPEED;
-       }
-       else 
-       {
-         PI_parameters.Reference=  reference_tmp;
-       }      
-    }
-
-  }
-#else
-   if(speed_value != 0)
+   if(speed_value != 0){
     PI_parameters.Reference = speed_value;
-#endif
-  
+	 } else {
+	 MC_StopMotor();
+	 }
 }
 
 /**
@@ -1081,8 +971,7 @@ void MC_SixStep_Init_main_data()
   SIXSTEP_parameters.ACCEL = ACC;
   SIXSTEP_parameters.KP = KP_GAIN;   
   SIXSTEP_parameters.KI = KI_GAIN;
-  SIXSTEP_parameters.CW_CCW = 0;
-  SIXSTEP_parameters.Potentiometer = POTENTIOMETER;  
+  SIXSTEP_parameters.CW_CCW = 0;  
 }
 
 /**
@@ -1139,7 +1028,6 @@ void MC_TIMx_SixStep_timebase()
   {
     MC_SixStep_ARR_step();                                                       /*BASE TIMER - ARR modification for STEP frequency changing */ 
   }
-  
   MC_Speed_Filter();                                                            /*Calculate SPEED filtered  */   
 }
 
@@ -1177,7 +1065,6 @@ void MC_Speed_Filter()
      index_array++;
      if(index_array >= FILTER_DEEP) 
       index_array = 1;
-     
       speed_sum_sp_filt = 0;
       speed_tmp_array[index_array] = SIXSTEP_parameters.speed_fdbk;   
       for(uint16_t i = 1; i < FILTER_DEEP;i++)
@@ -1186,63 +1073,6 @@ void MC_Speed_Filter()
        }      
       SIXSTEP_parameters.speed_fdbk_filtered = speed_sum_sp_filt/(FILTER_DEEP-1);
   }  
-}
-
-/**
-  * @} 
-  */
-
-/** @defgroup MC_Potentiometer_filter    MC_Potentiometer_filter
-  *  @{
-    * @brief Calculate the filtered potentiometer value 
-    * @retval uint16_t Return the filtered potentiometer value 
-*/
-
- uint16_t MC_Potentiometer_filter(uint16_t potentiometer_value)
-{ 
-  if(buffer_completed == FALSE)
-  {
-     speed_tmp_buffer[index_pot_filt] = potentiometer_value;    
-     speed_sum_pot_filt = 0;
-     for(uint16_t i = 1; i <= index_pot_filt;i++)
-     {
-       speed_sum_pot_filt = speed_sum_pot_filt + speed_tmp_buffer[i];
-     }
-     potent_filtered = speed_sum_pot_filt/index_pot_filt;
-     index_pot_filt++;
-     
-      if(index_pot_filt >= FILTER_DEEP) 
-       {
-         index_pot_filt = 1;
-         buffer_completed = TRUE;
-       }
-  }  
-  else
-  {
-     index_pot_filt++;
-     if(index_pot_filt >= FILTER_DEEP)
-     {
-      index_pot_filt = 1;
-     }
-     
-     speed_sum_pot_filt = 0;
-     speed_tmp_buffer[index_pot_filt] = potentiometer_value;
-     uint16_t speed_max = 0;
-     for(uint16_t i = 1; i < FILTER_DEEP;i++)
-     {
-       uint16_t val = speed_tmp_buffer[i];
-       if (val > speed_max)
-       {
-         speed_max = val;
-       }
-       speed_sum_pot_filt += val;
-     }
-     speed_sum_pot_filt -= speed_max;
-     potent_filtered = speed_sum_pot_filt/(FILTER_DEEP-2);
-  }
-  if(potent_filtered==0) potent_filtered = 1;
-  
-return(potent_filtered);
 }
 
 /**
@@ -1266,26 +1096,7 @@ void MC_SysTick_SixStep_MediumFrequencyTask()
  if(UART_FLAG_RECEIVE == TRUE)    UART_Communication_Task();
 #endif
  
-#ifdef DEMOMODE
-  index_motor_run++;
-  if(index_motor_run >= DEMO_START_TIME && test_motor_run == 0)
-  {
-    MC_StopMotor();
-    index_motor_run=0;
-    test_motor_run=1;
-  }
-  if(index_motor_run >= DEMO_STOP_TIME && test_motor_run == 1)
-  {
-    MC_StartMotor();
-    test_motor_run = 0;
-    index_motor_run=0;
-  }    
-#endif
   
- if(SIXSTEP_parameters.VALIDATION_OK == TRUE && SIXSTEP_parameters.Potentiometer  == TRUE)  
-  {
-    MC_SixStep_Speed_Potentiometer();
-  }
  /* Push button delay time to avoid double command */    
   if(HAL_GetTick() == BUTTON_DELAY && Enable_start_button != TRUE)
   {
