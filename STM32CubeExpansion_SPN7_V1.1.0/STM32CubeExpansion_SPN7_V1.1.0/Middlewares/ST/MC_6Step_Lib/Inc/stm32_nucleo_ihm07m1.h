@@ -35,22 +35,9 @@
  ******************************************************************************
  */
 
-  #ifdef STM32F030x8
-  #include "stm32F030_nucleo_ihm07m1.h"
-  #include "MC_SixStep_param_F030.h"
-  #endif
-  #ifdef STM32F103xB
-  #include "stm32F103_nucleo_ihm07m1.h"
-  #include "MC_SixStep_param_F103.h"
-  #endif
-  #ifdef STM32F302x8
-  #include "stm32F302_nucleo_ihm07m1.h"
-  #include "MC_SixStep_param.h"
-  #endif
-  #ifdef STM32F401xE
-  #include "stm32F401_nucleo_ihm07m1.h"
-  #include "MC_SixStep_param.h"
-  #endif
+
+#include "stm32F302_nucleo_ihm07m1.h"
+#include "MC_SixStep_param.h"
 
 
 

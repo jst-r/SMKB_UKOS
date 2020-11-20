@@ -350,13 +350,8 @@ void MC_SixStep_NEXT_step()
     * @brief Change target direction to opposite
     * @retval None
   */
-void MC_SixStep_Change_Direction(){
-	if (SIXSTEP_parameters.CW_CCW == 1){
-		SIXSTEP_parameters.CW_CCW = 0;
-	}
-	else{
-		SIXSTEP_parameters.CW_CCW = 1;
-	}
+void MC_SixStep_Change_Direction(uint8_t dir){
+	SIXSTEP_parameters.CW_CCW = dir;
 }
 
 /**
@@ -1292,7 +1287,7 @@ void MC_SysTick_SixStep_MediumFrequencyTask()
     MC_SixStep_Speed_Potentiometer();
   }
  /* Push button delay time to avoid double command */    
-  if(HAL_GetTick() == BUTTON_DELAY && Enable_start_button != TRUE)
+  if(HAL_GTetTick() == BUTTON_DELAY && Enable_start_button != TRUE)
   {
     Enable_start_button = TRUE; 
   }
@@ -1591,14 +1586,19 @@ void MC_ADCx_SixStep_Bemf()
     * @retval None
 */
 
+
+// TODO REMOVE dir
+uint8_t dir = 0;
 void MC_EXT_button_SixStep()
 {
   if(Enable_start_button == TRUE)
   {
     if(SIXSTEP_parameters.RUN_Motor == 0 && SIXSTEP_parameters.Button_ready == TRUE) 
-    {    
+    {
+      dir = !dir;
+      MC_Change_Dir(dir);
       MC_StartMotor();
-      Enable_start_button = FALSE;      
+      Enable_start_button = FALSE;
     }
     else  
     {     
@@ -1606,6 +1606,7 @@ void MC_EXT_button_SixStep()
       Enable_start_button = FALSE;
     }
   }
+
 }
 
 /**
