@@ -53,23 +53,10 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "X-NUCLEO-IHM07M1.h"
-#ifdef STM32F030x8
-#include "stm32f0xx_hal.h"
-#include "stm32F030_nucleo_ihm07m1.h"
-#endif
-#ifdef STM32F103xB
-#include "stm32f1xx_hal.h"
-#include "stm32F103_nucleo_ihm07m1.h"
-#endif
 #ifdef STM32F302x8
 #include "stm32f3xx_hal.h"
 #include "stm32F302_nucleo_ihm07m1.h"
 #endif
-#ifdef STM32F401xE
-#include "stm32f4xx_hal.h"
-#include "stm32F401_nucleo_ihm07m1.h"
-#endif
-        
 
 /** @defgroup L6230_ECH1CH2_DCH3_IO_Write    L6230_ECH1CH2_DCH3_IO_Write
   *  @{
@@ -80,8 +67,14 @@
 void L6230_ECH1CH2_DCH3_IO_Write()
 {
   HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH1,GPIO_SET);      //EN1 ENABLE               
-  HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH2,GPIO_SET);      //EN2 DISABLE
-  HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH3,GPIO_RESET);    //EN3 ENABLE    
+  HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH2,GPIO_SET);      //EN2 ENABLE
+  HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH3,GPIO_RESET);    //EN3 DISABLE
+	HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_1);
+	HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_2);
+	HAL_TIMEx_PWMN_Stop(&htim1,TIM_CHANNEL_3);
+	
+	
+	
 }
 /**
   * @}  
@@ -98,7 +91,12 @@ void L6230_ECH1CH3_DCH2_IO_Write()
   HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH1,GPIO_SET);    //EN1 ENABLE               
   HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH2,GPIO_RESET);  //EN2 DISABLE
   HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH3,GPIO_SET);    //EN3 ENABLE    
+	HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_1);
+	HAL_TIMEx_PWMN_Stop(&htim1,TIM_CHANNEL_2);
+	HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_3);
+	
 }
+
 /**
   * @}  
   */
@@ -112,6 +110,10 @@ void L6230_ECH2CH3_DCH1_IO_Write()
   HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH1,GPIO_RESET);  //EN1 DISABLE               
   HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH2,GPIO_SET);    //EN2 ENABLE
   HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH3,GPIO_SET);    //EN3 ENABLE   
+	HAL_TIMEx_PWMN_Stop(&htim1,TIM_CHANNEL_1);
+	HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_2);
+	HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_3);
+	
 }
 /**
   * @}  
@@ -126,6 +128,10 @@ void L6230_DCH1CH2CH3_IO_Write()
   HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH1,GPIO_RESET);  //EN1 DISABLE          
   HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH2,GPIO_RESET);  //EN2 DISABLE
   HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH3,GPIO_RESET);  //EN3 DISABLE   
+	HAL_TIMEx_PWMN_Stop(&htim1,TIM_CHANNEL_1);
+	HAL_TIMEx_PWMN_Stop(&htim1,TIM_CHANNEL_2);
+	HAL_TIMEx_PWMN_Stop(&htim1,TIM_CHANNEL_3);
+	
 }
 /**
   * @}  
@@ -138,6 +144,10 @@ void L6230_DCH1CH2CH3_IO_Write()
 
 void L6230_Start_PWM_generation()
 {
+	
+	HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_1);
+	HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_2);
+	HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_3);
   HAL_TIM_PWM_Start(&HF_TIMx, HF_TIMx_CH1);           //TIM1_CH1 ENABLE   
   HAL_TIM_PWM_Start(&HF_TIMx, HF_TIMx_CH2);           //TIM1_CH2 ENABLE   
   HAL_TIM_PWM_Start(&HF_TIMx, HF_TIMx_CH3);           //TIM1_CH3 ENABLE  
@@ -151,7 +161,10 @@ void L6230_Start_PWM_generation()
   * @retval None
 */
 void L6230_Stop_PWM_generation()
-{
+{	
+	HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_1);
+	HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_2);
+	HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_3);
   HAL_TIM_PWM_Stop(&HF_TIMx, HF_TIMx_CH1);           //TIM1_CH1 DISABLE   
   HAL_TIM_PWM_Stop(&HF_TIMx, HF_TIMx_CH2);           //TIM1_CH2 DISABLE   
   HAL_TIM_PWM_Stop(&HF_TIMx, HF_TIMx_CH3);           //TIM1_CH3 DISABLE  

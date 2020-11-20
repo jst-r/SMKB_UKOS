@@ -1287,7 +1287,7 @@ void MC_SysTick_SixStep_MediumFrequencyTask()
     MC_SixStep_Speed_Potentiometer();
   }
  /* Push button delay time to avoid double command */    
-  if(HAL_GetTick() == BUTTON_DELAY && Enable_start_button != TRUE)
+  if(HAL_GTetTick() == BUTTON_DELAY && Enable_start_button != TRUE)
   {
     Enable_start_button = TRUE; 
   }
@@ -1596,7 +1596,7 @@ void MC_EXT_button_SixStep()
     if(SIXSTEP_parameters.RUN_Motor == 0 && SIXSTEP_parameters.Button_ready == TRUE) 
     {
       dir = !dir;
-      MC_SixStep_Change_Direction(dir);
+      MC_Change_Dir(dir);
       MC_StartMotor();
       Enable_start_button = FALSE;
     }
