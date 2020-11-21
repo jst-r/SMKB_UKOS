@@ -206,11 +206,9 @@ void SysTick_Handler(void)
 void EXTI1_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI1_IRQn 0 */
-HAL_UART_Transmit(&huart3, "Stop Motor pos1%/s",19, 100 );
   /* USER CODE END EXTI1_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_1);
   /* USER CODE BEGIN EXTI1_IRQn 1 */
-
   /* USER CODE END EXTI1_IRQn 1 */
 }
 
@@ -220,11 +218,9 @@ HAL_UART_Transmit(&huart3, "Stop Motor pos1%/s",19, 100 );
 void EXTI2_TSC_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI2_TSC_IRQn 0 */
-HAL_UART_Transmit(&huart3, "Stop Motor pos2%/s",19, 100 );
   /* USER CODE END EXTI2_TSC_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_2);
   /* USER CODE BEGIN EXTI2_TSC_IRQn 1 */
-
   /* USER CODE END EXTI2_TSC_IRQn 1 */
 }
 

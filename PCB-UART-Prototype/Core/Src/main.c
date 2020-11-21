@@ -62,7 +62,6 @@ volatile uint8_t gu32_Ticks = 0;
 volatile uint16_t status = 0;
 volatile uint16_t zero = 0;
 volatile uint16_t one = 0;
-
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -118,14 +117,16 @@ int main(void)
   MX_TIM6_Init();
   MX_TIM15_Init();
   /* USER CODE BEGIN 2 */
-
+	HAL_NVIC_EnableIRQ(EXTI1_IRQn);
+	HAL_NVIC_EnableIRQ(EXTI2_TSC_IRQn);
+	HAL_TIM_Base_Start_IT(&htim15);
+	
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
-  {HAL_TIM_Base_Start_IT(&htim15);
-	
+  {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -267,7 +268,7 @@ static void MX_TIM1_Init(void)
 
   /* USER CODE END TIM1_Init 1 */
   htim1.Instance = TIM1;
-  htim1.Init.Prescaler = 0;
+  htim1.Init.Prescaler = 72;
   htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim1.Init.Period = 65535;
   htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
@@ -453,7 +454,7 @@ static void MX_USART3_UART_Init(void)
 
   /* USER CODE END USART3_Init 1 */
   huart3.Instance = USART3;
-  huart3.Init.BaudRate = 19200;
+  huart3.Init.BaudRate = 115200;
   huart3.Init.WordLength = UART_WORDLENGTH_8B;
   huart3.Init.StopBits = UART_STOPBITS_1;
   huart3.Init.Parity = UART_PARITY_NONE;
@@ -549,6 +550,19 @@ if (htim->Instance == TIM15) {
 }
 }
 
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+  if(GPIO_Pin == GPIO_PIN_1) {
+		HAL_UART_Transmit_IT(&huart3, "Stop Motor pos 1", 16 );
+  } 
+	else if (GPIO_Pin == GPIO_PIN_2) {
+		HAL_UART_Transmit_IT(&huart3, "Stop Motor pos 2", 16 );
+	} 
+	else {
+	  __NOP();
+	}
+}
 /* USER CODE END 4 */
 
 /**
