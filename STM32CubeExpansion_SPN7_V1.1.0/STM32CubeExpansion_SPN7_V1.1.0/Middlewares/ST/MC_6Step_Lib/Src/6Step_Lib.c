@@ -117,7 +117,7 @@ uint32_t counter_ARR_Bemf = 0;
 uint64_t constant_multiplier_tmp = 0;
  
 int16_t MC_PI_Controller(SIXSTEP_PI_PARAM_InitTypeDef_t *, int16_t);
-uint16_t MC_Potentiometer_filter(uint16_t);
+//uint16_t MC_Potentiometer_filter(uint16_t);
 uint64_t MCM_Sqrt(uint64_t );
 int32_t MC_GetElSpeedHz(void);
 int32_t MC_GetMechSpeedRPM(void);
@@ -370,7 +370,7 @@ void MC_SixStep_RESET()
  SIXSTEP_parameters.Ireference = STARTUP_CURRENT_REFERENCE;  
  SIXSTEP_parameters.Speed_Loop_Time = SPEED_LOOP_TIME;
  SIXSTEP_parameters.pulse_value = SIXSTEP_parameters.HF_TIMx_CCR;
- SIXSTEP_parameters.Speed_target_ramp = MAX_POT_SPEED;
+ SIXSTEP_parameters.Speed_target_ramp = TARGET_SPEED/10;
  SIXSTEP_parameters.ALIGNMENT = FALSE;
  SIXSTEP_parameters.Speed_Ref_filtered = 0;
  SIXSTEP_parameters.demagn_value = INITIAL_DEMAGN_DELAY;
@@ -847,11 +847,9 @@ void MC_Task_Speed()
 */
 void MC_Set_Speed(uint16_t speed_value)
 {
-   if(speed_value != 0){
+	if(speed_value != 0){
     PI_parameters.Reference = speed_value;
-	 } else {
-	 MC_StopMotor();
-	 }
+	}
 }
 
 /**

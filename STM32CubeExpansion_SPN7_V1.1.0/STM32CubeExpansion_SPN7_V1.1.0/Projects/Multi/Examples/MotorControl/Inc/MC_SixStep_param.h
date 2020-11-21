@@ -58,8 +58,8 @@
 **************************************************************************** */   
 #define NUM_POLE_PAIRS                       4      /*!< Number of Motor Pole pairs */
 
-#define TARGET_SPEED                      1400      /*!< Target speed in closed loop control */
-#define POTENTIOMETER                        0      /*!< Enable (1)/Disable (0) the potentiometer */
+#define TARGET_SPEED                      1300      /*!< Target speed in closed loop control */
+//#define POTENTIOMETER                        0      /*!< Enable (1)/Disable (0) the potentiometer */
 
 
 /* **************************************************************************** 
@@ -68,25 +68,25 @@
  ============================================================================== 
 **************************************************************************** */  
 /*!< ********************* Open loop control *********************************/
-#define STARTUP_CURRENT_REFERENCE         2000      /*!< StartUP Currente Reference (2000 = 2.2A)*/
-#define ACC                             6000      /*!< Mechanical acceleration rate (setting available in manual mode, LOAD_TYPE = 0) */
+#define STARTUP_CURRENT_REFERENCE         4000      /*!< StartUP Currente Reference (2000 = 2.2A)*/
+#define ACC                          		  8000      /*!< Mechanical acceleration rate (setting available in manual mode, LOAD_TYPE = 0) */
 #define MINIMUM_ACC                        500      /*!< Mechanical acceleration rate for BIG load application */ 
-#define NUMBER_OF_STEPS                  20000      /*!< Number of elements for motor start-UP (max value 65535)*/ 
-#define TIME_FOR_ALIGN                     500      /*!< Time for alignment (msec)*/ 
+#define NUMBER_OF_STEPS                 	2500      /*!< Number of elements for motor start-UP (max value 65535)*/ 
+#define TIME_FOR_ALIGN                    1000      /*!< Time for alignment (msec)*/ 
 #define BUTTON_DELAY                      1000      /*!< Delay time to enable push button for new command (1 = 1msec)*/ 
-#define NUMBER_ZCR                          12      /*!< Number of zero crossing event during the startup for closed loop control begin */   
+#define NUMBER_ZCR											 		6 	   /*!< Number of zero crossing event during the startup for closed loop control begin */   
 /*!< ********************* Closed Loop control *********************************/
-#define SPEED_LOOP_TIME                      1      /*!< Speed Loop time (1 = 1msec) */  
-#define KP_GAIN                           8000      /*!< Kp parameter for PI regulator */
-#define KI_GAIN                             50      /*!< Ki parameter for PI regulator */   
+#define SPEED_LOOP_TIME                      2      /*!< Speed Loop time (1 = 1msec) */  
+#define KP_GAIN                           2000      /*!< Kp parameter for PI regulator */
+#define KI_GAIN                            	120	    /*!< Ki parameter for PI regulator */   
 #define KP_DIV                            4096      /*!< Kp parameter divider for PI regulator */
 #define KI_DIV                            4096      /*!< Ki parameter divider for PI regulator */   
 #define LOWER_OUT_LIMIT                    120      /*!< Low Out value of PI regulator */      
 #define UPPER_OUT_LIMIT                   2000      /*!< High Out value of PI regulator */    
-#define MAX_POT_SPEED                    1400      /*!< Maximum Speed regulated by potentiometer */
-#define MIN_POT_SPEED                     1400      /*!< Minimum Speed regulated by potentiometer */
-#define VAL_POT_SPEED_DIV                    2      /*!< Validation potentiometer speed divider */
-#define INITIAL_DEMAGN_DELAY                10      /*!< Initial value for delay time during startup for Bemf detection */
+//#define MAX_POT_SPEED                  	  200      /*!< Maximum Speed regulated by potentiometer */
+//#define MIN_POT_SPEED                     100      /*!< Minimum Speed regulated by potentiometer */
+//#define VAL_POT_SPEED_DIV                    2      /*!< Validation potentiometer speed divider */
+#define INITIAL_DEMAGN_DELAY               	100      /*!< Initial value for delay time during startup for Bemf detection */
 
 /*!< Zero Crossissing parameters */
 #define BEMF_THRSLD_DOWN                    200     /*!< Zero Crossing threshold */  
