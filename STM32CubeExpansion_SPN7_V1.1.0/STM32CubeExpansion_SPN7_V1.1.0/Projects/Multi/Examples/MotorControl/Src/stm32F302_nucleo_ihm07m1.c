@@ -173,40 +173,7 @@
   {
       REFx.Instance->CCR1 = (uint32_t)(Iref * REFx.Instance->ARR)/4096;
   }
-/**
-  * @} 
-  */
-  
-/** @defgroup START_DAC    START_DAC
-  *  @{
-     @brief Start DAC for debug
-*/
-  void START_DAC()
-  {
-    HAL_DAC_Start(&DACx,DACx_CH); 
-  } 
-/**
-  * @} 
-  */  
-/** @defgroup STOP_DAC    STOP_DAC
-  *  @{
-     @brief Stop DAC for debug
-*/
-  void STOP_DAC()
-  {
-    HAL_DAC_Stop(&DACx,DACx_CH); 
-  }
-/**
-  * @} 
-  */    
-/** @defgroup SET_DAC_value    SET_DAC_value
-  *  @{
-     @brief Set DAC value for debug
-*/
-  void SET_DAC_value(uint16_t dac_value)
-  {
-    HAL_DAC_SetValue(&DACx,DACx_CH,DACx_ALIGN,dac_value);
-  }
+
 /**
   * @} 
   */   
