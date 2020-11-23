@@ -1,7 +1,7 @@
 stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.o: ..\..\..\..\..\..\Drivers\BSP\X-NUCLEO-IHM07M1\X-NUCLEO-IHM07M1.c
 stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.o: ..\..\..\..\..\..\Drivers\BSP\X-NUCLEO-IHM07M1\X-NUCLEO-IHM07M1.h
 stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.o: ..\..\..\..\..\..\Drivers\BSP\Components\l6230\l6230.h
-stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.o: D:\system\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.o: ..\..\..\..\..\..\Drivers\BSP\Components\Common\MC_Common.h
 stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.o: ..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal.h
 stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.o: ..\..\Inc\stm32f3xx_hal_conf.h
@@ -18,7 +18,7 @@ stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.o: ..\..\..\..\..\..\Drivers\C
 stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.o: ..\..\..\..\..\..\Drivers\CMSIS\Device\ST\STM32F3xx\Include\system_stm32f3xx.h
 stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.o: ..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal.h
 stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.o: ..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\Legacy/stm32_hal_legacy.h
-stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.o: D:\system\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.o: ..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_rcc_ex.h
 stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.o: ..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_gpio.h
 stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.o: ..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_gpio_ex.h

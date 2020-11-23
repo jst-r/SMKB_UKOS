@@ -92,8 +92,7 @@
   #define GPIO_CH_ZCR           GPIO_PIN_7      /*!<  GPIO pin name for zero crossing detection */
  // #define GPIO_PORT_ZCR         GPIOC         /*!<  EDITED _ GPIO port name for zero crossing detection */
  // #define GPIO_CH_ZCR           GPIO_PIN_9    /*!<  EDITED _ GPIO pin name for zero crossing detection */
-  #define GPIO_PORT_COMM        GPIOC           /*!<  GPIO port name for 6Step commutation */
-  #define GPIO_CH_COMM          GPIO_PIN_4      /*!<  GPIO pin name for 6Step commutation */
+
 
   #define STARTM_CMD             0     /*!<  Start Motor command received */
   #define STOPMT_CMD             1     /*!<  Stop Motor command received */

@@ -51,9 +51,6 @@
   extern void L6230_HFTIM_DC_CH1(uint16_t CCR_value);
   extern void L6230_HFTIM_DC_CH2(uint16_t CCR_value);
   extern void L6230_HFTIM_DC_CH3(uint16_t CCR_value);
-//  extern void START_Ref_Generation(void);
-//  extern void STOP_Ref_Generation(void);
-//  extern void Set_Ref_Generation(uint16_t);
 
   void EnableInput_CH1_E_CH2_E_CH3_D(void);
   void EnableInput_CH1_E_CH2_D_CH3_E(void);
@@ -64,9 +61,6 @@
   void HF_TIMx_SetDutyCycle_CH1(uint16_t);
   void HF_TIMx_SetDutyCycle_CH2(uint16_t);
   void HF_TIMx_SetDutyCycle_CH3(uint16_t);
-//  void Current_Reference_Start(void);
-//  void Current_Reference_Stop(void);
-//  void Current_Reference_Setvalue(uint16_t);
 
   
   /** @addtogroup DRIVERS     DRIVERS 
