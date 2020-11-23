@@ -160,11 +160,7 @@ void CMD_Parser(char* pCommandString);
 
 void MC_SixStep_TABLE(uint8_t step_number)
 { 
- if(GPIO_COMM == 1)
- {
-  HAL_GPIO_TogglePin(GPIO_PORT_COMM,GPIO_CH_COMM);  
- }
- 
+
  switch (step_number)
   { 
     case 1:
@@ -400,7 +396,7 @@ void MC_SixStep_RESET()
  SIXSTEP_parameters.Regular_channel[2] = ADC_Bemf_CH2;   /*BEMF2*/
  SIXSTEP_parameters.Regular_channel[3] = ADC_Bemf_CH3;   /*BEMF3*/
  SIXSTEP_parameters.ADC_SEQ_CHANNEL[0] = ADC_CH_1;       /*CURRENT*/
- SIXSTEP_parameters.ADC_SEQ_CHANNEL[1] = ADC_CH_2;       /*SPEED*/
+ //SIXSTEP_parameters.ADC_SEQ_CHANNEL[1] = ADC_CH_2;       /*SPEED*/
  
  SIXSTEP_parameters.step_position = 0;
  SIXSTEP_parameters.demagn_counter = 0; 
@@ -1201,7 +1197,7 @@ void MC_ADCx_SixStep_Bemf()
 
   if(__HAL_TIM_DIRECTION_STATUS(&HF_TIMx)) 
   {   
-  HAL_GPIO_WritePin(GPIO_PORT_COMM,GPIO_CH_COMM,GPIO_PIN_SET);      
+      
      /* UP-counting direction started */
      /* GET the ADC value (PHASE CURRENT)*/
    if(SIXSTEP_parameters.STATUS != START && SIXSTEP_parameters.STATUS != ALIGNMENT)     
@@ -1357,8 +1353,7 @@ void MC_ADCx_SixStep_Bemf()
     /******************* SET ADC CHANNEL FOR SPEED/CURRENT/VBUS *******************/
     /* Set the channel for next ADC Regular reading */   
     MC_SixStep_ADC_Channel(SIXSTEP_parameters.ADC_SEQ_CHANNEL[index_adc_chn]);
-    /******************************************************************************/    
-    HAL_GPIO_WritePin(GPIO_PORT_COMM,GPIO_CH_COMM,GPIO_PIN_RESET);   
+    /******************************************************************************/       
    }  
    else 
    {  
@@ -1376,7 +1371,7 @@ void MC_ADCx_SixStep_Bemf()
       }
     }
     index_adc_chn++; 
-    if(index_adc_chn>3) index_adc_chn = 0;       
+    if(index_adc_chn>1) index_adc_chn = 0;       
      MC_SixStep_ADC_Channel(SIXSTEP_parameters.CurrentRegular_BEMF_ch);   
    }
  

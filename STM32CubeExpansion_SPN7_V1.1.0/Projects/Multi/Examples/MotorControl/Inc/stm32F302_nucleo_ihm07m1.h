@@ -65,7 +65,7 @@
 //#define ADC_CH_2              ADC_CHANNEL_3    /*Phase current V*/
 //#define ADC_CH_2              ADC_CHANNEL_4    /*Phase current W*/
 
-  #define ADC_CH_2              ADC_CHANNEL_12   /*SPEED*/  //I dunno wft is this, maybe remove
+ // #define ADC_CH_2              ADC_CHANNEL_12   /*SPEED*/  //I dunno wft is this, maybe remove
   #define ADC_CH_3              ADC_CHANNEL_2    /*VBUS*/   //NO NEED IN THIS MEASUREMENT! REMOVE
   #define ADC_CH_4              ADC_CHANNEL_8    /*TEMP*/   //NO NEED IN THIS MEASUREMENT! REMOVE
   #define ADC_Bemf_CH1          ADC_CHANNEL_9    /*BEMF1*/
@@ -87,10 +87,8 @@
   #define HF_TIMx_CCR2          CCR2            /*Channel 2*/
   #define HF_TIMx_CCR3          CCR3            /*Channel 3*/
 
-  #define DAC_ENABLE            1               /*!< Enable (1) the DAC peripheral */  
-  #define DACx                  hdac
-  #define DACx_CH               DAC1_CHANNEL_1  /*!<  DAC Channel */
-  #define DACx_ALIGN            DAC_ALIGN_12B_L  /*!< DAC Aligment value */
+  #define DAC_ENABLE            0               /*!< Enable (1) the DAC peripheral */  
+
 
   #define GPIO_PORT_ZCR         GPIOC           /*!<  GPIO port name for zero crossing detection */
   #define GPIO_CH_ZCR           GPIO_PIN_7      /*!<  GPIO pin name for zero crossing detection */

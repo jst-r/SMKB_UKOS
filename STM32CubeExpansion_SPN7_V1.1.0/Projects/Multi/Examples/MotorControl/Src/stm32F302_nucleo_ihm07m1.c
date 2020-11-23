@@ -130,9 +130,7 @@
     sConfig.Channel = ADC_Bemf_CH3; /* BEMF feedback phase C */
     sConfig.SamplingTime = ADC_Bemf_CH3_ST;
     HAL_ADC_ConfigChannel(&hadc1, &sConfig);
-    sConfig.Channel = ADC_CH_2; /* Potentiometer */
-    sConfig.SamplingTime = ADC_CH_2_ST;
-    HAL_ADC_ConfigChannel(&hadc1, &sConfig);    
+    
     /***************************************************************************/
   }
 
