@@ -71,9 +71,9 @@
     void (*HF_TIMx_SetDutyCycle_CH1)(uint16_t);   /*!< High Frequency Timer - Change DutyCycle value for CH1 */    
     void (*HF_TIMx_SetDutyCycle_CH2)(uint16_t);   /*!< High Frequency Timer - Change DutyCycle value for CH2 */
     void (*HF_TIMx_SetDutyCycle_CH3)(uint16_t);   /*!< High Frequency Timer - Change DutyCycle value for CH3 */
-    void (*Current_Reference_Start)(void);        /*!< Start current reference generation for closed loop control */
-    void (*Current_Reference_Stop)(void);         /*!< Stop current reference generation for closed loop control */
-    void (*Current_Reference_Setvalue)(uint16_t); /*!< Set current reference value for closed loop control */    
+//    void (*Current_Reference_Start)(void);        /*!< Start current reference generation for closed loop control */
+//    void (*Current_Reference_Stop)(void);         /*!< Stop current reference generation for closed loop control */
+//    void (*Current_Reference_Setvalue)(uint16_t); /*!< Set current reference value for closed loop control */    
   } L6230_MotorDriver_TypeDef;                          /*!< MC driver handler */
 
 /**

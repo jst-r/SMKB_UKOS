@@ -48,8 +48,7 @@
   #define LF_TIMx               htim6
   #define HALL_ENCODER_TIMx     htim2
   #define ADCx                  hadc1
-  #define REFx                  htim16
-  #define UART                  huart2          //NO NEED IN THIS PORT, USE huart3 instead
+//  #define UART                  huart2          //NO NEED IN THIS PORT, USE huart3 instead
 
   #define GPIO_PORT_1           GPIOC           //NO NEED IN THIS PORT, Used as enable of PWM channels, Remove after complimentaru PWM implementation
   #define GPIO_CH1              GPIO_PIN_10     //same
@@ -60,12 +59,12 @@
   #define GPIO_SET              GPIO_PIN_SET
   #define GPIO_RESET            GPIO_PIN_RESET
 
-  #define ADC_CH_1              ADC_CHANNEL_7    /*CURRENT*/
+  #define ADC_CH_1              ADC_CHANNEL_7    /*CURRENT*/      // - remove
 //#define ADC_CH_1              ADC_CHANNEL_2    /*Phase current U*/
 //#define ADC_CH_2              ADC_CHANNEL_3    /*Phase current V*/
 //#define ADC_CH_2              ADC_CHANNEL_4    /*Phase current W*/
 
- // #define ADC_CH_2              ADC_CHANNEL_12   /*SPEED*/  //I dunno wft is this, maybe remove
+ #define ADC_CH_2              ADC_CHANNEL_12   /*SPEED*/  //I dunno wft is this, maybe remove
   #define ADC_CH_3              ADC_CHANNEL_2    /*VBUS*/   //NO NEED IN THIS MEASUREMENT! REMOVE
   #define ADC_CH_4              ADC_CHANNEL_8    /*TEMP*/   //NO NEED IN THIS MEASUREMENT! REMOVE
   #define ADC_Bemf_CH1          ADC_CHANNEL_9    /*BEMF1*/
@@ -75,7 +74,7 @@
   #define ADC_CH_1_ST           ADC_SAMPLETIME_1CYCLE_5    /*CURRENT sampling time */
   #define ADC_CH_2_ST           ADC_SAMPLETIME_181CYCLES_5 /*SPEED sampling time*/
   #define ADC_CH_3_ST           ADC_SAMPLETIME_181CYCLES_5 /*VBUS sampling time*/ 
-	#define ADC_CH_4_ST           ADC_SAMPLETIME_181CYCLES_5 /*TEMP sampling time*/  //REMOVE
+  #define ADC_CH_4_ST           ADC_SAMPLETIME_181CYCLES_5 /*TEMP sampling time*/  //REMOVE
   #define ADC_Bemf_CH1_ST       ADC_SAMPLETIME_61CYCLES_5  /*BEMF1 sampling time*/
   #define ADC_Bemf_CH2_ST       ADC_SAMPLETIME_61CYCLES_5  /*BEMF2 sampling time*/
   #define ADC_Bemf_CH3_ST       ADC_SAMPLETIME_61CYCLES_5  /*BEMF3 sampling time*/
@@ -87,8 +86,10 @@
   #define HF_TIMx_CCR2          CCR2            /*Channel 2*/
   #define HF_TIMx_CCR3          CCR3            /*Channel 3*/
 
-  #define DAC_ENABLE            0               /*!< Enable (1) the DAC peripheral */  
-
+  #define DAC_ENABLE            1               /*!< Enable (1) the DAC peripheral */  
+  #define DACx                  hdac
+  #define DACx_CH               DAC1_CHANNEL_1  /*!<  DAC Channel */
+  #define DACx_ALIGN            DAC_ALIGN_12B_L  /*!< DAC Aligment value */
 
   #define GPIO_PORT_ZCR         GPIOC           /*!<  GPIO port name for zero crossing detection */
   #define GPIO_CH_ZCR           GPIO_PIN_7      /*!<  GPIO pin name for zero crossing detection */
@@ -115,7 +116,6 @@
   extern TIM_HandleTypeDef htim1;
   extern TIM_HandleTypeDef htim2;
   extern TIM_HandleTypeDef htim6;  
-  extern TIM_HandleTypeDef htim16;
   extern UART_HandleTypeDef huart2;
   
   /** @addtogroup stm32F302_nucleo_ihm07m1    stm32F302_nucleo_ihm07m1
@@ -132,11 +132,6 @@
   uint32_t Get_UART_Data(void);
   void MC_SixStep_ADC_Channel(uint32_t);
   void MC_SixStep_Nucleo_Init(void);
-  void START_Ref_Generation(void);
-  void STOP_Ref_Generation(void);
-  void Set_Ref_Generation(uint16_t);
-  void START_DAC(void);
-  void STOP_DAC(void);
   void SET_DAC_value(uint16_t);
   void Bemf_delay_calc(void);  
   void MC_SixStep_EnableInput_CH1_E_CH2_E_CH3_D(void);
@@ -148,9 +143,7 @@
   void MC_SixStep_HF_TIMx_SetDutyCycle_CH1(uint16_t);
   void MC_SixStep_HF_TIMx_SetDutyCycle_CH2(uint16_t);
   void MC_SixStep_HF_TIMx_SetDutyCycle_CH3(uint16_t);
-  void MC_SixStep_Current_Reference_Start(void);
-  void MC_SixStep_Current_Reference_Stop(void);
-  void MC_SixStep_Current_Reference_Setvalue(uint16_t);
+
   
   /**
   * @} 
