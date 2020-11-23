@@ -2247,7 +2247,11 @@ Image component sizes
       1106         70          0          0        452     556469   main_f302.o
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         64         26        392          0       1536        892   startup_stm32f302x8.o
+=======
+        64         26        392          0       1536        924   startup_stm32f302x8.o
+>>>>>>> parent of 8916301... Version stability verified
 =======
         64         26        392          0       1536        924   startup_stm32f302x8.o
 >>>>>>> parent of 8916301... Version stability verified
@@ -2275,7 +2279,11 @@ Image component sizes
     ----------------------------------------------------------------------
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
      16618       1144        480        160       2296     728076   Object Totals
+=======
+     16618       1144        480        160       2296     728108   Object Totals
+>>>>>>> parent of 8916301... Version stability verified
 =======
      16618       1144        480        160       2296     728108   Object Totals
 >>>>>>> parent of 8916301... Version stability verified
@@ -2336,8 +2344,13 @@ Image component sizes
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
      17188       1160        480        160       2392     711684   Grand Totals
      17188       1160        480        160       2392     711684   ELF Image Totals
+=======
+     17188       1160        480        160       2392     711716   Grand Totals
+     17188       1160        480        160       2392     711716   ELF Image Totals
+>>>>>>> parent of 8916301... Version stability verified
 =======
      17188       1160        480        160       2392     711716   Grand Totals
      17188       1160        480        160       2392     711716   ELF Image Totals
