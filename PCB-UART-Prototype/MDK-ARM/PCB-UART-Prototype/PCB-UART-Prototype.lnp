@@ -1,4 +1,4 @@
---cpu=Cortex-M4.fp
+--cpu=Cortex-M4.fp.sp
 "pcb-uart-prototype\startup_stm32f302x8.o"
 "pcb-uart-prototype\main.o"
 "pcb-uart-prototype\stm32f3xx_it.o"

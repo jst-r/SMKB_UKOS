@@ -2288,32 +2288,32 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-      3172        324          0        104        308      24594   6step_lib.o
-        48          0          0         48          0       8768   l6230.o
-      1152         78          0          0        472     563462   main_f302.o
-        64         26        392          0       1536        944   startup_stm32f302x8.o
-       972        120          0          0          0      17350   stm32f302_nucleo_ihm07m1.o
-        76         10          0          4          0       2835   stm32f3xx_hal.o
-         4          0          0          0          0       2027   stm32f3xx_hal_adc.o
-      2390         54          0          0          0      14143   stm32f3xx_hal_adc_ex.o
-       226         14          0          0          0      31402   stm32f3xx_hal_cortex.o
-        42          0          0          0          0       2152   stm32f3xx_hal_dac.o
-       198          0          0          0          0       4212   stm32f3xx_hal_dac_ex.o
-        74          0          0          0          0       1487   stm32f3xx_hal_dma.o
-       426         32          0          0          0       4492   stm32f3xx_hal_gpio.o
-       756         72          0          0          0       5582   stm32f3xx_hal_msp.o
-      2052         80         32          0          0       7684   stm32f3xx_hal_rcc.o
-       500         14          0          0          0       1928   stm32f3xx_hal_rcc_ex.o
-      1730        138          0          0          0      21068   stm32f3xx_hal_tim.o
-      1114         50          0          0          0      10978   stm32f3xx_hal_tim_ex.o
-      1448         54          0          0          0      13667   stm32f3xx_hal_uart.o
-         2          0          0          0          0       1296   stm32f3xx_hal_uart_ex.o
-       118         32          0          0          0       3813   stm32f3xx_it.o
-       104         22         24          4          0       1911   system_stm32f3xx.o
-       480         68          0          0          0       8247   x-nucleo-ihm07m1.o
+      3172        324          0        104        308      24714   6step_lib.o
+        48          0          0         48          0       8852   l6230.o
+      1152         78          0          0        472     563566   main_f302.o
+        64         26        392          0       1536        940   startup_stm32f302x8.o
+       972        120          0          0          0      17458   stm32f302_nucleo_ihm07m1.o
+        76         10          0          4          0       2859   stm32f3xx_hal.o
+         4          0          0          0          0       2043   stm32f3xx_hal_adc.o
+      2390         54          0          0          0      14207   stm32f3xx_hal_adc_ex.o
+       226         14          0          0          0      31430   stm32f3xx_hal_cortex.o
+        42          0          0          0          0       2168   stm32f3xx_hal_dac.o
+       198          0          0          0          0       4240   stm32f3xx_hal_dac_ex.o
+        74          0          0          0          0       1499   stm32f3xx_hal_dma.o
+       426         32          0          0          0       4524   stm32f3xx_hal_gpio.o
+       756         72          0          0          0       5618   stm32f3xx_hal_msp.o
+      2052         80         32          0          0       7716   stm32f3xx_hal_rcc.o
+       500         14          0          0          0       1936   stm32f3xx_hal_rcc_ex.o
+      1730        138          0          0          0      21184   stm32f3xx_hal_tim.o
+      1114         50          0          0          0      11034   stm32f3xx_hal_tim_ex.o
+      1448         54          0          0          0      13747   stm32f3xx_hal_uart.o
+         2          0          0          0          0       1308   stm32f3xx_hal_uart_ex.o
+       118         32          0          0          0       3849   stm32f3xx_it.o
+       104         22         24          4          0       1923   system_stm32f3xx.o
+       480         68          0          0          0       8311   x-nucleo-ihm07m1.o
 
     ----------------------------------------------------------------------
-     17172       1188        482        160       2316     754042   Object Totals
+     17172       1188        482        160       2316     755126   Object Totals
          0          0         32          0          0          0   (incl. Generated)
         24          0          2          0          0          0   (incl. Padding)
 
@@ -2366,8 +2366,8 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     17742       1204        482        160       2416     736750   Grand Totals
-     17742       1204        482        160       2416     736750   ELF Image Totals
+     17742       1204        482        160       2416     737834   Grand Totals
+     17742       1204        482        160       2416     737834   ELF Image Totals
      17742       1204        482        160          0          0   ROM Totals
 
 ==============================================================================
