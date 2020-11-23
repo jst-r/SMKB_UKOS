@@ -74,19 +74,16 @@
 #define NUMBER_OF_STEPS                 	2500      /*!< Number of elements for motor start-UP (max value 65535)*/ 
 #define TIME_FOR_ALIGN                    1000      /*!< Time for alignment (msec)*/ 
 #define BUTTON_DELAY                      1000      /*!< Delay time to enable push button for new command (1 = 1msec)*/ 
-#define NUMBER_ZCR											 		6 	   /*!< Number of zero crossing event during the startup for closed loop control begin */   
+#define NUMBER_ZCR											     6 	    /*!< Number of zero crossing event during the startup for closed loop control begin */   
 /*!< ********************* Closed Loop control *********************************/
 #define SPEED_LOOP_TIME                      2      /*!< Speed Loop time (1 = 1msec) */  
 #define KP_GAIN                           2000      /*!< Kp parameter for PI regulator */
-#define KI_GAIN                            	120	    /*!< Ki parameter for PI regulator */   
+#define KI_GAIN                            120	    /*!< Ki parameter for PI regulator */   
 #define KP_DIV                            4096      /*!< Kp parameter divider for PI regulator */
 #define KI_DIV                            4096      /*!< Ki parameter divider for PI regulator */   
 #define LOWER_OUT_LIMIT                    120      /*!< Low Out value of PI regulator */      
 #define UPPER_OUT_LIMIT                   2000      /*!< High Out value of PI regulator */    
-//#define MAX_POT_SPEED                  	  200      /*!< Maximum Speed regulated by potentiometer */
-//#define MIN_POT_SPEED                     100      /*!< Minimum Speed regulated by potentiometer */
-//#define VAL_POT_SPEED_DIV                    2      /*!< Validation potentiometer speed divider */
-#define INITIAL_DEMAGN_DELAY               	100      /*!< Initial value for delay time during startup for Bemf detection */
+#define INITIAL_DEMAGN_DELAY            	 100      /*!< Initial value for delay time during startup for Bemf detection */
 
 /*!< Zero Crossissing parameters */
 #define BEMF_THRSLD_DOWN                    200     /*!< Zero Crossing threshold */  
