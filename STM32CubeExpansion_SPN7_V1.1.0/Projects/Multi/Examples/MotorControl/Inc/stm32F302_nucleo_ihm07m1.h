@@ -86,10 +86,7 @@
   #define HF_TIMx_CCR2          CCR2            /*Channel 2*/
   #define HF_TIMx_CCR3          CCR3            /*Channel 3*/
 
-  #define DAC_ENABLE            1               /*!< Enable (1) the DAC peripheral */  
-  #define DACx                  hdac
-  #define DACx_CH               DAC1_CHANNEL_1  /*!<  DAC Channel */
-  #define DACx_ALIGN            DAC_ALIGN_12B_L  /*!< DAC Aligment value */
+  #define DAC_ENABLE            0               /*!< Enable (1) the DAC peripheral */  
 
   #define GPIO_PORT_ZCR         GPIOC           /*!<  GPIO port name for zero crossing detection */
   #define GPIO_CH_ZCR           GPIO_PIN_7      /*!<  GPIO pin name for zero crossing detection */
