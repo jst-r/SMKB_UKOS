@@ -118,7 +118,6 @@
   extern TIM_HandleTypeDef htim2;
   extern TIM_HandleTypeDef htim6;  
   extern TIM_HandleTypeDef htim16;
-  extern DAC_HandleTypeDef hdac;
   extern UART_HandleTypeDef huart2;
   
   /** @addtogroup stm32F302_nucleo_ihm07m1    stm32F302_nucleo_ihm07m1

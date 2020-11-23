@@ -46,7 +46,7 @@
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc1;
 
-// DAC_HandleTypeDef hdac;
+
 
 TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim2;
@@ -64,7 +64,6 @@ UART_HandleTypeDef huart2;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_ADC1_Init(void);
-//static void MX_DAC_Init(void);
 static void MX_TIM1_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_TIM6_Init(void);
@@ -112,7 +111,6 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_ADC1_Init();
- // MX_DAC_Init();
   MX_TIM1_Init();
   MX_TIM2_Init();
   MX_TIM6_Init();
@@ -285,29 +283,6 @@ static void MX_ADC1_Init(void)
   }
 
 }
-
-/* DAC init function */
-/*static void MX_DAC_Init(void)
-{
-
-  DAC_ChannelConfTypeDef sConfig;
-
-    //DAC Initialization 
-  hdac.Instance = DAC;
-  if (HAL_DAC_Init(&hdac) != HAL_OK)
-  {
-    _Error_Handler(__FILE__, __LINE__);
-  }
-
-    //DAC channel OUT1 config 
-  sConfig.DAC_Trigger = DAC_TRIGGER_NONE;
-  sConfig.DAC_OutputBuffer = DAC_OUTPUTBUFFER_ENABLE;
-  if (HAL_DAC_ConfigChannel(&hdac, &sConfig, DAC_CHANNEL_1) != HAL_OK)
-  {
-    _Error_Handler(__FILE__, __LINE__);
-  }
-
-}  */
 
 /* TIM1 init function */
 static void MX_TIM1_Init(void)
