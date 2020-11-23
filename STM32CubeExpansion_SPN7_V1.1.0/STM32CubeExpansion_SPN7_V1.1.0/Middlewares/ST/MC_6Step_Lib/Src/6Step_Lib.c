@@ -106,7 +106,6 @@ uint16_t cnt_bemf_event = 0;
 uint8_t startup_bemf_failure = 0;
 uint8_t speed_fdbk_error = 0;
 extern __IO uint32_t uwTick;                        /*!<  Tick counter - 1msec updated */
-uint8_t dac_status = DAC_ENABLE;
 uint16_t index_align = 1;
 int32_t speed_sum_sp_filt = 0;
 int32_t speed_sum_pot_filt = 0;
@@ -798,11 +797,11 @@ int16_t MC_PI_Controller(SIXSTEP_PI_PARAM_InitTypeDef_t *PI_PARAM, int16_t speed
 void MC_Task_Speed()
 {
  
- if(dac_status == TRUE)
+ /* if(dac_status == TRUE)
  {  
    SET_DAC_value(SIXSTEP_parameters.speed_fdbk_filtered);   
  }
-  
+			*/
  if((SIXSTEP_parameters.speed_fdbk_filtered > (target_speed) || SIXSTEP_parameters.speed_fdbk_filtered < (-target_speed)) && SIXSTEP_parameters.VALIDATION_OK !=TRUE)
  { 
    SIXSTEP_parameters.STATUS = VALIDATION;   
@@ -816,9 +815,9 @@ void MC_Task_Speed()
    
  if(SIXSTEP_parameters.VALIDATION_OK == TRUE)
  {    
- /*****************************************************************************/           
+ 
   SIXSTEP_parameters.STATUS = RUN; 
- /*****************************************************************************/  
+ 
     
     if(PI_parameters.Reference>=0)
     {
@@ -833,7 +832,7 @@ void MC_Task_Speed()
             
  }
  MC_Bemf_Delay();
-}
+}             
      
 /**
   * @} 
@@ -883,10 +882,10 @@ void MC_StartMotor()
   HAL_ADC_Start_IT(&ADCx);
   SIXSTEP_parameters.RUN_Motor = 1;
   BSP_X_NUCLEO_FAULT_LED_ON();
-  if(dac_status == TRUE)
+/*  if(dac_status == TRUE)
   {
    START_DAC();
-  }
+  }               */
 }
 /**
   * @} 

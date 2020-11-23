@@ -62,6 +62,8 @@ volatile uint8_t gu32_Ticks = 0;
 volatile uint16_t status = 0;
 volatile uint16_t zero = 0;
 volatile uint16_t one = 0;
+volatile uint16_t zero_lenth = 0;
+volatile uint16_t one_lenth = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -537,11 +539,15 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 uint8_t i = 0;	
 if (htim->Instance == TIM15) {
 	if((HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == SET) & status == 0){
+	zero_lenth = zero;	
+	zero = 0;
 	one +=1;
 	status = 1;
 	//for (i = 0; i++; i<1000){}
 	}
 	if ((HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == RESET) & status == 1){
+		one_lenth = one;
+		one = 0;
 		zero += 1;
 		status = 0;
 		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_SET);
