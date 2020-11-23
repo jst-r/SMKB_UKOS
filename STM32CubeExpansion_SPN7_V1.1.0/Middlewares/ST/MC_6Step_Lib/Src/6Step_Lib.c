@@ -141,9 +141,6 @@ void MC_SixStep_Stop_PWM_driving(void);
 void MC_SixStep_HF_TIMx_SetDutyCycle_CH1(uint16_t);    
 void MC_SixStep_HF_TIMx_SetDutyCycle_CH2(uint16_t);    
 void MC_SixStep_HF_TIMx_SetDutyCycle_CH3(uint16_t);   
-void MC_SixStep_Current_Reference_Start(void);         
-void MC_SixStep_Current_Reference_Stop(void);          
-void MC_SixStep_Current_Reference_Setvalue(uint16_t);  
 void MC_SixStep_ARR_Bemf(uint8_t);
 void MC_UI_INIT(void);
 void UART_Set_Value(void);
@@ -470,9 +467,7 @@ void MC_SixStep_RESET()
    SIXSTEP_parameters.step_position = 1;
  }
   target_speed = TARGET_SPEED;
-  MC_Set_PI_param(&PI_parameters); 
-  MC_SixStep_Current_Reference_Start(); 
-  MC_SixStep_Current_Reference_Setvalue(SIXSTEP_parameters.Ireference); 
+  MC_Set_PI_param(&PI_parameters);
   index_startup_motor = 1;
   MC_SixStep_Ramp_Motor_calc(); 
 }
@@ -496,7 +491,7 @@ void MC_SixStep_Ramp_Motor_calc()
     mech_accel_hz = SIXSTEP_parameters.ACCEL * Rotor_poles_pairs / 60; 
     constant_multiplier_tmp = (uint64_t)constant_multiplier*(uint64_t)constant_multiplier_2;
     constant_k = constant_multiplier_tmp/(3*mech_accel_hz);    
-    MC_SixStep_Current_Reference_Setvalue(SIXSTEP_parameters.Ireference); 
+//    MC_SixStep_Current_Reference_Setvalue(SIXSTEP_parameters.Ireference); 
     Time_vector_prev_tmp = 0;
   }
   if(index_startup_motor < NUMBER_OF_STEPS)  
@@ -828,7 +823,7 @@ void MC_Task_Speed()
       SIXSTEP_parameters.Current_Reference = (uint16_t)(-MC_PI_Controller(&PI_parameters,(int16_t)SIXSTEP_parameters.speed_fdbk_filtered));      
     }
                  
-    MC_SixStep_Current_Reference_Setvalue(SIXSTEP_parameters.Current_Reference);
+//    MC_SixStep_Current_Reference_Setvalue(SIXSTEP_parameters.Current_Reference);
             
  }
  MC_Bemf_Delay();
@@ -907,7 +902,6 @@ void MC_StopMotor()
   MC_SixStep_DisableInput_CH1_D_CH2_D_CH3_D();
   HAL_TIM_Base_Stop_IT(&LF_TIMx);  
   HAL_ADC_Stop_IT(&ADCx);
-  MC_SixStep_Current_Reference_Stop();
   BSP_X_NUCLEO_FAULT_LED_OFF();
   MC_SixStep_RESET();
 }
@@ -991,8 +985,6 @@ void MC_SixStep_INIT()
     SIXSTEP_parameters.LF_TIMx_ARR  = LF_TIMx.Instance->ARR;
     SIXSTEP_parameters.LF_TIMx_PSC  = LF_TIMx.Instance->PSC;
     
-//    MC_SixStep_Current_Reference_Start(); 
-    MC_SixStep_Current_Reference_Setvalue(SIXSTEP_parameters.Ireference); 
 
   #ifdef UART_COMM  
     SIXSTEP_parameters.Button_ready = FALSE;

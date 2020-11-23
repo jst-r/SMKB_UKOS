@@ -74,9 +74,9 @@ L6230_MotorDriver_TypeDef L6230MotorDriver =
   HF_TIMx_SetDutyCycle_CH1,
   HF_TIMx_SetDutyCycle_CH2,
   HF_TIMx_SetDutyCycle_CH3,
-  Current_Reference_Start,
-  Current_Reference_Stop,
-  Current_Reference_Setvalue,
+//  Current_Reference_Start,
+//  Current_Reference_Stop,
+//  Current_Reference_Setvalue,
 };    
     
  /**
@@ -229,10 +229,10 @@ void HF_TIMx_SetDutyCycle_CH3(uint16_t CCR_value)
   * @retval None
 */
 
-void Current_Reference_Start()
+/*void Current_Reference_Start()
 {
   START_Ref_Generation();
-}
+}       */
 
 /**
   * @} 
@@ -245,10 +245,10 @@ void Current_Reference_Start()
   * @retval None
 */
 
-void Current_Reference_Stop()
+/*void Current_Reference_Stop()
 {
-  STOP_Ref_Generation();
-}
+  STOP_Ref_Generation();   
+}     */
 
 /**
   * @}  
@@ -262,10 +262,10 @@ void Current_Reference_Stop()
 */
 
 
-void Current_Reference_Setvalue(uint16_t Iref)
+/*void Current_Reference_Setvalue(uint16_t Iref)
 {
   Set_Ref_Generation(Iref);
-}
+}                              */
 
 /**
   * @}  

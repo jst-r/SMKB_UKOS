@@ -134,49 +134,7 @@
     sConfig.SamplingTime = ADC_CH_2_ST;
     HAL_ADC_ConfigChannel(&hadc1, &sConfig);    
     /***************************************************************************/
-  }
-
-/**
-  * @} 
-  */
-
-/** @defgroup START_Ref_Generation    START_Ref_Generation
-  *  @{
-    * @brief Start the current generation
-*/
-  void START_Ref_Generation()
-  {
-     REFx.Instance->CCR1 = 0;
-     HAL_TIM_PWM_Start(&REFx, HF_TIMx_CH1);   
   } 
-/**
-  * @} 
-  */
-
-/** @defgroup STOP_Ref_Generation    STOP_Ref_Generation
-  *  @{
-    * @brief Stop the current generation
-*/
-  void STOP_Ref_Generation()
-  {
-     REFx.Instance->CCR1 = 0;
-     HAL_TIM_PWM_Stop(&REFx, HF_TIMx_CH1);    
-  }
-/**
-  * @} 
-  */
-/** @defgroup Set_Ref_Generation    Set_Ref_Generation
-  *  @{
-    * @brief Set the current generation value
-*/
-  void Set_Ref_Generation(uint16_t Iref)
-  {
-      REFx.Instance->CCR1 = (uint32_t)(Iref * REFx.Instance->ARR)/4096;
-  }
-
-/**
-  * @} 
-  */   
 
 /** @defgroup HAL_ADC_ConvCpltCallback    HAL_ADC_ConvCpltCallback
   *  @{
@@ -347,54 +305,6 @@ void MC_SixStep_HF_TIMx_SetDutyCycle_CH3(uint16_t CCR_value)
   L6230MotorDriver.HF_TIMx_SetDutyCycle_CH3(CCR_value);
 }
 
-/**
-  * @} 
-  */
-
-/** @defgroup Current_Reference_Start    Current_Reference_Start
-  *  @{
-    * @brief Enable the Current Reference generation
-*/
-
-void MC_SixStep_Current_Reference_Start()
-{
-  L6230MotorDriver.Current_Reference_Start();
-}
-
-/**
-  * @} 
-  */
-
-
-/** @defgroup Current_Reference_Stop    Current_Reference_Stop
-  *  @{
-    * @brief Disable the Current Reference generation
-*/
-
-void MC_SixStep_Current_Reference_Stop()
-{
-  L6230MotorDriver.Current_Reference_Stop();
-}
-
-/**
-  * @}  
-  */
-
-
-/** @defgroup Current_Reference_Setvalue    Current_Reference_Setvalue
-  *  @{
-    * @brief Set the value for Current Reference
-*/
-
-void MC_SixStep_Current_Reference_Setvalue(uint16_t Iref)
-{
-  L6230MotorDriver.Current_Reference_Setvalue(Iref);
-}
-
-/**
-  * @}  
-  */
-
 
 
 /** @defgroup Bemf_delay_calc    Bemf_delay_calc
@@ -533,10 +443,10 @@ void Bemf_delay_calc()
   *  @{
     * @brief Get the UART value from DR register
 */
-uint32_t Get_UART_Data()
+/*uint32_t Get_UART_Data()
 {
   return (UART.Instance->RDR);
-}
+}       */
 /**
  * @}  
  */ 
