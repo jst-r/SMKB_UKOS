@@ -19,7 +19,8 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-
+#include "string.h"
+#include "stdio.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -64,6 +65,7 @@ volatile uint16_t zero = 0;
 volatile uint16_t one = 0;
 volatile uint16_t zero_lenth = 0;
 volatile uint16_t one_lenth = 0;
+volatile uint8_t i = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -536,13 +538,14 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
-uint8_t i = 0;	
+	
 if (htim->Instance == TIM15) {
 	if((HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == SET) & status == 0){
 	zero_lenth = zero;	
 	zero = 0;
 	one +=1;
 	status = 1;
+		HAL_UART_Transmit(&huart3, (uint8_t*)zero_lenth, 5, 50);
 	//for (i = 0; i++; i<1000){}
 	}
 	if ((HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == RESET) & status == 1){
@@ -550,7 +553,9 @@ if (htim->Instance == TIM15) {
 		one = 0;
 		zero += 1;
 		status = 0;
-		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_SET);
+		
+	//	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_SET);
+		HAL_UART_Transmit(&huart3, (uint8_t*)one_lenth, 5, 50);
 		//for (i = 0; i++; i<1000){}
 }
 }
