@@ -33,5 +33,3 @@ pcb-uart-prototype\main.o: ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_tim
 pcb-uart-prototype\main.o: ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_tim_ex.h
 pcb-uart-prototype\main.o: ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart.h
 pcb-uart-prototype\main.o: ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart_ex.h
-pcb-uart-prototype\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
-pcb-uart-prototype\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

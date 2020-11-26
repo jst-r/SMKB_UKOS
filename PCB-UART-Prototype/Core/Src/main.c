@@ -19,9 +19,8 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "string.h"
-#include "stdio.h"
-// Private includes ----------------------------------------------------------*/
+
+/* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
@@ -47,6 +46,7 @@ TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim6;
 TIM_HandleTypeDef htim15;
+TIM_HandleTypeDef htim16;
 
 UART_HandleTypeDef huart3;
 
@@ -70,6 +70,7 @@ volatile uint8_t buffer2 = 0;
 char buffer[20];
 volatile uint8_t i = 0;
 volatile uint16_t data = 0;
+volatile uint16_t counter = 0;;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -81,7 +82,7 @@ static void MX_RTC_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_TIM6_Init(void);
 static void MX_TIM15_Init(void);
-
+static void MX_TIM16_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -125,11 +126,12 @@ int main(void)
   MX_TIM2_Init();
   MX_TIM6_Init();
   MX_TIM15_Init();
+  MX_TIM16_Init();
   /* USER CODE BEGIN 2 */
 	HAL_NVIC_EnableIRQ(EXTI1_IRQn);
 	HAL_NVIC_EnableIRQ(EXTI2_TSC_IRQn);
 	HAL_TIM_Base_Start_IT(&htim15);
-	
+	HAL_TIM_Base_Start_IT(&htim16);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -186,10 +188,11 @@ void SystemClock_Config(void)
     Error_Handler();
   }
   PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_RTC|RCC_PERIPHCLK_TIM1
-                              |RCC_PERIPHCLK_TIM15;
+                              |RCC_PERIPHCLK_TIM15|RCC_PERIPHCLK_TIM16;
   PeriphClkInit.RTCClockSelection = RCC_RTCCLKSOURCE_LSE;
   PeriphClkInit.Tim1ClockSelection = RCC_TIM1CLK_HCLK;
   PeriphClkInit.Tim15ClockSelection = RCC_TIM15CLK_HCLK;
+  PeriphClkInit.Tim16ClockSelection = RCC_TIM16CLK_HCLK;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
     Error_Handler();
@@ -277,7 +280,7 @@ static void MX_TIM1_Init(void)
 
   /* USER CODE END TIM1_Init 1 */
   htim1.Instance = TIM1;
-  htim1.Init.Prescaler = 72;
+  htim1.Init.Prescaler = 0;
   htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim1.Init.Period = 65535;
   htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
@@ -420,9 +423,9 @@ static void MX_TIM15_Init(void)
 
   /* USER CODE END TIM15_Init 1 */
   htim15.Instance = TIM15;
-  htim15.Init.Prescaler = 72;
+  htim15.Init.Prescaler = 0;
   htim15.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim15.Init.Period = 10;
+  htim15.Init.Period = 65535;
   htim15.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim15.Init.RepetitionCounter = 0;
   htim15.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -444,6 +447,38 @@ static void MX_TIM15_Init(void)
   /* USER CODE BEGIN TIM15_Init 2 */
 
   /* USER CODE END TIM15_Init 2 */
+
+}
+
+/**
+  * @brief TIM16 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM16_Init(void)
+{
+
+  /* USER CODE BEGIN TIM16_Init 0 */
+
+  /* USER CODE END TIM16_Init 0 */
+
+  /* USER CODE BEGIN TIM16_Init 1 */
+
+  /* USER CODE END TIM16_Init 1 */
+  htim16.Instance = TIM16;
+  htim16.Init.Prescaler = 7199;
+  htim16.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim16.Init.Period = 10000;
+  htim16.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim16.Init.RepetitionCounter = 0;
+  htim16.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim16) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM16_Init 2 */
+
+  /* USER CODE END TIM16_Init 2 */
 
 }
 
@@ -543,6 +578,20 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+	
+	if (htim->Instance == TIM16){
+		
+		if ((counter <= 3) & (counter >= 2)){
+			HAL_UART_Transmit(&huart3, "Spinning motor forward\n", 23, 200);
+//			HAL_UART_Transmit(&huart3, "\n", 1, 200);
+		}	else if ((counter > 3) & (counter != 0)){
+			HAL_UART_Transmit(&huart3, "Spinning motor backward\n", 24, 200);
+			}
+		counter = 0;
+		}
+	
+	
+	
 	//GPIO - SET - > hydrophone -> 0 -> osc -> 1;
 	if (htim->Instance == TIM15) {
 		if((HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_2) == SET & status == 0)||(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == RESET & status == 1)){		
@@ -554,9 +603,16 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 		//			HAL_UART_Transmit(&huart3, "Motor control Stop\n", 20, 200);}
 				if(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == SET) {
 					if (resetLength < 1000) {
-						HAL_UART_Transmit(&huart3, "Less than a 1000", 20, 200);}
-					else {
-						HAL_UART_Transmit(&huart3, "More than a 1000",20, 200);}
+						//HAL_UART_Transmit(&huart3, "Less than a 1000\n", 20, 200);
+					if (counter == 0){
+					TIM16->CCR1=0;
+					HAL_UART_Transmit(&huart3, "Motor is ready\n", 15, 200);
+					}
+					counter ++;
+						
+					}	else {
+						//HAL_UART_Transmit(&huart3, "More than a 1000\n",20, 200);
+					}
 					//HAL_UART_Transmit_IT(&huart3,(uint8_t*)buffer, sprintf(buffer, "resetLength = %d\n", resetLength)); //define the variable
 					resetLength = 0;
 					status = 1;
@@ -585,11 +641,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
   if(GPIO_Pin == GPIO_PIN_1) {
-		HAL_UART_Transmit(&huart3, "Stop Motor pos 1", 16, 200 );
+		HAL_UART_Transmit(&huart3, "Stop Motor pos 1\n", 17, 200 );
 		
   } 
 	else if (GPIO_Pin == GPIO_PIN_2) {
-		HAL_UART_Transmit(&huart3, "Stop Motor pos 2", 16, 200 );
+		HAL_UART_Transmit(&huart3, "Stop Motor pos 2\n", 17, 200 );
 	} 
 	else {
 	  __NOP();
