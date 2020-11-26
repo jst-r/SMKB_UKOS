@@ -21,7 +21,7 @@
 #include "main.h"
 #include "string.h"
 #include "stdio.h"
-/* Private includes ----------------------------------------------------------*/
+// Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
@@ -60,15 +60,16 @@ volatile uint8_t DONE = 1;
 volatile uint16_t gu16_TIM2_OVC = 0;
 volatile uint32_t gu32_T2 = 0;
 volatile uint8_t gu32_Ticks = 0;
-volatile uint16_t status = 0;
+volatile uint16_t status = 1;
 volatile uint16_t zero = 0;
 volatile uint16_t one = 0;
 volatile uint16_t resetLength = 0;
 volatile uint16_t setLength = 0;
-volatile uint8_t buffer = 0;
+//volatile uint8_t buffer = 0;
 volatile uint8_t buffer2 = 0;
-
+char buffer[20];
 volatile uint8_t i = 0;
+volatile uint16_t data = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -80,6 +81,7 @@ static void MX_RTC_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_TIM6_Init(void);
 static void MX_TIM15_Init(void);
+
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -420,7 +422,7 @@ static void MX_TIM15_Init(void)
   htim15.Instance = TIM15;
   htim15.Init.Prescaler = 72;
   htim15.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim15.Init.Period = 50;
+  htim15.Init.Period = 10;
   htim15.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim15.Init.RepetitionCounter = 0;
   htim15.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -544,30 +546,41 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	//GPIO - SET - > hydrophone -> 0 -> osc -> 1;
 	if (htim->Instance == TIM15) {
 		if((HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_2) == SET & status == 0)||(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == RESET & status == 1)){		
-			
-			if(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == SET) {
-				buffer = WordDivider(resetLength);
-				buffer2 = WordDivider2(setLength);
-				HAL_UART_Transmit(&huart3,(uint8_t*)buffer, 15, 100); //define the variable
-				resetLength = 0;}
-			else if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == RESET) {
-				int buffer = WordDivider(setLength);
-			//int buffer2 = WordDivider2(setLength);
-				HAL_UART_Transmit(&huart3,(uint8_t *)WordDivider(setLength), 15, 100); //define the variable
-				setLength = 0;
-			}
-	}
-	if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == SET ) {
-		setLength ++;
-		if (setLength >= 10000) {
-			setLength = 9999;
-			status = 1;
+		//HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "resetLength = %d\n", resetLength), 1000);
+		//	HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "resetLength = %d\n", setLength), 1000);
+			//	if (setLength / resetLength > 10) {
+		//			HAL_UART_Transmit(&huart3, "Motor control Start\n", 20 ,200);
+		//		} else if (setLength / resetLength <10) {
+		//			HAL_UART_Transmit(&huart3, "Motor control Stop\n", 20, 200);}
+				if(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == SET) {
+					if (resetLength < 1000) {
+						HAL_UART_Transmit(&huart3, "Less than a 1000", 20, 200);}
+					else {
+						HAL_UART_Transmit(&huart3, "More than a 1000",20, 200);}
+					//HAL_UART_Transmit_IT(&huart3,(uint8_t*)buffer, sprintf(buffer, "resetLength = %d\n", resetLength)); //define the variable
+					resetLength = 0;
+					status = 1;
+				} else {
+					//HAL_UART_Transmit_IT(&huart3,(uint8_t*)buffer, sprintf(buffer, "setLength = %d\n", setLength));
+					setLength = 0;	
+					status = 0;
+				}
+		} else {
+			if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == SET ) {
+				setLength ++;
+			//	HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "setLength = %d\n", resetLength), 1000);
+				if (setLength >= 10000) {
+					setLength = 9999;
+				}
+				status = 1;
+			} else {
+				resetLength ++;
+		//		HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "resetLength = %d\n", resetLength), 1000);
+				status = 0;}
 		}
-	} else if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == RESET) {
-		resetLength ++;
-		status = 0;}
 	}
 }
+
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
@@ -583,12 +596,12 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 	}
 }
 
-int WordDivider(X){
+/*int WordDivider(X){
 	uint16_t  first = X / 1000;
 	return first;
 }
 
-int	WordDivider2(X){
+/*int	WordDivider2(X){
 	uint16_t second = X % 1000;
 	return second;
 }
