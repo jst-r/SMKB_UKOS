@@ -63,8 +63,11 @@ volatile uint8_t gu32_Ticks = 0;
 volatile uint16_t status = 0;
 volatile uint16_t zero = 0;
 volatile uint16_t one = 0;
-volatile uint16_t zero_lenth = 0;
-volatile uint16_t one_lenth = 0;
+volatile uint16_t resetLength = 0;
+volatile uint16_t setLength = 0;
+volatile uint8_t buffer = 0;
+volatile uint8_t buffer2 = 0;
+
 volatile uint8_t i = 0;
 /* USER CODE END PV */
 
@@ -415,9 +418,9 @@ static void MX_TIM15_Init(void)
 
   /* USER CODE END TIM15_Init 1 */
   htim15.Instance = TIM15;
-  htim15.Init.Prescaler = 0;
+  htim15.Init.Prescaler = 72;
   htim15.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim15.Init.Period = 65535;
+  htim15.Init.Period = 50;
   htim15.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim15.Init.RepetitionCounter = 0;
   htim15.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -538,41 +541,56 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
-	
-if (htim->Instance == TIM15) {
-	if((HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == SET) & status == 0){
-	zero_lenth = zero;	
-	zero = 0;
-	one +=1;
-	status = 1;
-		HAL_UART_Transmit(&huart3, (uint8_t*)zero_lenth, 5, 50);
-	//for (i = 0; i++; i<1000){}
+	//GPIO - SET - > hydrophone -> 0 -> osc -> 1;
+	if (htim->Instance == TIM15) {
+		if((HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_2) == SET & status == 0)||(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == RESET & status == 1)){		
+			
+			if(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == SET) {
+				buffer = WordDivider(resetLength);
+				buffer2 = WordDivider2(setLength);
+				HAL_UART_Transmit(&huart3,(uint8_t*)buffer, 15, 100); //define the variable
+				resetLength = 0;}
+			else if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == RESET) {
+				int buffer = WordDivider(setLength);
+			//int buffer2 = WordDivider2(setLength);
+				HAL_UART_Transmit(&huart3,(uint8_t *)WordDivider(setLength), 15, 100); //define the variable
+				setLength = 0;
+			}
 	}
-	if ((HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == RESET) & status == 1){
-		one_lenth = one;
-		one = 0;
-		zero += 1;
-		status = 0;
-		
-	//	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_SET);
-		HAL_UART_Transmit(&huart3, (uint8_t*)one_lenth, 5, 50);
-		//for (i = 0; i++; i<1000){}
+	if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == SET ) {
+		setLength ++;
+		if (setLength >= 10000) {
+			setLength = 9999;
+			status = 1;
+		}
+	} else if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == RESET) {
+		resetLength ++;
+		status = 0;}
+	}
 }
-}
-}
-
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
   if(GPIO_Pin == GPIO_PIN_1) {
-		HAL_UART_Transmit_IT(&huart3, "Stop Motor pos 1", 16 );
+		HAL_UART_Transmit(&huart3, "Stop Motor pos 1", 16, 200 );
+		
   } 
 	else if (GPIO_Pin == GPIO_PIN_2) {
-		HAL_UART_Transmit_IT(&huart3, "Stop Motor pos 2", 16 );
+		HAL_UART_Transmit(&huart3, "Stop Motor pos 2", 16, 200 );
 	} 
 	else {
 	  __NOP();
 	}
+}
+
+int WordDivider(X){
+	uint16_t  first = X / 1000;
+	return first;
+}
+
+int	WordDivider2(X){
+	uint16_t second = X % 1000;
+	return second;
 }
 /* USER CODE END 4 */
 
