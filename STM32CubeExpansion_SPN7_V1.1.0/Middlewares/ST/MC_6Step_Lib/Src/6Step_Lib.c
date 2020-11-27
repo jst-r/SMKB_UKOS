@@ -164,7 +164,10 @@ void MC_SixStep_TABLE(uint8_t step_number)
       {  
           MC_SixStep_HF_TIMx_SetDutyCycle_CH1(SIXSTEP_parameters.pulse_value);
           MC_SixStep_HF_TIMx_SetDutyCycle_CH2(0);
-          MC_SixStep_HF_TIMx_SetDutyCycle_CH3(0);          
+          MC_SixStep_HF_TIMx_SetDutyCycle_CH3(0);
+					HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_1);
+					HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_2);
+					HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_3);
           MC_SixStep_EnableInput_CH1_E_CH2_E_CH3_D();
           SIXSTEP_parameters.CurrentRegular_BEMF_ch = SIXSTEP_parameters.Regular_channel[3];         
       }
@@ -173,7 +176,10 @@ void MC_SixStep_TABLE(uint8_t step_number)
       {                   
           MC_SixStep_HF_TIMx_SetDutyCycle_CH1(SIXSTEP_parameters.pulse_value);
           MC_SixStep_HF_TIMx_SetDutyCycle_CH2(0);
-          MC_SixStep_HF_TIMx_SetDutyCycle_CH3(0);                              
+          MC_SixStep_HF_TIMx_SetDutyCycle_CH3(0); 
+					HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_1);
+					HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_2);
+					HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_3);
           MC_SixStep_EnableInput_CH1_E_CH2_D_CH3_E();   
           SIXSTEP_parameters.CurrentRegular_BEMF_ch = SIXSTEP_parameters.Regular_channel[2];        
       }
@@ -183,6 +189,9 @@ void MC_SixStep_TABLE(uint8_t step_number)
           MC_SixStep_HF_TIMx_SetDutyCycle_CH2(SIXSTEP_parameters.pulse_value);
           MC_SixStep_HF_TIMx_SetDutyCycle_CH3(0);
           MC_SixStep_HF_TIMx_SetDutyCycle_CH1(0);  
+					HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_2);
+					HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_1);
+					HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_3);
           MC_SixStep_EnableInput_CH1_D_CH2_E_CH3_E();           
           SIXSTEP_parameters.CurrentRegular_BEMF_ch = SIXSTEP_parameters.Regular_channel[1];                    
       }
@@ -191,7 +200,10 @@ void MC_SixStep_TABLE(uint8_t step_number)
       { 
           MC_SixStep_HF_TIMx_SetDutyCycle_CH2(SIXSTEP_parameters.pulse_value);
           MC_SixStep_HF_TIMx_SetDutyCycle_CH1(0);
-          MC_SixStep_HF_TIMx_SetDutyCycle_CH3(0);   
+          MC_SixStep_HF_TIMx_SetDutyCycle_CH3(0);
+					HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_2);
+					HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_1);
+					HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_3);
           MC_SixStep_EnableInput_CH1_E_CH2_E_CH3_D();        
           SIXSTEP_parameters.CurrentRegular_BEMF_ch = SIXSTEP_parameters.Regular_channel[3]; 
       }
@@ -201,6 +213,9 @@ void MC_SixStep_TABLE(uint8_t step_number)
           MC_SixStep_HF_TIMx_SetDutyCycle_CH3(SIXSTEP_parameters.pulse_value);
           MC_SixStep_HF_TIMx_SetDutyCycle_CH1(0);
           MC_SixStep_HF_TIMx_SetDutyCycle_CH2(0);  
+					HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_3);
+					HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_1);
+					HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_2);
           MC_SixStep_EnableInput_CH1_E_CH2_D_CH3_E();                    
           SIXSTEP_parameters.CurrentRegular_BEMF_ch = SIXSTEP_parameters.Regular_channel[2];        
       }
@@ -210,6 +225,9 @@ void MC_SixStep_TABLE(uint8_t step_number)
           MC_SixStep_HF_TIMx_SetDutyCycle_CH3(SIXSTEP_parameters.pulse_value);
           MC_SixStep_HF_TIMx_SetDutyCycle_CH2(0);
           MC_SixStep_HF_TIMx_SetDutyCycle_CH1(0);  
+					HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_3);
+					HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_1);
+					HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_2);
           MC_SixStep_EnableInput_CH1_D_CH2_E_CH3_E();              
           SIXSTEP_parameters.CurrentRegular_BEMF_ch = SIXSTEP_parameters.Regular_channel[1]; 
       }
