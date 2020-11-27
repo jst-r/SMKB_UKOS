@@ -468,7 +468,7 @@ static void MX_TIM16_Init(void)
   htim16.Instance = TIM16;
   htim16.Init.Prescaler = 7199;
   htim16.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim16.Init.Period = 10000;
+  htim16.Init.Period = 15000;
   htim16.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim16.Init.RepetitionCounter = 0;
   htim16.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -581,10 +581,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	
 	if (htim->Instance == TIM16){
 		
-		if ((counter <= 3) & (counter >= 2)){
+		if ((counter <= 3) & (counter >= 1)){
 			HAL_UART_Transmit(&huart3, "Spinning motor forward\n", 23, 200);
 //			HAL_UART_Transmit(&huart3, "\n", 1, 200);
-		}	else if ((counter > 3) & (counter != 0)){
+		}	else if ((counter >= 4) & (counter != 0)){
 			HAL_UART_Transmit(&huart3, "Spinning motor backward\n", 24, 200);
 			}
 		counter = 0;
@@ -604,14 +604,15 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 				if(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == SET) {
 					if (resetLength < 1000) {
 						//HAL_UART_Transmit(&huart3, "Less than a 1000\n", 20, 200);
-					/*if (counter == 0){
-					TIM16->CCR1=0;
-					HAL_UART_Transmit(&huart3, "Motor is ready\n", 15, 200);
-					}*/
+					if (counter == 0){
+				//	TIM16->CCR1=0;
+				//	HAL_UART_Transmit(&huart3, "Motor is ready\n", 15, 200);
+					}
 					counter ++;
 						
 					}	else {
 						//HAL_UART_Transmit(&huart3, "More than a 1000\n",20, 200);
+					//counter ++;
 					}
 					//HAL_UART_Transmit_IT(&huart3,(uint8_t*)buffer, sprintf(buffer, "resetLength = %d\n", resetLength)); //define the variable
 					resetLength = 0;
