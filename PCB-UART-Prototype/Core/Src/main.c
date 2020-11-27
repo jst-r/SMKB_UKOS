@@ -604,10 +604,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 				if(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == SET) {
 					if (resetLength < 1000) {
 						//HAL_UART_Transmit(&huart3, "Less than a 1000\n", 20, 200);
-					if (counter == 0){
+					/*if (counter == 0){
 					TIM16->CCR1=0;
 					HAL_UART_Transmit(&huart3, "Motor is ready\n", 15, 200);
-					}
+					}*/
 					counter ++;
 						
 					}	else {
