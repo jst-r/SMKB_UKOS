@@ -62,18 +62,9 @@
 
   typedef struct
   {
-    void (*EnableInput_CH1_E_CH2_E_CH3_D)(void);  /*!< Enable the channel 1,2 and Disable the channel 3 */
-    void (*EnableInput_CH1_E_CH2_D_CH3_E)(void);  /*!< Enable the channel 1,3 and Disable the channel 2 */
-    void (*EnableInput_CH1_D_CH2_E_CH3_E)(void);  /*!< Enable the channel 2,3 and Disable the channel 1 */
-    void (*DisableInput_CH1_D_CH2_D_CH3_D)(void); /*!< Disable all channels */
-    void (*Start_PWM_driving)(void);              /*!< Start PWM generation */
-    void (*Stop_PWM_driving)(void);               /*!< Stop PWM generation */
     void (*HF_TIMx_SetDutyCycle_CH1)(uint16_t);   /*!< High Frequency Timer - Change DutyCycle value for CH1 */    
     void (*HF_TIMx_SetDutyCycle_CH2)(uint16_t);   /*!< High Frequency Timer - Change DutyCycle value for CH2 */
-    void (*HF_TIMx_SetDutyCycle_CH3)(uint16_t);   /*!< High Frequency Timer - Change DutyCycle value for CH3 */
-//    void (*Current_Reference_Start)(void);        /*!< Start current reference generation for closed loop control */
-//    void (*Current_Reference_Stop)(void);         /*!< Stop current reference generation for closed loop control */
-//    void (*Current_Reference_Setvalue)(uint16_t); /*!< Set current reference value for closed loop control */    
+    void (*HF_TIMx_SetDutyCycle_CH3)(uint16_t);   /*!< High Frequency Timer - Change DutyCycle value for CH3 */   
   } L6230_MotorDriver_TypeDef;                          /*!< MC driver handler */
 
 /**

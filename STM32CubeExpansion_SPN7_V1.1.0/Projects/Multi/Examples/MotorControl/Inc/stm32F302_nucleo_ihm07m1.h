@@ -130,9 +130,6 @@
   void MC_SixStep_Nucleo_Init(void);
   void SET_DAC_value(uint16_t);
   void Bemf_delay_calc(void);  
-  void MC_SixStep_EnableInput_CH1_E_CH2_E_CH3_D(void);
-  void MC_SixStep_EnableInput_CH1_E_CH2_D_CH3_E(void);
-  void MC_SixStep_EnableInput_CH1_D_CH2_E_CH3_E(void);
   void MC_SixStep_DisableInput_CH1_D_CH2_D_CH3_D(void);
   void MC_SixStep_Start_PWM_driving(void);
   void MC_SixStep_Stop_PWM_driving(void);

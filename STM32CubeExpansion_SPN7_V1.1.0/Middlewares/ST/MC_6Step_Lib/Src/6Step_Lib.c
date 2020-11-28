@@ -77,25 +77,25 @@ SIXSTEP_PI_PARAM_InitTypeDef_t PI_parameters;           /*!< SixStep PI regulato
 uint16_t Rotor_poles_pairs;                         /*!<  Number of pole pairs of the motor */ 
 uint32_t mech_accel_hz = 0;                         /*!<  Hz -- Mechanical acceleration rate */
 uint32_t constant_k = 0;                            /*!<  1/3*mech_accel_hz */
-uint32_t Time_vector_tmp = 0;                      /*!<  Startup variable  */
+uint32_t Time_vector_tmp = 0;                     	/*!<  Startup variable  */
 uint32_t Time_vector_prev_tmp = 0 ;                 /*!<  Startup variable  */
 uint32_t T_single_step = 0;                         /*!<  Startup variable  */
 uint32_t T_single_step_first_value = 0;             /*!<  Startup variable  */
 int32_t  delta = 0;                                 /*!<  Startup variable  */
 uint16_t index_array = 1;                           /*!<  Speed filter variable */
 int16_t speed_tmp_array[FILTER_DEEP];               /*!<  Speed filter variable */
-uint16_t speed_tmp_buffer[FILTER_DEEP];             /*!<  Potentiometer filter variable */
-uint16_t HFBuffer[HFBUFFERSIZE];                    /*!<  Buffer for Potentiometer Value Filtering at the High-Frequency ADC conversion */    
-uint16_t HFBufferIndex = 0;                         /*!<  High-Frequency Buffer Index */    
+uint16_t speed_tmp_buffer[FILTER_DEEP];             /*!<  Potentiometer filter variable REMOVE_ASAP*/
+uint16_t HFBuffer[HFBUFFERSIZE];                    /*!<  Buffer for Potentiometer Value Filtering at the High-Frequency ADC conversion REMOVE_ASAP*/    
+uint16_t HFBufferIndex = 0;                         /*!<  High-Frequency Buffer Index ???REMOVE_ASAP???*/    
 uint8_t  array_completed = FALSE;                   /*!<  Speed filter variable */
-uint8_t  buffer_completed = FALSE;                  /*!<  Potentiometer filter variable */
+uint8_t  buffer_completed = FALSE;                  /*!<  Potentiometer filter variable REMOVE_ASAP*/
 uint8_t  UART_FLAG_RECEIVE = FALSE;                 /*!<  UART commmunication flag */
 uint32_t ARR_LF = 0;                                /*!<  Autoreload LF TIM variable */
 int32_t Mech_Speed_RPM = 0;                         /*!<  Mechanical motor speed */
 int32_t El_Speed_Hz = 0;                            /*!<  Electrical motor speed */
 uint16_t index_adc_chn = 0;                         /*!<  Index of ADC channel selector for measuring */
-uint16_t index_motor_run = 0;                       /*!<  Tmp variable for DEMO mode */
-uint16_t test_motor_run = 1;                        /*!<  Tmp variable for DEMO mode */
+uint16_t index_motor_run = 0;                       /*!<  Tmp variable for DEMO mode REMOVE_ASAP*/
+uint16_t test_motor_run = 1;                        /*!<  Tmp variable for DEMO mode REMOVE_ASAP*/
 uint8_t Enable_start_button = TRUE;                 /*!<  Start/stop button filter to avoid double command */
 uint16_t index_ARR_step = 1;                           
 uint32_t n_zcr_startup = 0;
@@ -107,16 +107,15 @@ uint8_t startup_bemf_failure = 0;
 uint8_t speed_fdbk_error = 0;
 extern __IO uint32_t uwTick;                        /*!<  Tick counter - 1msec updated */
 uint16_t index_align = 1;
-int32_t speed_sum_sp_filt = 0;
-int32_t speed_sum_pot_filt = 0;
-uint16_t index_pot_filt = 1; 
-int16_t potent_filtered = 0;
+int32_t speed_sum_sp_filt = 0;	/*REMOVE_ASAP*/
+int32_t speed_sum_pot_filt = 0;	/*REMOVE_ASAP*/
+uint16_t index_pot_filt = 1; 		/*REMOVE_ASAP*/
+int16_t potent_filtered = 0; 		/*REMOVE_ASAP*/
 uint32_t Tick_cnt = 0;  
 uint32_t counter_ARR_Bemf = 0;
 uint64_t constant_multiplier_tmp = 0;
  
 int16_t MC_PI_Controller(SIXSTEP_PI_PARAM_InitTypeDef_t *, int16_t);
-//uint16_t MC_Potentiometer_filter(uint16_t);
 uint64_t MCM_Sqrt(uint64_t );
 int32_t MC_GetElSpeedHz(void);
 int32_t MC_GetMechSpeedRPM(void);
@@ -132,9 +131,6 @@ void MC_TIMx_SixStep_timebase(void);
 void MC_ADCx_SixStep_Bemf(void);
 void MC_SysTick_SixStep_MediumFrequencyTask(void);
 void MC_SixStep_Ramp_Motor_calc(void);
-void MC_SixStep_EnableInput_CH1_E_CH2_E_CH3_D(void);
-void MC_SixStep_EnableInput_CH1_E_CH2_D_CH3_E(void);
-void MC_SixStep_EnableInput_CH1_D_CH2_E_CH3_E(void);
 void MC_SixStep_DisableInput_CH1_D_CH2_D_CH3_D(void);
 void MC_SixStep_Start_PWM_driving(void);
 void MC_SixStep_Stop_PWM_driving(void);
@@ -165,10 +161,12 @@ void MC_SixStep_TABLE(uint8_t step_number)
           MC_SixStep_HF_TIMx_SetDutyCycle_CH1(SIXSTEP_parameters.pulse_value);
           MC_SixStep_HF_TIMx_SetDutyCycle_CH2(0);
           MC_SixStep_HF_TIMx_SetDutyCycle_CH3(0);
-					HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_1);
-					HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_2);
-					HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_3);
-          MC_SixStep_EnableInput_CH1_E_CH2_E_CH3_D();
+					HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH1,GPIO_SET);      //EN1 ENABLE  	  REMOVE_ASAP           
+					HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH2,GPIO_SET);      //EN2 ENABLE			REMOVE_ASAP
+					HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH3,GPIO_RESET);    //EN3 DISABLE		REMOVE_ASAP
+					HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_1);
+					HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_2);
+					HAL_TIMEx_PWMN_Stop(&htim1,TIM_CHANNEL_3);
           SIXSTEP_parameters.CurrentRegular_BEMF_ch = SIXSTEP_parameters.Regular_channel[3];         
       }
      break;
@@ -177,10 +175,12 @@ void MC_SixStep_TABLE(uint8_t step_number)
           MC_SixStep_HF_TIMx_SetDutyCycle_CH1(SIXSTEP_parameters.pulse_value);
           MC_SixStep_HF_TIMx_SetDutyCycle_CH2(0);
           MC_SixStep_HF_TIMx_SetDutyCycle_CH3(0); 
-					HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_1);
-					HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_2);
-					HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_3);
-          MC_SixStep_EnableInput_CH1_E_CH2_D_CH3_E();   
+          HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH1,GPIO_SET);    //EN1 ENABLE  			REMOVE_ASAP             
+					HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH2,GPIO_RESET);  //EN2 DISABLE			REMOVE_ASAP
+					HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH3,GPIO_SET);    //EN3 ENABLE  		  REMOVE_ASAP
+					HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_1);
+					HAL_TIMEx_PWMN_Stop(&htim1,TIM_CHANNEL_2);
+					HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_3);  
           SIXSTEP_parameters.CurrentRegular_BEMF_ch = SIXSTEP_parameters.Regular_channel[2];        
       }
      break;     
@@ -189,10 +189,12 @@ void MC_SixStep_TABLE(uint8_t step_number)
           MC_SixStep_HF_TIMx_SetDutyCycle_CH2(SIXSTEP_parameters.pulse_value);
           MC_SixStep_HF_TIMx_SetDutyCycle_CH3(0);
           MC_SixStep_HF_TIMx_SetDutyCycle_CH1(0);  
-					HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_2);
-					HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_1);
-					HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_3);
-          MC_SixStep_EnableInput_CH1_D_CH2_E_CH3_E();           
+          HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH1,GPIO_RESET);  //EN1 DISABLE 		  REMOVE_ASAP              
+					HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH2,GPIO_SET);    //EN2 ENABLE		 	 	REMOVE_ASAP
+					HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH3,GPIO_SET);    //EN3 ENABLE   		REMOVE_ASAP
+					HAL_TIMEx_PWMN_Stop(&htim1,TIM_CHANNEL_1);
+					HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_2);
+					HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_3);           
           SIXSTEP_parameters.CurrentRegular_BEMF_ch = SIXSTEP_parameters.Regular_channel[1];                    
       }
      break;     
@@ -201,10 +203,12 @@ void MC_SixStep_TABLE(uint8_t step_number)
           MC_SixStep_HF_TIMx_SetDutyCycle_CH2(SIXSTEP_parameters.pulse_value);
           MC_SixStep_HF_TIMx_SetDutyCycle_CH1(0);
           MC_SixStep_HF_TIMx_SetDutyCycle_CH3(0);
-					HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_2);
-					HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_1);
-					HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_3);
-          MC_SixStep_EnableInput_CH1_E_CH2_E_CH3_D();        
+					HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH1,GPIO_SET);      //EN1 ENABLE  	  REMOVE_ASAP           
+					HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH2,GPIO_SET);      //EN2 ENABLE			REMOVE_ASAP
+					HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH3,GPIO_RESET);    //EN3 DISABLE		REMOVE_ASAP
+					HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_1);
+					HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_2);
+					HAL_TIMEx_PWMN_Stop(&htim1,TIM_CHANNEL_3);       
           SIXSTEP_parameters.CurrentRegular_BEMF_ch = SIXSTEP_parameters.Regular_channel[3]; 
       }
      break;  
@@ -213,10 +217,12 @@ void MC_SixStep_TABLE(uint8_t step_number)
           MC_SixStep_HF_TIMx_SetDutyCycle_CH3(SIXSTEP_parameters.pulse_value);
           MC_SixStep_HF_TIMx_SetDutyCycle_CH1(0);
           MC_SixStep_HF_TIMx_SetDutyCycle_CH2(0);  
-					HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_3);
-					HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_1);
-					HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_2);
-          MC_SixStep_EnableInput_CH1_E_CH2_D_CH3_E();                    
+          HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH1,GPIO_SET);    //EN1 ENABLE  			REMOVE_ASAP             
+					HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH2,GPIO_RESET);  //EN2 DISABLE			REMOVE_ASAP
+					HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH3,GPIO_SET);    //EN3 ENABLE  		  REMOVE_ASAP
+					HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_1);
+					HAL_TIMEx_PWMN_Stop(&htim1,TIM_CHANNEL_2);
+					HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_3);                    
           SIXSTEP_parameters.CurrentRegular_BEMF_ch = SIXSTEP_parameters.Regular_channel[2];        
       }
      break;
@@ -225,10 +231,12 @@ void MC_SixStep_TABLE(uint8_t step_number)
           MC_SixStep_HF_TIMx_SetDutyCycle_CH3(SIXSTEP_parameters.pulse_value);
           MC_SixStep_HF_TIMx_SetDutyCycle_CH2(0);
           MC_SixStep_HF_TIMx_SetDutyCycle_CH1(0);  
-					HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_3);
-					HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_1);
-					HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_2);
-          MC_SixStep_EnableInput_CH1_D_CH2_E_CH3_E();              
+          HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH1,GPIO_RESET);  //EN1 DISABLE 		  REMOVE_ASAP              
+					HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH2,GPIO_SET);    //EN2 ENABLE		 	 	REMOVE_ASAP
+					HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH3,GPIO_SET);    //EN3 ENABLE   		REMOVE_ASAP
+					HAL_TIMEx_PWMN_Stop(&htim1,TIM_CHANNEL_1);
+					HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_2);
+					HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_3);              
           SIXSTEP_parameters.CurrentRegular_BEMF_ch = SIXSTEP_parameters.Regular_channel[1]; 
       }
      break;        
@@ -380,7 +388,7 @@ void MC_SixStep_RESET()
  SIXSTEP_parameters.Ireference = STARTUP_CURRENT_REFERENCE;  
  SIXSTEP_parameters.Speed_Loop_Time = SPEED_LOOP_TIME;
  SIXSTEP_parameters.pulse_value = SIXSTEP_parameters.HF_TIMx_CCR;
- SIXSTEP_parameters.Speed_target_ramp = TARGET_SPEED/10;
+ SIXSTEP_parameters.Speed_target_ramp = TARGET_SPEED;
  SIXSTEP_parameters.ALIGNMENT = FALSE;
  SIXSTEP_parameters.Speed_Ref_filtered = 0;
  SIXSTEP_parameters.demagn_value = INITIAL_DEMAGN_DELAY;
@@ -411,7 +419,6 @@ void MC_SixStep_RESET()
  SIXSTEP_parameters.Regular_channel[2] = ADC_Bemf_CH2;   /*BEMF2*/
  SIXSTEP_parameters.Regular_channel[3] = ADC_Bemf_CH3;   /*BEMF3*/
  SIXSTEP_parameters.ADC_SEQ_CHANNEL[0] = ADC_CH_1;       /*CURRENT*/
- //SIXSTEP_parameters.ADC_SEQ_CHANNEL[1] = ADC_CH_2;       /*SPEED*/
  
  SIXSTEP_parameters.step_position = 0;
  SIXSTEP_parameters.demagn_counter = 0; 
@@ -459,7 +466,7 @@ void MC_SixStep_RESET()
  Tick_cnt = 0;   
  counter_ARR_Bemf = 0;
  constant_multiplier_tmp = 0;
- 
+ /*REMOVE_ASAP
  HFBufferIndex =0;
  for(uint16_t i = 0; i < HFBUFFERSIZE;i++)
  {
@@ -470,7 +477,7 @@ void MC_SixStep_RESET()
  {
    speed_tmp_array[i] = 0;
    speed_tmp_buffer[i]= 0;   
- } 
+ } */
  array_completed = FALSE;
  buffer_completed = FALSE;
  
@@ -677,7 +684,6 @@ void MC_SixStep_Alignment()
    LF_TIMx.Init.Period = SIXSTEP_parameters.ARR_value;
    LF_TIMx.Instance->ARR = (uint32_t)LF_TIMx.Init.Period;
    SIXSTEP_parameters.STATUS = ALIGNMENT;    
-   //MC_SixStep_Speed_Val_target_potentiometer();
    index_align++;
    if(index_align >= TIME_FOR_ALIGN+1) 
     { 
@@ -803,12 +809,7 @@ int16_t MC_PI_Controller(SIXSTEP_PI_PARAM_InitTypeDef_t *PI_PARAM, int16_t speed
 */
 void MC_Task_Speed()
 {
- 
- /* if(dac_status == TRUE)
- {  
-   SET_DAC_value(SIXSTEP_parameters.speed_fdbk_filtered);   
- }
-			*/
+
  if((SIXSTEP_parameters.speed_fdbk_filtered > (target_speed) || SIXSTEP_parameters.speed_fdbk_filtered < (-target_speed)) && SIXSTEP_parameters.VALIDATION_OK !=TRUE)
  { 
    SIXSTEP_parameters.STATUS = VALIDATION;   
@@ -834,8 +835,6 @@ void MC_Task_Speed()
     {
       SIXSTEP_parameters.Current_Reference = (uint16_t)(-MC_PI_Controller(&PI_parameters,(int16_t)SIXSTEP_parameters.speed_fdbk_filtered));      
     }
-                 
-//    MC_SixStep_Current_Reference_Setvalue(SIXSTEP_parameters.Current_Reference);
             
  }
  MC_Bemf_Delay();
@@ -888,11 +887,7 @@ void MC_StartMotor()
   HAL_TIM_Base_Start_IT(&LF_TIMx);  
   HAL_ADC_Start_IT(&ADCx);
   SIXSTEP_parameters.RUN_Motor = 1;
-  BSP_X_NUCLEO_FAULT_LED_ON();
-/*  if(dac_status == TRUE)
-  {
-   START_DAC();
-  }               */
+  HAL_GPIO_WritePin(GPIOB,GPIO_PIN_2,GPIO_PIN_SET); //LED ON
 }
 /**
   * @} 
@@ -914,7 +909,7 @@ void MC_StopMotor()
   MC_SixStep_DisableInput_CH1_D_CH2_D_CH3_D();
   HAL_TIM_Base_Stop_IT(&LF_TIMx);  
   HAL_ADC_Stop_IT(&ADCx);
-  BSP_X_NUCLEO_FAULT_LED_OFF();
+  HAL_GPIO_WritePin(GPIOB,GPIO_PIN_2,GPIO_PIN_RESET); //LED OFF
   MC_SixStep_RESET();
 }
 
@@ -1373,12 +1368,12 @@ void MC_ADCx_SixStep_Bemf()
     SIXSTEP_parameters.ADC_Regular_Buffer[index_adc_chn] = HAL_ADC_GetValue(&ADCx);
     
     if (index_adc_chn == 1)
-    {
+    {/*HFBuffer
       HFBuffer[HFBufferIndex++] = HAL_ADC_GetValue(&ADCx);
       if (HFBufferIndex >= HFBUFFERSIZE)
       {
         HFBufferIndex = 0;
-      }
+      }*/
     }
     index_adc_chn++; 
     if(index_adc_chn>1) index_adc_chn = 0;       

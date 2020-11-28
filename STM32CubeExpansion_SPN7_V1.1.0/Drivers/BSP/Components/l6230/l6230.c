@@ -62,15 +62,8 @@
     * @brief API pointer for L6230
   */
 
-
 L6230_MotorDriver_TypeDef L6230MotorDriver =
 {
-  EnableInput_CH1_E_CH2_E_CH3_D,
-  EnableInput_CH1_E_CH2_D_CH3_E,
-  EnableInput_CH1_D_CH2_E_CH3_E,  
-  DisableInput_CH1_D_CH2_D_CH3_D,
-  Start_PWM_driving,
-  Stop_PWM_driving,
   HF_TIMx_SetDutyCycle_CH1,
   HF_TIMx_SetDutyCycle_CH2,
   HF_TIMx_SetDutyCycle_CH3,
@@ -80,93 +73,7 @@ L6230_MotorDriver_TypeDef L6230MotorDriver =
   * @} 
   */   
 
-/** @defgroup EnableInput_CH1_E_CH2_E_CH3_D    EnableInput_CH1_E_CH2_E_CH3_D
-  *  @{
-  * @brief  Enable Input channel CH1 and CH2 for L6230     
-  * @retval None
-  */
-
-void EnableInput_CH1_E_CH2_E_CH3_D()
-{
-  L6230_ECH1CH2_DCH3_IO_Write();
-}
-
-/**
-  * @} 
-  */
-
-
-/** @defgroup EnableInput_CH1_E_CH2_D_CH3_E    EnableInput_CH1_E_CH2_D_CH3_E
-  *  @{
-  * @brief  Enable Input channel CH1 and CH3 for L6230           
-  * @retval None
-*/
-
-void EnableInput_CH1_E_CH2_D_CH3_E()
-{
-  L6230_ECH1CH3_DCH2_IO_Write();
-}
-
-/**
-  * @} 
-  */
-
-/** @defgroup EnableInput_CH1_D_CH2_E_CH3_E    EnableInput_CH1_D_CH2_E_CH3_E
-  *  @{
-  * @brief  Enable Input channel CH2 and CH3 for L6230           
-  * @retval None
-*/
-
-void EnableInput_CH1_D_CH2_E_CH3_E()
-{
-  L6230_ECH2CH3_DCH1_IO_Write();
-}
-
-/**
-  * @} 
-  */
-
-
-/** @defgroup DisableInput_CH1_D_CH2_D_CH3_D    DisableInput_CH1_D_CH2_D_CH3_D
-  *  @{
-  * @brief  Enable Input channel CH2 and CH3 for L6230           
-  * @retval None
-*/
-
-void DisableInput_CH1_D_CH2_D_CH3_D()
-{
-  L6230_DCH1CH2CH3_IO_Write();
-}
-
-/**
-  * @} 
-  */
-
-/** @defgroup Start_PWM_driving    Start_PWM_driving
-  *  @{
-  * @brief  Enable PWM channels for L6230           
-  * @retval None
-*/
-
-void Start_PWM_driving()
-{
-  L6230_Start_PWM_generation(); 
-} 
-
-/**
-  * @} 
-  */
-
-/** @defgroup Stop_PWM_driving    Stop_PWM_driving
-  *  @{
-  * @brief  Disable PWM channels for L6230           
-  * @retval None
-*/
-
-void Stop_PWM_driving()
-{
-  L6230_Stop_PWM_generation(); 
-}  
+ 
 
 /**
   * @}

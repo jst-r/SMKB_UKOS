@@ -58,117 +58,7 @@
 #include "stm32F302_nucleo_ihm07m1.h"
 #endif
 
-/** @defgroup L6230_ECH1CH2_DCH3_IO_Write    L6230_ECH1CH2_DCH3_IO_Write
-  *  @{
-    * @brief Enable Input channel CH1 and CH2 for L6230   
-  * @retval None
-*/
 
-void L6230_ECH1CH2_DCH3_IO_Write()
-{
-  HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH1,GPIO_SET);      //EN1 ENABLE               
-  HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH2,GPIO_SET);      //EN2 ENABLE
-  HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH3,GPIO_RESET);    //EN3 DISABLE
-	HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_1);
-	HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_2);
-	HAL_TIMEx_PWMN_Stop(&htim1,TIM_CHANNEL_3);
-	
-	
-	
-}
-/**
-  * @}  
-  */
-
-/** @defgroup L6230_ECH1CH3_DCH2_IO_Write    L6230_ECH1CH3_DCH2_IO_Write
-  *  @{
-    * @brief Enable Input channel CH1 and CH3 for L6230   
-  * @retval None
-*/
-
-void L6230_ECH1CH3_DCH2_IO_Write()
-{
-  HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH1,GPIO_SET);    //EN1 ENABLE               
-  HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH2,GPIO_RESET);  //EN2 DISABLE
-  HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH3,GPIO_SET);    //EN3 ENABLE    
-	HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_1);
-	HAL_TIMEx_PWMN_Stop(&htim1,TIM_CHANNEL_2);
-	HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_3);
-	
-}
-
-/**
-  * @}  
-  */
-/** @defgroup L6230_ECH2CH3_DCH1_IO_Write    L6230_ECH2CH3_DCH1_IO_Write
-  *  @{
-    * @brief Enable Input channel CH2 and CH3 for L6230   
-  * @retval None
-*/
-void L6230_ECH2CH3_DCH1_IO_Write()
-{
-  HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH1,GPIO_RESET);  //EN1 DISABLE               
-  HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH2,GPIO_SET);    //EN2 ENABLE
-  HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH3,GPIO_SET);    //EN3 ENABLE   
-	HAL_TIMEx_PWMN_Stop(&htim1,TIM_CHANNEL_1);
-	HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_2);
-	HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_3);
-	
-}
-/**
-  * @}  
-  */
-/** @defgroup L6230_DCH1CH2CH3_IO_Write    L6230_DCH1CH2CH3_IO_Write
-  *  @{
-    * @brief Disable all channels for L6230   
-  * @retval None
-*/
-void L6230_DCH1CH2CH3_IO_Write()
-{
-  HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH1,GPIO_RESET);  //EN1 DISABLE          
-  HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH2,GPIO_RESET);  //EN2 DISABLE
-  HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH3,GPIO_RESET);  //EN3 DISABLE   
-	HAL_TIMEx_PWMN_Stop(&htim1,TIM_CHANNEL_1);
-	HAL_TIMEx_PWMN_Stop(&htim1,TIM_CHANNEL_2);
-	HAL_TIMEx_PWMN_Stop(&htim1,TIM_CHANNEL_3);
-	
-}
-/**
-  * @}  
-  */
-/** @defgroup L6230_Start_PWM_generation    L6230_Start_PWM_generation
-  *  @{
-    * @brief Enable the PWM generation on Input channels for L6230 
-  * @retval None
-*/
-
-void L6230_Start_PWM_generation()
-{
-	
-	HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_1);
-	HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_2);
-	HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_3);
-  HAL_TIM_PWM_Start(&HF_TIMx, HF_TIMx_CH1);           //TIM1_CH1 ENABLE   
-  HAL_TIM_PWM_Start(&HF_TIMx, HF_TIMx_CH2);           //TIM1_CH2 ENABLE   
-  HAL_TIM_PWM_Start(&HF_TIMx, HF_TIMx_CH3);           //TIM1_CH3 ENABLE  
-}
-/**
-  * @}  
-  */
-/** @defgroup L6230_Stop_PWM_generation    L6230_Stop_PWM_generation
-  *  @{
-    * @brief Disable the PWM generation on Input channels for L6230 
-  * @retval None
-*/
-void L6230_Stop_PWM_generation()
-{	
-	HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_1);
-	HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_2);
-	HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_3);
-  HAL_TIM_PWM_Stop(&HF_TIMx, HF_TIMx_CH1);           //TIM1_CH1 DISABLE   
-  HAL_TIM_PWM_Stop(&HF_TIMx, HF_TIMx_CH2);           //TIM1_CH2 DISABLE   
-  HAL_TIM_PWM_Stop(&HF_TIMx, HF_TIMx_CH3);           //TIM1_CH3 DISABLE  
-}
 /**
   * @}  
   */
@@ -209,27 +99,7 @@ void  L6230_HFTIM_DC_CH3(uint16_t CCRx)
   * @}  
   */
 
-/** @defgroup BSP_X_NUCLEO_FAULT_LED_ON    BSP_X_NUCLEO_FAULT_LED_ON
-  *  @{
-    * @brief Turns selected LED On.
-  * @retval None
-*/
-void BSP_X_NUCLEO_FAULT_LED_ON()
-{
-  HAL_GPIO_WritePin(GPIOB,GPIO_PIN_2,GPIO_PIN_SET);
-}
-/**
-  * @}  
-  */
-/** @defgroup BSP_X_NUCLEO_FAULT_LED_OFF    BSP_X_NUCLEO_FAULT_LED_OFF
-  *  @{
-    * @brief Turns selected LED Off.
-  * @retval None
-*/
-void BSP_X_NUCLEO_FAULT_LED_OFF()
-{
-  HAL_GPIO_WritePin(GPIOB,GPIO_PIN_2,GPIO_PIN_RESET);
-}
+
 /**
   * @}  
   */

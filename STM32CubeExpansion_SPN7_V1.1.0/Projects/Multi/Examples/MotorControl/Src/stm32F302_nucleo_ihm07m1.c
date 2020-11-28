@@ -182,45 +182,6 @@
   * @} 
   */
   
-/** @defgroup EnableInput_CH1_E_CH2_E_CH3_D    EnableInput_CH1_E_CH2_E_CH3_D
-  *  @{
-    * @brief Enable Input channel for L6230
-  */
-
-void MC_SixStep_EnableInput_CH1_E_CH2_E_CH3_D()
-{
-   L6230MotorDriver.EnableInput_CH1_E_CH2_E_CH3_D();
-}
-
-/**
-  * @} 
-  */  
-  
- /** @defgroup EnableInput_CH1_E_CH2_D_CH3_E    EnableInput_CH1_E_CH2_D_CH3_E
-  *  @{
-    * @brief Enable Input channel for L6230
-  */
-void  MC_SixStep_EnableInput_CH1_E_CH2_D_CH3_E()
-{
-  L6230MotorDriver.EnableInput_CH1_E_CH2_D_CH3_E();
-}
-
-/**
-  * @} 
-  */ 
-
-/** @defgroup EnableInput_CH1_D_CH2_E_CH3_E    EnableInput_CH1_D_CH2_E_CH3_E
-  *  @{
-    * @brief Enable Input channel for L6230
-  */
-void MC_SixStep_EnableInput_CH1_D_CH2_E_CH3_E()
-{
-  L6230MotorDriver.EnableInput_CH1_D_CH2_E_CH3_E();
-}
-
-/**
-  * @} 
-  */
 
 /** @defgroup DisableInput_CH1_D_CH2_D_CH3_D    DisableInput_CH1_D_CH2_D_CH3_D
   *  @{
@@ -229,7 +190,12 @@ void MC_SixStep_EnableInput_CH1_D_CH2_E_CH3_E()
 
 void MC_SixStep_DisableInput_CH1_D_CH2_D_CH3_D()
 {
-  L6230MotorDriver.DisableInput_CH1_D_CH2_D_CH3_D();
+  HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH1,GPIO_RESET);  //EN1 DISABLE          
+  HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH2,GPIO_RESET);  //EN2 DISABLE
+  HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH3,GPIO_RESET);  //EN3 DISABLE   
+	HAL_TIMEx_PWMN_Stop(&htim1,TIM_CHANNEL_1);
+	HAL_TIMEx_PWMN_Stop(&htim1,TIM_CHANNEL_2);
+	HAL_TIMEx_PWMN_Stop(&htim1,TIM_CHANNEL_3);
 }
 
 /**
@@ -243,7 +209,12 @@ void MC_SixStep_DisableInput_CH1_D_CH2_D_CH3_D()
 
 void MC_SixStep_Start_PWM_driving()
 {
-   L6230MotorDriver.Start_PWM_driving();
+  HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_1);
+	HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_2);
+	HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_3);
+  HAL_TIM_PWM_Start(&HF_TIMx, HF_TIMx_CH1);           //TIM1_CH1 ENABLE   
+  HAL_TIM_PWM_Start(&HF_TIMx, HF_TIMx_CH2);           //TIM1_CH2 ENABLE   
+  HAL_TIM_PWM_Start(&HF_TIMx, HF_TIMx_CH3);           //TIM1_CH3 ENABLE  
 } 
 
 /**
@@ -257,7 +228,12 @@ void MC_SixStep_Start_PWM_driving()
 
 void MC_SixStep_Stop_PWM_driving()
 {
-  L6230MotorDriver.Stop_PWM_driving();
+ 	HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_1);
+	HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_2);
+	HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_3);
+  HAL_TIM_PWM_Stop(&HF_TIMx, HF_TIMx_CH1);           //TIM1_CH1 DISABLE   
+  HAL_TIM_PWM_Stop(&HF_TIMx, HF_TIMx_CH2);           //TIM1_CH2 DISABLE   
+  HAL_TIM_PWM_Stop(&HF_TIMx, HF_TIMx_CH3);           //TIM1_CH3 DISABLE  
 }  
 
 /**
