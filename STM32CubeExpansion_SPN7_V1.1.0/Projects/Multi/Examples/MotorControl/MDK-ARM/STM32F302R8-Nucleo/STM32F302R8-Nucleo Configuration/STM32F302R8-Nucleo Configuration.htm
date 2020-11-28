@@ -3,7 +3,7 @@
 <title>Static Call Graph - [STM32F302R8-Nucleo Configuration\STM32F302R8-Nucleo Configuration.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image STM32F302R8-Nucleo Configuration\STM32F302R8-Nucleo Configuration.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Sat Nov 28 19:36:52 2020
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Sat Nov 28 19:56:20 2020
 <BR><P>
 <H3>Maximum Stack Usage =        224 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1165,7 +1165,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MC_TIMx_SixStep_timebase
 </UL>
 
-<P><STRONG><a name="[bb]"></a>MC_SixStep_Nucleo_Init</STRONG> (Thumb, 170 bytes, Stack size 56 bytes, stm32f302_nucleo_ihm07m1.o(i.MC_SixStep_Nucleo_Init))
+<P><STRONG><a name="[bb]"></a>MC_SixStep_Nucleo_Init</STRONG> (Thumb, 136 bytes, Stack size 56 bytes, stm32f302_nucleo_ihm07m1.o(i.MC_SixStep_Nucleo_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 160<LI>Call Chain = MC_SixStep_Nucleo_Init &rArr; HAL_ADC_ConfigChannel
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ADC_ConfigChannel
@@ -1174,7 +1174,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MC_SixStep_INIT
 </UL>
 
-<P><STRONG><a name="[bd]"></a>MC_SixStep_RESET</STRONG> (Thumb, 330 bytes, Stack size 24 bytes, 6step_lib.o(i.MC_SixStep_RESET))
+<P><STRONG><a name="[bd]"></a>MC_SixStep_RESET</STRONG> (Thumb, 326 bytes, Stack size 24 bytes, 6step_lib.o(i.MC_SixStep_RESET))
 <BR><BR>[Stack]<UL><LI>Max Depth = 136<LI>Call Chain = MC_SixStep_RESET &rArr; MC_SixStep_Ramp_Motor_calc &rArr; MCM_Sqrt &rArr; __aeabi_uldivmod
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MC_SixStep_HF_TIMx_SetDutyCycle_CH3

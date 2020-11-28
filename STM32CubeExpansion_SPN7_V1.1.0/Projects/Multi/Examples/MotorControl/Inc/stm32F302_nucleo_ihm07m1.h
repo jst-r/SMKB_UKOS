@@ -59,7 +59,6 @@
   #define GPIO_SET              GPIO_PIN_SET
   #define GPIO_RESET            GPIO_PIN_RESET
 
-  #define ADC_CH_1              ADC_CHANNEL_7    /*CURRENT*/      // - remove
 //#define ADC_CH_1              ADC_CHANNEL_2    /*Phase current U*/
 //#define ADC_CH_2              ADC_CHANNEL_3    /*Phase current V*/
 //#define ADC_CH_2              ADC_CHANNEL_4    /*Phase current W*/

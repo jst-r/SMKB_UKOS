@@ -43,7 +43,6 @@ extern SIXSTEP_Base_InitTypeDef SIXSTEP_parameters; /*!< Main SixStep structure*
 /* External variables --------------------------------------------------------*/
 
 extern ADC_HandleTypeDef hadc1;
-//extern DAC_HandleTypeDef hdac;
 extern TIM_HandleTypeDef htim1;
 extern TIM_HandleTypeDef htim6;
 extern UART_HandleTypeDef huart2;
