@@ -1,7 +1,6 @@
 stm32f302r8-nucleo configuration\uart_ui.o: ..\..\..\..\..\..\Middlewares\ST\UART_serial_com\Src\UART_UI.c
 stm32f302r8-nucleo configuration\uart_ui.o: ..\..\..\..\..\..\Middlewares\ST\UART_serial_com\Inc\UART_UI.h
 stm32f302r8-nucleo configuration\uart_ui.o: ..\..\..\..\..\..\Middlewares\ST\MC_6Step_Lib\Inc\6Step_Lib.h
-stm32f302r8-nucleo configuration\uart_ui.o: ..\..\..\..\..\..\Middlewares\ST\MC_6Step_Lib\Inc\stm32_nucleo_ihm07m1.h
 stm32f302r8-nucleo configuration\uart_ui.o: ..\..\Inc\stm32F302_nucleo_ihm07m1.h
 stm32f302r8-nucleo configuration\uart_ui.o: ..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal.h
 stm32f302r8-nucleo configuration\uart_ui.o: ..\..\Inc\stm32f3xx_hal_conf.h

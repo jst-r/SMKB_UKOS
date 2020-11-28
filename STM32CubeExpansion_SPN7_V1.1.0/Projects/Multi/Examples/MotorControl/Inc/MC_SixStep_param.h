@@ -58,8 +58,7 @@
 **************************************************************************** */   
 #define NUM_POLE_PAIRS                       4      /*!< Number of Motor Pole pairs */
 
-#define TARGET_SPEED                      1400      /*!< Target speed in closed loop control */
-//#define POTENTIOMETER                        0      /*!< Enable (1)/Disable (0) the potentiometer */
+#define TARGET_SPEED                      1340      /*!< Target speed in closed loop control */
 
 
 /* **************************************************************************** 
@@ -83,7 +82,7 @@
 #define KI_DIV                            4096      /*!< Ki parameter divider for PI regulator */   
 #define LOWER_OUT_LIMIT                    120      /*!< Low Out value of PI regulator */      
 #define UPPER_OUT_LIMIT                   2000      /*!< High Out value of PI regulator */    
-#define INITIAL_DEMAGN_DELAY            	 10      /*!< Initial value for delay time during startup for Bemf detection */
+#define INITIAL_DEMAGN_DELAY            	 100      /*!< Initial value for delay time during startup for Bemf detection */
 
 /*!< Zero Crossissing parameters */
 #define BEMF_THRSLD_DOWN                    200     /*!< Zero Crossing threshold */  

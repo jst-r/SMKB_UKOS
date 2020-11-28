@@ -39,7 +39,6 @@ stm32f302r8-nucleo configuration\main_f302.o: ..\..\..\..\..\..\Drivers\STM32F3x
 stm32f302r8-nucleo configuration\main_f302.o: ..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_uart.h
 stm32f302r8-nucleo configuration\main_f302.o: ..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_uart_ex.h
 stm32f302r8-nucleo configuration\main_f302.o: ..\..\..\..\..\..\Middlewares\ST\MC_6Step_Lib\Inc\6Step_Lib.h
-stm32f302r8-nucleo configuration\main_f302.o: ..\..\..\..\..\..\Middlewares\ST\MC_6Step_Lib\Inc\stm32_nucleo_ihm07m1.h
 stm32f302r8-nucleo configuration\main_f302.o: ..\..\Inc\stm32F302_nucleo_ihm07m1.h
 stm32f302r8-nucleo configuration\main_f302.o: ..\..\..\..\..\..\Drivers\BSP\X-NUCLEO-IHM07M1\X-NUCLEO-IHM07M1.h
 stm32f302r8-nucleo configuration\main_f302.o: ..\..\Inc\MC_SixStep_param.h

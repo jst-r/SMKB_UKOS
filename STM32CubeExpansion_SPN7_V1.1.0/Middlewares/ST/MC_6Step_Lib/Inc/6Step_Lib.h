@@ -41,7 +41,8 @@
 #ifndef __6STEP_LIB_H
 #define __6STEP_LIB_H
 
-#include "stm32_nucleo_ihm07m1.h"
+#include "stm32F302_nucleo_ihm07m1.h"
+#include "MC_SixStep_param.h"
 
 #include "math.h"
 #include "stdlib.h"

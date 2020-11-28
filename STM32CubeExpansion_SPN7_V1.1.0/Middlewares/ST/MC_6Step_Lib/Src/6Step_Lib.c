@@ -499,7 +499,6 @@ void MC_SixStep_Ramp_Motor_calc()
     mech_accel_hz = SIXSTEP_parameters.ACCEL * Rotor_poles_pairs / 60; 
     constant_multiplier_tmp = (uint64_t)constant_multiplier*(uint64_t)constant_multiplier_2;
     constant_k = constant_multiplier_tmp/(3*mech_accel_hz);    
-//    MC_SixStep_Current_Reference_Setvalue(SIXSTEP_parameters.Ireference); 
     Time_vector_prev_tmp = 0;
   }
   if(index_startup_motor < NUMBER_OF_STEPS)  

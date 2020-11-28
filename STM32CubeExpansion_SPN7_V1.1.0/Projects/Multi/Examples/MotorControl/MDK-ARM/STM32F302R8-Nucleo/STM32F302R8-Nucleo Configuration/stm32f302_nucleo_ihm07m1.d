@@ -41,7 +41,6 @@ stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.o: ..\..\..\..\..\..\D
 stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.o: ..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_uart_ex.h
 stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.o: ..\..\..\..\..\..\Drivers\BSP\X-NUCLEO-IHM07M1\X-NUCLEO-IHM07M1.h
 stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.o: ..\..\..\..\..\..\Middlewares\ST\MC_6Step_Lib\Inc\6Step_Lib.h
-stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.o: ..\..\..\..\..\..\Middlewares\ST\MC_6Step_Lib\Inc\stm32_nucleo_ihm07m1.h
 stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.o: ..\..\Inc\MC_SixStep_param.h
 stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.o: D:\system\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.o: D:\system\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h

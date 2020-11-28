@@ -247,10 +247,7 @@ void MC_SixStep_Stop_PWM_driving()
 void MC_SixStep_HF_TIMx_SetDutyCycle_CH1(uint16_t CCR_value)
 { 
 	HF_TIMx.Instance->HF_TIMx_CCR1 = CCR_value; 
-	
 }
-
-
 /**
   * @} 
   */
@@ -278,8 +275,6 @@ void MC_SixStep_HF_TIMx_SetDutyCycle_CH3(uint16_t CCR_value)
 { 
 	HF_TIMx.Instance->HF_TIMx_CCR3 = CCR_value;
 }
-
-
 
 /** @defgroup Bemf_delay_calc    Bemf_delay_calc
   *  @{
