@@ -466,16 +466,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>Drivers/BSP/Components</GroupName>
-          <Files>
-            <File>
-              <FileName>l6230.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\l6230\l6230.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>Drivers/BSP/STM32F3xx-Nucleo</GroupName>
           <Files>
             <File>
@@ -1006,16 +996,6 @@
               <FileName>startup_stm32f302x8.s</FileName>
               <FileType>2</FileType>
               <FilePath>.\startup_stm32f302x8.s</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>Drivers/BSP/Components</GroupName>
-          <Files>
-            <File>
-              <FileName>l6230.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\l6230\l6230.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1555,16 +1535,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>Drivers/BSP/Components</GroupName>
-          <Files>
-            <File>
-              <FileName>l6230.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\l6230\l6230.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>Drivers/BSP/STM32F3xx-Nucleo</GroupName>
           <Files>
             <File>
@@ -2095,16 +2065,6 @@
               <FileName>startup_stm32f302x8.s</FileName>
               <FileType>2</FileType>
               <FilePath>.\startup_stm32f302x8.s</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>Drivers/BSP/Components</GroupName>
-          <Files>
-            <File>
-              <FileName>l6230.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\l6230\l6230.c</FilePath>
             </File>
           </Files>
         </Group>

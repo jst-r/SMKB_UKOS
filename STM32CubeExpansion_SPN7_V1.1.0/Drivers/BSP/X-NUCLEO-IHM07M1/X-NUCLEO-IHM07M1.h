@@ -37,10 +37,6 @@
 
 /* Includes ------------------------------------------------------------------*/
 
-#include "l6230.h"
 
-void L6230_HFTIM_DC_CH1(uint16_t CCR_value);
-void L6230_HFTIM_DC_CH2(uint16_t CCR_value);
-void L6230_HFTIM_DC_CH3(uint16_t CCR_value);
 
 

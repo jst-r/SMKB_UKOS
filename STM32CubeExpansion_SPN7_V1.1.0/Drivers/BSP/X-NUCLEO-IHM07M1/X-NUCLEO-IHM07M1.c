@@ -62,43 +62,6 @@
 /**
   * @}  
   */
-/** @defgroup L6230_HFTIM_DC_CH1    L6230_HFTIM_DC_CH1
-  *  @{
-    * @brief Set the Duty Cycle value for CH1  
-  * @retval None
-*/
-void L6230_HFTIM_DC_CH1(uint16_t CCRx)
-{
-  HF_TIMx.Instance->HF_TIMx_CCR1 = CCRx;  
-}
-/**
-  * @}  
-  */
-/** @defgroup L6230_HFTIM_DC_CH2    L6230_HFTIM_DC_CH2
-  *  @{
-    * @brief Set the Duty Cycle value for CH2
-  * @retval None
-*/
-void  L6230_HFTIM_DC_CH2(uint16_t CCRx)
-{
-  HF_TIMx.Instance->HF_TIMx_CCR2 = CCRx;  
-}
-/**
-  * @}  
-  */
-/** @defgroup L6230_HFTIM_DC_CH3    L6230_HFTIM_DC_CH3
-  *  @{
-    * @brief Set the Duty Cycle value for CH3  
-  * @retval None
-*/
-void  L6230_HFTIM_DC_CH3(uint16_t CCRx)
-{
-  HF_TIMx.Instance->HF_TIMx_CCR3 = CCRx;  
-}
-/**
-  * @}  
-  */
-
 
 /**
   * @}  

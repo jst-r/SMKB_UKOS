@@ -42,8 +42,6 @@ stm32f302r8-nucleo configuration\main_f302.o: ..\..\..\..\..\..\Middlewares\ST\M
 stm32f302r8-nucleo configuration\main_f302.o: ..\..\..\..\..\..\Middlewares\ST\MC_6Step_Lib\Inc\stm32_nucleo_ihm07m1.h
 stm32f302r8-nucleo configuration\main_f302.o: ..\..\Inc\stm32F302_nucleo_ihm07m1.h
 stm32f302r8-nucleo configuration\main_f302.o: ..\..\..\..\..\..\Drivers\BSP\X-NUCLEO-IHM07M1\X-NUCLEO-IHM07M1.h
-stm32f302r8-nucleo configuration\main_f302.o: ..\..\..\..\..\..\Drivers\BSP\Components\l6230\l6230.h
-stm32f302r8-nucleo configuration\main_f302.o: ..\..\..\..\..\..\Drivers\BSP\Components\Common\MC_Common.h
 stm32f302r8-nucleo configuration\main_f302.o: ..\..\Inc\MC_SixStep_param.h
 stm32f302r8-nucleo configuration\main_f302.o: D:\system\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 stm32f302r8-nucleo configuration\main_f302.o: D:\system\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h

@@ -1,8 +1,5 @@
 stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.o: ..\..\..\..\..\..\Drivers\BSP\X-NUCLEO-IHM07M1\X-NUCLEO-IHM07M1.c
 stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.o: ..\..\..\..\..\..\Drivers\BSP\X-NUCLEO-IHM07M1\X-NUCLEO-IHM07M1.h
-stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.o: ..\..\..\..\..\..\Drivers\BSP\Components\l6230\l6230.h
-stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.o: D:\system\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
-stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.o: ..\..\..\..\..\..\Drivers\BSP\Components\Common\MC_Common.h
 stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.o: ..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal.h
 stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.o: ..\..\Inc\stm32f3xx_hal_conf.h
 stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.o: ..\..\Inc\main_F302.h
@@ -11,6 +8,7 @@ stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.o: ..\..\..\..\..\..\Drivers\S
 stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.o: ..\..\..\..\..\..\Drivers\CMSIS\Device\ST\STM32F3xx\Include\stm32f3xx.h
 stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.o: ..\..\..\..\..\..\Drivers\CMSIS\Device\ST\STM32F3xx\Include\stm32f302x8.h
 stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.o: ..\..\..\..\..\..\Drivers\CMSIS\Include\core_cm4.h
+stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.o: D:\system\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.o: ..\..\..\..\..\..\Drivers\CMSIS\Include\core_cmInstr.h
 stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.o: ..\..\..\..\..\..\Drivers\CMSIS\Include\cmsis_armcc.h
 stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.o: ..\..\..\..\..\..\Drivers\CMSIS\Include\core_cmFunc.h

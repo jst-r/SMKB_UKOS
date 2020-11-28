@@ -40,48 +40,6 @@
 #ifndef __MC_COMMON_H
 #define __MC_COMMON_H
 
-/** @addtogroup DRIVERS     DRIVERS 
-  * @brief  Driver Layer
-  * @{ 
-  */
-
-/** @addtogroup BSP    BSP
-  * @brief  BSP Layer
-  * @{ 
-  */
-
-/** @addtogroup COMPONENTS    COMPONENTS
-  * @brief  Components
-  * @{ 
-  */
-
-/** @addtogroup L6230_Motor_Driver_handler     L6230_Motor_Driver_handler  
-  * @brief  Handler for L6230 Motor driver
-  * @{ 
-  */  
-
-  typedef struct
-  {
-    void (*HF_TIMx_SetDutyCycle_CH1)(uint16_t);   /*!< High Frequency Timer - Change DutyCycle value for CH1 */    
-    void (*HF_TIMx_SetDutyCycle_CH2)(uint16_t);   /*!< High Frequency Timer - Change DutyCycle value for CH2 */
-    void (*HF_TIMx_SetDutyCycle_CH3)(uint16_t);   /*!< High Frequency Timer - Change DutyCycle value for CH3 */   
-  } L6230_MotorDriver_TypeDef;                          /*!< MC driver handler */
-
-/**
-  * @}  end L6230_Motor_Driver_handler 
-  */
-
-/**
-  * @}  end COMPONENTS 
-  */
-
-/**
-  * @}  end BSP 
-  */
-
-/**
-  * @}  end DRIVERS
-  */
 
 #endif
 

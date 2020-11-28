@@ -42,8 +42,6 @@ stm32f302r8-nucleo configuration\6step_lib.o: ..\..\..\..\..\..\Drivers\STM32F3x
 stm32f302r8-nucleo configuration\6step_lib.o: ..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_uart.h
 stm32f302r8-nucleo configuration\6step_lib.o: ..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_uart_ex.h
 stm32f302r8-nucleo configuration\6step_lib.o: ..\..\..\..\..\..\Drivers\BSP\X-NUCLEO-IHM07M1\X-NUCLEO-IHM07M1.h
-stm32f302r8-nucleo configuration\6step_lib.o: ..\..\..\..\..\..\Drivers\BSP\Components\l6230\l6230.h
-stm32f302r8-nucleo configuration\6step_lib.o: ..\..\..\..\..\..\Drivers\BSP\Components\Common\MC_Common.h
 stm32f302r8-nucleo configuration\6step_lib.o: ..\..\Inc\MC_SixStep_param.h
 stm32f302r8-nucleo configuration\6step_lib.o: D:\system\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 stm32f302r8-nucleo configuration\6step_lib.o: D:\system\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h

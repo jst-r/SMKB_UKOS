@@ -41,7 +41,6 @@
 
   extern SIXSTEP_Base_InitTypeDef SIXSTEP_parameters; /*!< Main SixStep structure*/ 
   extern SIXSTEP_PI_PARAM_InitTypeDef_t PI_parameters; /*!< SixStep PI regulator structure*/ 
-  extern L6230_MotorDriver_TypeDef L6230MotorDriver;
   extern void MC_ADCx_SixStep_Bemf(void);
   extern void MC_TIMx_SixStep_timebase(void);
   extern void MC_SysTick_SixStep_MediumFrequencyTask(void);
@@ -247,7 +246,8 @@ void MC_SixStep_Stop_PWM_driving()
 
 void MC_SixStep_HF_TIMx_SetDutyCycle_CH1(uint16_t CCR_value)
 { 
-  L6230MotorDriver.HF_TIMx_SetDutyCycle_CH1(CCR_value);
+	HF_TIMx.Instance->HF_TIMx_CCR1 = CCR_value; 
+	
 }
 
 
@@ -262,7 +262,7 @@ void MC_SixStep_HF_TIMx_SetDutyCycle_CH1(uint16_t CCR_value)
 
 void MC_SixStep_HF_TIMx_SetDutyCycle_CH2(uint16_t CCR_value)
 { 
-  L6230MotorDriver.HF_TIMx_SetDutyCycle_CH2(CCR_value);
+	HF_TIMx.Instance->HF_TIMx_CCR2 = CCR_value;
 }
 /**
   * @} 
@@ -276,7 +276,7 @@ void MC_SixStep_HF_TIMx_SetDutyCycle_CH2(uint16_t CCR_value)
 
 void MC_SixStep_HF_TIMx_SetDutyCycle_CH3(uint16_t CCR_value)
 { 
-  L6230MotorDriver.HF_TIMx_SetDutyCycle_CH3(CCR_value);
+	HF_TIMx.Instance->HF_TIMx_CCR3 = CCR_value;
 }
 
 

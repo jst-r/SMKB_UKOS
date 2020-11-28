@@ -41,9 +41,7 @@ I (..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_uart_ex.h)(0
 I (..\..\..\..\..\..\Middlewares\ST\MC_6Step_Lib\Inc\6Step_Lib.h)(0x5FBBD461)
 I (..\..\..\..\..\..\Middlewares\ST\MC_6Step_Lib\Inc\stm32_nucleo_ihm07m1.h)(0x5FBBCA19)
 I (..\..\Inc\stm32F302_nucleo_ihm07m1.h)(0x5FC173E3)
-I (..\..\..\..\..\..\Drivers\BSP\X-NUCLEO-IHM07M1\X-NUCLEO-IHM07M1.h)(0x5FC17BC3)
-I (..\..\..\..\..\..\Drivers\BSP\Components\l6230\l6230.h)(0x5FC17DA7)
-I (..\..\..\..\..\..\Drivers\BSP\Components\Common\MC_Common.h)(0x5FC17A31)
+I (..\..\..\..\..\..\Drivers\BSP\X-NUCLEO-IHM07M1\X-NUCLEO-IHM07M1.h)(0x5FC251EE)
 I (..\..\Inc\MC_SixStep_param.h)(0x5FC11952)
 I (D:\system\Keil_v5\ARM\ARMCC\include\math.h)(0x599F218E)
 I (D:\system\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x599F218C)
@@ -129,13 +127,11 @@ I (..\..\Inc\stm32f3xx_it.h)(0x5FBBCA19)
 I (..\..\..\..\..\..\Middlewares\ST\MC_6Step_Lib\Inc\6Step_Lib.h)(0x5FBBD461)
 I (..\..\..\..\..\..\Middlewares\ST\MC_6Step_Lib\Inc\stm32_nucleo_ihm07m1.h)(0x5FBBCA19)
 I (..\..\Inc\stm32F302_nucleo_ihm07m1.h)(0x5FC173E3)
-I (..\..\..\..\..\..\Drivers\BSP\X-NUCLEO-IHM07M1\X-NUCLEO-IHM07M1.h)(0x5FC17BC3)
-I (..\..\..\..\..\..\Drivers\BSP\Components\l6230\l6230.h)(0x5FC17DA7)
-I (..\..\..\..\..\..\Drivers\BSP\Components\Common\MC_Common.h)(0x5FC17A31)
+I (..\..\..\..\..\..\Drivers\BSP\X-NUCLEO-IHM07M1\X-NUCLEO-IHM07M1.h)(0x5FC251EE)
 I (..\..\Inc\MC_SixStep_param.h)(0x5FC11952)
 I (D:\system\Keil_v5\ARM\ARMCC\include\math.h)(0x599F218E)
 I (D:\system\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x599F218C)
-F (..\..\Src\stm32F302_nucleo_ihm07m1.c)(0x5FC17A32)(-c --cpu Cortex-M4.fp -D__EVAL -g -O3 --apcs=interwork --split_sections -I ..\..\Inc -I ..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc -I ..\..\..\..\..\..\Drivers\CMSIS\Device\ST\STM32F3xx\Include -I ..\..\..\..\..\..\Drivers\CMSIS\Include -I ..\..\..\..\..\..\Drivers\BSP\STM32F3xx-Nucleo -I ..\..\..\..\..\..\Drivers\BSP\X-NUCLEO-IHM07M1 -I ..\..\..\..\..\..\Drivers\BSP\Components\Common -I ..\..\..\..\..\..\Drivers\BSP\Components\l6230 -I ..\..\..\..\..\..\Middlewares\ST\MC_6Step_Lib\Inc -I ..\..\..\..\..\..\Middlewares\ST\UART_serial_com\Inc --C99 --reduce_paths-I.\RTE\_STM32F302R8-Nucleo-ID:\system\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-ID:\system\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="526" -DSTM32F302x8 -DUSE_HAL_DRIVER -DSTM32F302x8-o "stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.o" --omf_browse "stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.crf" --depend "stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.d")
+F (..\..\Src\stm32F302_nucleo_ihm07m1.c)(0x5FC250D3)(-c --cpu Cortex-M4.fp -D__EVAL -g -O3 --apcs=interwork --split_sections -I ..\..\Inc -I ..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc -I ..\..\..\..\..\..\Drivers\CMSIS\Device\ST\STM32F3xx\Include -I ..\..\..\..\..\..\Drivers\CMSIS\Include -I ..\..\..\..\..\..\Drivers\BSP\STM32F3xx-Nucleo -I ..\..\..\..\..\..\Drivers\BSP\X-NUCLEO-IHM07M1 -I ..\..\..\..\..\..\Drivers\BSP\Components\Common -I ..\..\..\..\..\..\Drivers\BSP\Components\l6230 -I ..\..\..\..\..\..\Middlewares\ST\MC_6Step_Lib\Inc -I ..\..\..\..\..\..\Middlewares\ST\UART_serial_com\Inc --C99 --reduce_paths-I.\RTE\_STM32F302R8-Nucleo-ID:\system\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-ID:\system\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="526" -DSTM32F302x8 -DUSE_HAL_DRIVER -DSTM32F302x8-o "stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.o" --omf_browse "stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.crf" --depend "stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.d")
 I (..\..\Inc\stm32F302_nucleo_ihm07m1.h)(0x5FC173E3)
 I (..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal.h)(0x5FBBCA19)
 I (..\..\Inc\stm32f3xx_hal_conf.h)(0x5FBBCA19)
@@ -175,19 +171,13 @@ I (..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_tim.h)(0x5FB
 I (..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_tim_ex.h)(0x5FBBCA19)
 I (..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_uart.h)(0x5FBBCA19)
 I (..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_uart_ex.h)(0x5FBBCA19)
-I (..\..\..\..\..\..\Drivers\BSP\X-NUCLEO-IHM07M1\X-NUCLEO-IHM07M1.h)(0x5FC17BC3)
-I (..\..\..\..\..\..\Drivers\BSP\Components\l6230\l6230.h)(0x5FC17DA7)
-I (..\..\..\..\..\..\Drivers\BSP\Components\Common\MC_Common.h)(0x5FC17A31)
+I (..\..\..\..\..\..\Drivers\BSP\X-NUCLEO-IHM07M1\X-NUCLEO-IHM07M1.h)(0x5FC251EE)
 I (..\..\..\..\..\..\Middlewares\ST\MC_6Step_Lib\Inc\6Step_Lib.h)(0x5FBBD461)
 I (..\..\..\..\..\..\Middlewares\ST\MC_6Step_Lib\Inc\stm32_nucleo_ihm07m1.h)(0x5FBBCA19)
 I (..\..\Inc\MC_SixStep_param.h)(0x5FC11952)
 I (D:\system\Keil_v5\ARM\ARMCC\include\math.h)(0x599F218E)
 I (D:\system\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x599F218C)
 F (.\startup_stm32f302x8.s)(0x5FBBCA19)(--cpu Cortex-M4.fp --pd "__EVAL SETA 1" -g --apcs=interwork -I.\RTE\_STM32F302R8-Nucleo-ID:\system\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-ID:\system\Keil_v5\ARM\CMSIS\Include--pd "__UVISION_VERSION SETA 526" --pd "STM32F302x8 SETA 1"--list startup_stm32f302x8.lst --xref -o "stm32f302r8-nucleo configuration\startup_stm32f302x8.o" --depend "stm32f302r8-nucleo configuration\startup_stm32f302x8.d")
-F (..\..\..\..\..\..\Drivers\BSP\Components\l6230\l6230.c)(0x5FC17A32)(-c --cpu Cortex-M4.fp -D__EVAL -g -O3 --apcs=interwork --split_sections -I ..\..\Inc -I ..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc -I ..\..\..\..\..\..\Drivers\CMSIS\Device\ST\STM32F3xx\Include -I ..\..\..\..\..\..\Drivers\CMSIS\Include -I ..\..\..\..\..\..\Drivers\BSP\STM32F3xx-Nucleo -I ..\..\..\..\..\..\Drivers\BSP\X-NUCLEO-IHM07M1 -I ..\..\..\..\..\..\Drivers\BSP\Components\Common -I ..\..\..\..\..\..\Drivers\BSP\Components\l6230 -I ..\..\..\..\..\..\Middlewares\ST\MC_6Step_Lib\Inc -I ..\..\..\..\..\..\Middlewares\ST\UART_serial_com\Inc --C99 --reduce_paths-I.\RTE\_STM32F302R8-Nucleo-ID:\system\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-ID:\system\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="526" -DSTM32F302x8 -DUSE_HAL_DRIVER -DSTM32F302x8-o "stm32f302r8-nucleo configuration\l6230.o" --omf_browse "stm32f302r8-nucleo configuration\l6230.crf" --depend "stm32f302r8-nucleo configuration\l6230.d")
-I (..\..\..\..\..\..\Drivers\BSP\Components\l6230\l6230.h)(0x5FC17DA7)
-I (D:\system\Keil_v5\ARM\ARMCC\include\stdint.h)(0x599F218E)
-I (..\..\..\..\..\..\Drivers\BSP\Components\Common\MC_Common.h)(0x5FC17A31)
 F (..\..\..\..\..\..\Drivers\BSP\STM32F3xx-Nucleo\stm32f3xx_nucleo.c)(0x5FBBCA19)(-c --cpu Cortex-M4.fp -D__EVAL -g -O3 --apcs=interwork --split_sections -I ..\..\Inc -I ..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc -I ..\..\..\..\..\..\Drivers\CMSIS\Device\ST\STM32F3xx\Include -I ..\..\..\..\..\..\Drivers\CMSIS\Include -I ..\..\..\..\..\..\Drivers\BSP\STM32F3xx-Nucleo -I ..\..\..\..\..\..\Drivers\BSP\X-NUCLEO-IHM07M1 -I ..\..\..\..\..\..\Drivers\BSP\Components\Common -I ..\..\..\..\..\..\Drivers\BSP\Components\l6230 -I ..\..\..\..\..\..\Middlewares\ST\MC_6Step_Lib\Inc -I ..\..\..\..\..\..\Middlewares\ST\UART_serial_com\Inc --C99 --reduce_paths-I.\RTE\_STM32F302R8-Nucleo-ID:\system\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-ID:\system\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="526" -DSTM32F302x8 -DUSE_HAL_DRIVER -DSTM32F302x8-o "stm32f302r8-nucleo configuration\stm32f3xx_nucleo.o" --omf_browse "stm32f302r8-nucleo configuration\stm32f3xx_nucleo.crf" --depend "stm32f302r8-nucleo configuration\stm32f3xx_nucleo.d")
 I (..\..\..\..\..\..\Drivers\BSP\STM32F3xx-Nucleo\stm32f3xx_nucleo.h)(0x5FBBCA19)
 I (..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal.h)(0x5FBBCA19)
@@ -228,11 +218,8 @@ I (..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_tim.h)(0x5FB
 I (..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_tim_ex.h)(0x5FBBCA19)
 I (..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_uart.h)(0x5FBBCA19)
 I (..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_uart_ex.h)(0x5FBBCA19)
-F (..\..\..\..\..\..\Drivers\BSP\X-NUCLEO-IHM07M1\X-NUCLEO-IHM07M1.c)(0x5FC17DA7)(-c --cpu Cortex-M4.fp -D__EVAL -g -O3 --apcs=interwork --split_sections -I ..\..\Inc -I ..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc -I ..\..\..\..\..\..\Drivers\CMSIS\Device\ST\STM32F3xx\Include -I ..\..\..\..\..\..\Drivers\CMSIS\Include -I ..\..\..\..\..\..\Drivers\BSP\STM32F3xx-Nucleo -I ..\..\..\..\..\..\Drivers\BSP\X-NUCLEO-IHM07M1 -I ..\..\..\..\..\..\Drivers\BSP\Components\Common -I ..\..\..\..\..\..\Drivers\BSP\Components\l6230 -I ..\..\..\..\..\..\Middlewares\ST\MC_6Step_Lib\Inc -I ..\..\..\..\..\..\Middlewares\ST\UART_serial_com\Inc --C99 --reduce_paths-I.\RTE\_STM32F302R8-Nucleo-ID:\system\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-ID:\system\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="526" -DSTM32F302x8 -DUSE_HAL_DRIVER -DSTM32F302x8-o "stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.o" --omf_browse "stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.crf" --depend "stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.d")
-I (..\..\..\..\..\..\Drivers\BSP\X-NUCLEO-IHM07M1\X-NUCLEO-IHM07M1.h)(0x5FC17BC3)
-I (..\..\..\..\..\..\Drivers\BSP\Components\l6230\l6230.h)(0x5FC17DA7)
-I (D:\system\Keil_v5\ARM\ARMCC\include\stdint.h)(0x599F218E)
-I (..\..\..\..\..\..\Drivers\BSP\Components\Common\MC_Common.h)(0x5FC17A31)
+F (..\..\..\..\..\..\Drivers\BSP\X-NUCLEO-IHM07M1\X-NUCLEO-IHM07M1.c)(0x5FC251EE)(-c --cpu Cortex-M4.fp -D__EVAL -g -O3 --apcs=interwork --split_sections -I ..\..\Inc -I ..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc -I ..\..\..\..\..\..\Drivers\CMSIS\Device\ST\STM32F3xx\Include -I ..\..\..\..\..\..\Drivers\CMSIS\Include -I ..\..\..\..\..\..\Drivers\BSP\STM32F3xx-Nucleo -I ..\..\..\..\..\..\Drivers\BSP\X-NUCLEO-IHM07M1 -I ..\..\..\..\..\..\Drivers\BSP\Components\Common -I ..\..\..\..\..\..\Drivers\BSP\Components\l6230 -I ..\..\..\..\..\..\Middlewares\ST\MC_6Step_Lib\Inc -I ..\..\..\..\..\..\Middlewares\ST\UART_serial_com\Inc --C99 --reduce_paths-I.\RTE\_STM32F302R8-Nucleo-ID:\system\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-ID:\system\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="526" -DSTM32F302x8 -DUSE_HAL_DRIVER -DSTM32F302x8-o "stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.o" --omf_browse "stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.crf" --depend "stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.d")
+I (..\..\..\..\..\..\Drivers\BSP\X-NUCLEO-IHM07M1\X-NUCLEO-IHM07M1.h)(0x5FC251EE)
 I (..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal.h)(0x5FBBCA19)
 I (..\..\Inc\stm32f3xx_hal_conf.h)(0x5FBBCA19)
 I (..\..\Inc\main_F302.h)(0x5FBBCA19)
@@ -241,6 +228,7 @@ I (..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_def.h)(0x5FB
 I (..\..\..\..\..\..\Drivers\CMSIS\Device\ST\STM32F3xx\Include\stm32f3xx.h)(0x5FBBCA19)
 I (..\..\..\..\..\..\Drivers\CMSIS\Device\ST\STM32F3xx\Include\stm32f302x8.h)(0x5FBBCA19)
 I (..\..\..\..\..\..\Drivers\CMSIS\Include\core_cm4.h)(0x5FBBCA19)
+I (D:\system\Keil_v5\ARM\ARMCC\include\stdint.h)(0x599F218E)
 I (..\..\..\..\..\..\Drivers\CMSIS\Include\core_cmInstr.h)(0x5FBBCA19)
 I (..\..\..\..\..\..\Drivers\CMSIS\Include\cmsis_armcc.h)(0x5FBBCA19)
 I (..\..\..\..\..\..\Drivers\CMSIS\Include\core_cmFunc.h)(0x5FBBCA19)
@@ -271,7 +259,7 @@ I (..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_tim_ex.h)(0x
 I (..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_uart.h)(0x5FBBCA19)
 I (..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_uart_ex.h)(0x5FBBCA19)
 I (..\..\Inc\stm32F302_nucleo_ihm07m1.h)(0x5FC173E3)
-F (..\..\..\..\..\..\Middlewares\ST\MC_6Step_Lib\Src\6Step_Lib.c)(0x5FC17EBA)(-c --cpu Cortex-M4.fp -D__EVAL -g -O3 --apcs=interwork --split_sections -I ..\..\Inc -I ..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc -I ..\..\..\..\..\..\Drivers\CMSIS\Device\ST\STM32F3xx\Include -I ..\..\..\..\..\..\Drivers\CMSIS\Include -I ..\..\..\..\..\..\Drivers\BSP\STM32F3xx-Nucleo -I ..\..\..\..\..\..\Drivers\BSP\X-NUCLEO-IHM07M1 -I ..\..\..\..\..\..\Drivers\BSP\Components\Common -I ..\..\..\..\..\..\Drivers\BSP\Components\l6230 -I ..\..\..\..\..\..\Middlewares\ST\MC_6Step_Lib\Inc -I ..\..\..\..\..\..\Middlewares\ST\UART_serial_com\Inc --C99 --reduce_paths-I.\RTE\_STM32F302R8-Nucleo-ID:\system\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-ID:\system\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="526" -DSTM32F302x8 -DUSE_HAL_DRIVER -DSTM32F302x8-o "stm32f302r8-nucleo configuration\6step_lib.o" --omf_browse "stm32f302r8-nucleo configuration\6step_lib.crf" --depend "stm32f302r8-nucleo configuration\6step_lib.d")
+F (..\..\..\..\..\..\Middlewares\ST\MC_6Step_Lib\Src\6Step_Lib.c)(0x5FC24FBA)(-c --cpu Cortex-M4.fp -D__EVAL -g -O3 --apcs=interwork --split_sections -I ..\..\Inc -I ..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc -I ..\..\..\..\..\..\Drivers\CMSIS\Device\ST\STM32F3xx\Include -I ..\..\..\..\..\..\Drivers\CMSIS\Include -I ..\..\..\..\..\..\Drivers\BSP\STM32F3xx-Nucleo -I ..\..\..\..\..\..\Drivers\BSP\X-NUCLEO-IHM07M1 -I ..\..\..\..\..\..\Drivers\BSP\Components\Common -I ..\..\..\..\..\..\Drivers\BSP\Components\l6230 -I ..\..\..\..\..\..\Middlewares\ST\MC_6Step_Lib\Inc -I ..\..\..\..\..\..\Middlewares\ST\UART_serial_com\Inc --C99 --reduce_paths-I.\RTE\_STM32F302R8-Nucleo-ID:\system\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-ID:\system\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="526" -DSTM32F302x8 -DUSE_HAL_DRIVER -DSTM32F302x8-o "stm32f302r8-nucleo configuration\6step_lib.o" --omf_browse "stm32f302r8-nucleo configuration\6step_lib.crf" --depend "stm32f302r8-nucleo configuration\6step_lib.d")
 I (..\..\..\..\..\..\Middlewares\ST\MC_6Step_Lib\Inc\6Step_Lib.h)(0x5FBBD461)
 I (..\..\..\..\..\..\Middlewares\ST\MC_6Step_Lib\Inc\stm32_nucleo_ihm07m1.h)(0x5FBBCA19)
 I (..\..\Inc\stm32F302_nucleo_ihm07m1.h)(0x5FC173E3)
@@ -313,9 +301,7 @@ I (..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_tim.h)(0x5FB
 I (..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_tim_ex.h)(0x5FBBCA19)
 I (..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_uart.h)(0x5FBBCA19)
 I (..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_uart_ex.h)(0x5FBBCA19)
-I (..\..\..\..\..\..\Drivers\BSP\X-NUCLEO-IHM07M1\X-NUCLEO-IHM07M1.h)(0x5FC17BC3)
-I (..\..\..\..\..\..\Drivers\BSP\Components\l6230\l6230.h)(0x5FC17DA7)
-I (..\..\..\..\..\..\Drivers\BSP\Components\Common\MC_Common.h)(0x5FC17A31)
+I (..\..\..\..\..\..\Drivers\BSP\X-NUCLEO-IHM07M1\X-NUCLEO-IHM07M1.h)(0x5FC251EE)
 I (..\..\Inc\MC_SixStep_param.h)(0x5FC11952)
 I (D:\system\Keil_v5\ARM\ARMCC\include\math.h)(0x599F218E)
 I (D:\system\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x599F218C)
@@ -363,9 +349,7 @@ I (..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_tim.h)(0x5FB
 I (..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_tim_ex.h)(0x5FBBCA19)
 I (..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_uart.h)(0x5FBBCA19)
 I (..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_uart_ex.h)(0x5FBBCA19)
-I (..\..\..\..\..\..\Drivers\BSP\X-NUCLEO-IHM07M1\X-NUCLEO-IHM07M1.h)(0x5FC17BC3)
-I (..\..\..\..\..\..\Drivers\BSP\Components\l6230\l6230.h)(0x5FC17DA7)
-I (..\..\..\..\..\..\Drivers\BSP\Components\Common\MC_Common.h)(0x5FC17A31)
+I (..\..\..\..\..\..\Drivers\BSP\X-NUCLEO-IHM07M1\X-NUCLEO-IHM07M1.h)(0x5FC251EE)
 I (..\..\Inc\MC_SixStep_param.h)(0x5FC11952)
 I (D:\system\Keil_v5\ARM\ARMCC\include\math.h)(0x599F218E)
 I (D:\system\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x599F218C)

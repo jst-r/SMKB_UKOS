@@ -4,7 +4,6 @@
 "stm32f302r8-nucleo configuration\stm32f3xx_it.o"
 "stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.o"
 "stm32f302r8-nucleo configuration\startup_stm32f302x8.o"
-"stm32f302r8-nucleo configuration\l6230.o"
 "stm32f302r8-nucleo configuration\stm32f3xx_nucleo.o"
 "stm32f302r8-nucleo configuration\x-nucleo-ihm07m1.o"
 "stm32f302r8-nucleo configuration\6step_lib.o"

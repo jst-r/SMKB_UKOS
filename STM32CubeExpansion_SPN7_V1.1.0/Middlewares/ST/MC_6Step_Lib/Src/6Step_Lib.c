@@ -466,18 +466,7 @@ void MC_SixStep_RESET()
  Tick_cnt = 0;   
  counter_ARR_Bemf = 0;
  constant_multiplier_tmp = 0;
- /*REMOVE_ASAP
- HFBufferIndex =0;
- for(uint16_t i = 0; i < HFBUFFERSIZE;i++)
- {
-   HFBuffer[i]=0;
- }
- 
- for(uint16_t i = 0; i < FILTER_DEEP;i++)
- {
-   speed_tmp_array[i] = 0;
-   speed_tmp_buffer[i]= 0;   
- } */
+
  array_completed = FALSE;
  buffer_completed = FALSE;
  
