@@ -466,26 +466,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>Drivers/BSP/STM32F3xx-Nucleo</GroupName>
-          <Files>
-            <File>
-              <FileName>stm32f3xx_nucleo.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\Drivers\BSP\STM32F3xx-Nucleo\stm32f3xx_nucleo.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>Drivers/BSP/X_NUCLEO_IHM07M1</GroupName>
-          <Files>
-            <File>
-              <FileName>X-NUCLEO-IHM07M1.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\Drivers\BSP\X-NUCLEO-IHM07M1\X-NUCLEO-IHM07M1.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>Middlewares</GroupName>
           <Files>
             <File>
@@ -996,26 +976,6 @@
               <FileName>startup_stm32f302x8.s</FileName>
               <FileType>2</FileType>
               <FilePath>.\startup_stm32f302x8.s</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>Drivers/BSP/STM32F3xx-Nucleo</GroupName>
-          <Files>
-            <File>
-              <FileName>stm32f3xx_nucleo.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\Drivers\BSP\STM32F3xx-Nucleo\stm32f3xx_nucleo.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>Drivers/BSP/X_NUCLEO_IHM07M1</GroupName>
-          <Files>
-            <File>
-              <FileName>X-NUCLEO-IHM07M1.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\Drivers\BSP\X-NUCLEO-IHM07M1\X-NUCLEO-IHM07M1.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1535,26 +1495,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>Drivers/BSP/STM32F3xx-Nucleo</GroupName>
-          <Files>
-            <File>
-              <FileName>stm32f3xx_nucleo.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\Drivers\BSP\STM32F3xx-Nucleo\stm32f3xx_nucleo.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>Drivers/BSP/X_NUCLEO_IHM07M1</GroupName>
-          <Files>
-            <File>
-              <FileName>X-NUCLEO-IHM07M1.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\Drivers\BSP\X-NUCLEO-IHM07M1\X-NUCLEO-IHM07M1.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>Middlewares</GroupName>
           <Files>
             <File>
@@ -2065,26 +2005,6 @@
               <FileName>startup_stm32f302x8.s</FileName>
               <FileType>2</FileType>
               <FilePath>.\startup_stm32f302x8.s</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>Drivers/BSP/STM32F3xx-Nucleo</GroupName>
-          <Files>
-            <File>
-              <FileName>stm32f3xx_nucleo.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\Drivers\BSP\STM32F3xx-Nucleo\stm32f3xx_nucleo.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>Drivers/BSP/X_NUCLEO_IHM07M1</GroupName>
-          <Files>
-            <File>
-              <FileName>X-NUCLEO-IHM07M1.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\Drivers\BSP\X-NUCLEO-IHM07M1\X-NUCLEO-IHM07M1.c</FilePath>
             </File>
           </Files>
         </Group>
