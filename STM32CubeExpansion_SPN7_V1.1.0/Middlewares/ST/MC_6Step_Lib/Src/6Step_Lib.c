@@ -84,11 +84,11 @@ uint32_t T_single_step_first_value = 0;             /*!<  Startup variable  */
 int32_t  delta = 0;                                 /*!<  Startup variable  */
 uint16_t index_array = 1;                           /*!<  Speed filter variable */
 int16_t speed_tmp_array[FILTER_DEEP];               /*!<  Speed filter variable */
-uint16_t speed_tmp_buffer[FILTER_DEEP];             /*!<  Potentiometer filter variable REMOVE_ASAP*/
+//uint16_t speed_tmp_buffer[FILTER_DEEP];             /*!<  Potentiometer filter variable REMOVE_ASAP*/
 uint16_t HFBuffer[HFBUFFERSIZE];                    /*!<  Buffer for Potentiometer Value Filtering at the High-Frequency ADC conversion REMOVE_ASAP*/    
 uint16_t HFBufferIndex = 0;                         /*!<  High-Frequency Buffer Index ???REMOVE_ASAP???*/    
 uint8_t  array_completed = FALSE;                   /*!<  Speed filter variable */
-uint8_t  buffer_completed = FALSE;                  /*!<  Potentiometer filter variable REMOVE_ASAP*/
+//uint8_t  buffer_completed = FALSE;                  /*!<  Potentiometer filter variable REMOVE_ASAP*/
 uint8_t  UART_FLAG_RECEIVE = FALSE;                 /*!<  UART commmunication flag */
 uint32_t ARR_LF = 0;                                /*!<  Autoreload LF TIM variable */
 int32_t Mech_Speed_RPM = 0;                         /*!<  Mechanical motor speed */
@@ -467,7 +467,7 @@ void MC_SixStep_RESET()
  constant_multiplier_tmp = 0;
 
  array_completed = FALSE;
- buffer_completed = FALSE;
+ //buffer_completed = FALSE;
  
  if(PI_parameters.Reference < 0)  
  {
@@ -1353,15 +1353,6 @@ void MC_ADCx_SixStep_Bemf()
      /* Set the channel for next ADC Regular reading */
     
     SIXSTEP_parameters.ADC_Regular_Buffer[index_adc_chn] = HAL_ADC_GetValue(&ADCx);
-    
-    if (index_adc_chn == 1)
-    {/*HFBuffer
-      HFBuffer[HFBufferIndex++] = HAL_ADC_GetValue(&ADCx);
-      if (HFBufferIndex >= HFBUFFERSIZE)
-      {
-        HFBufferIndex = 0;
-      }*/
-    }
     index_adc_chn++; 
     if(index_adc_chn>1) index_adc_chn = 0;       
      MC_SixStep_ADC_Channel(SIXSTEP_parameters.CurrentRegular_BEMF_ch);   

@@ -110,7 +110,6 @@
  
     sConfig.Rank = 1;
     sConfig.SingleDiff = ADC_SINGLE_ENDED;
-    sConfig.SamplingTime = ADC_CH_1_ST;
     sConfig.OffsetNumber = ADC_OFFSET_NONE;
     sConfig.Offset = 0;
     HAL_ADC_ConfigChannel(&hadc1, &sConfig);
