@@ -1,4 +1,4 @@
---cpu=Cortex-M4.fp
+--cpu=Cortex-M4.fp.sp
 "stm32f302r8-nucleo configuration\main_f302.o"
 "stm32f302r8-nucleo configuration\stm32f3xx_hal_msp.o"
 "stm32f302r8-nucleo configuration\stm32f3xx_it.o"

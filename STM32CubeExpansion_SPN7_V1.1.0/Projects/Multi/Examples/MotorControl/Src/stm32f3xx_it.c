@@ -45,7 +45,9 @@ extern SIXSTEP_Base_InitTypeDef SIXSTEP_parameters; /*!< Main SixStep structure*
 extern ADC_HandleTypeDef hadc1;
 extern TIM_HandleTypeDef htim1;
 extern TIM_HandleTypeDef htim6;
-extern UART_HandleTypeDef huart2;
+extern TIM_HandleTypeDef htim15;  //added
+extern TIM_HandleTypeDef htim16;  //added
+extern UART_HandleTypeDef huart3; //changed from huart2
 extern void UART_Set_Value(void);
 /******************************************************************************/
 /*            Cortex-M4 Processor Interruption and Exception Handlers         */ 
@@ -96,14 +98,14 @@ void SysTick_Handler(void)
 }
 
 /**
-* @brief This function handles USART2 global interrupt.
+* @brief This function handles USART3 global interrupt.   //changed from uart2
 */
 void USART2_IRQHandler(void)
 {
   /* USER CODE BEGIN USART2_IRQn 0 */
 
   /* USER CODE END USART2_IRQn 0 */
-  HAL_UART_IRQHandler(&huart2);
+  HAL_UART_IRQHandler(&huart3);
   /* USER CODE BEGIN USART2_IRQn 1 */
 #ifdef UART_COMM   
   UART_Set_Value();
@@ -143,6 +145,9 @@ void EXTI15_10_IRQHandler(void)
   /* USER CODE END EXTI15_10_IRQn 1 */
 }
 
+/**
+*@brief This function handles  TIM16 interrupts
+*/
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
