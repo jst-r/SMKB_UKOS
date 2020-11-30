@@ -49,7 +49,6 @@ ADC_HandleTypeDef hadc1;
 
 
 TIM_HandleTypeDef htim1;
-TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim6;
 TIM_HandleTypeDef htim16;
 UART_HandleTypeDef huart2;
@@ -64,7 +63,6 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_TIM1_Init(void);
-static void MX_TIM2_Init(void);
 static void MX_TIM6_Init(void);
 static void MX_USART2_UART_Init(void);
 
@@ -85,9 +83,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 {
 
   /* USER CODE BEGIN 1 */
-#ifdef BOOT  
-  SCB->VTOR = 0x08009A00; /* Change vector table */
-#endif  
+ 
   /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
@@ -110,7 +106,6 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
   MX_GPIO_Init();
   MX_ADC1_Init();
   MX_TIM1_Init();
-  MX_TIM2_Init();
   MX_TIM6_Init();
   MX_USART2_UART_Init();
 
@@ -121,18 +116,14 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
   ============================================================================== 
   **************************************************************************** */     
   MC_SixStep_INIT();
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
+	HAL_NVIC_EnableIRQ(EXTI1_IRQn);
+	HAL_NVIC_EnableIRQ(EXTI2_TSC_IRQn);
+	
   /****************************************************************************/ 
  /*! ***************** This part enables the boot loader function ************/        
-#ifdef BOOT 
-  /* Blink to indicate FOC selection */
-  volatile uint32_t myDelay;
-  volatile uint32_t cycle;
-  for (cycle = 0; cycle < 8; cycle++)
-  {
-    GPIOB->ODR ^= GPIO_PIN_2;
-    for (myDelay = 0; myDelay < 1000000; myDelay++);
-  }
-#endif
+
 /*! *************************************************************************/  
   /* USER CODE END 2 */
 
@@ -171,8 +162,8 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
                        ###### USER SPACE ######
   ==============================================================================      
   *****************************************************************************/    
-      
-   
+      HAL_Delay(3000);
+			MC_StartMotor();
   /****************************************************************************/    
   }
   /* USER CODE END 3 */
@@ -190,8 +181,10 @@ void SystemClock_Config(void)
 
     /**Initializes the CPU, AHB and APB busses clocks 
     */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
-  RCC_OscInitStruct.HSEState = RCC_HSE_BYPASS;
+
+	
+	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.HSEPredivValue = RCC_HSE_PREDIV_DIV1;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
@@ -316,7 +309,7 @@ static void MX_TIM1_Init(void)
 
   sClearInputConfig.ClearInputState = ENABLE;
   sClearInputConfig.ClearInputSource = TIM_CLEARINPUTSOURCE_ETR;
-  sClearInputConfig.ClearInputPolarity = TIM_CLEARINPUTPOLARITY_NONINVERTED; //change to inverted in release version
+  sClearInputConfig.ClearInputPolarity = TIM_CLEARINPUTPOLARITY_NONINVERTED;
   sClearInputConfig.ClearInputPrescaler = TIM_CLEARINPUTPRESCALER_DIV1;
   sClearInputConfig.ClearInputFilter = 0;
   if (HAL_TIM_ConfigOCrefClear(&htim1, &sClearInputConfig, TIM_CHANNEL_1) != HAL_OK)
@@ -345,11 +338,9 @@ static void MX_TIM1_Init(void)
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
   sConfigOC.Pulse = 575;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-  sConfigOC.OCNPolarity = TIM_OCNPOLARITY_LOW;
+  sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-// sConfigOC.OCIdleState = TIM_OCIDLESTATE_SET; - uncomment B4 release 
-// sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_SET;
-	sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET; 
+	sConfigOC.OCIdleState = TIM_OCIDLESTATE_SET; 
 	sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_SET;
   if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
   {
@@ -386,55 +377,7 @@ static void MX_TIM1_Init(void)
 
 }
 
-/* TIM2 init function */
-static void MX_TIM2_Init(void)
-{
 
-  TIM_ClockConfigTypeDef sClockSourceConfig;
-  TIM_MasterConfigTypeDef sMasterConfig;
-  TIM_OC_InitTypeDef sConfigOC;
-
-  htim2.Instance = TIM2;
-  htim2.Init.Prescaler = 719;
-  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 50000;
-  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-  if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
-  {
-    _Error_Handler(__FILE__, __LINE__);
-  }
-
-  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
-  if (HAL_TIM_ConfigClockSource(&htim2, &sClockSourceConfig) != HAL_OK)
-  {
-    _Error_Handler(__FILE__, __LINE__);
-  }
-
-  if (HAL_TIM_PWM_Init(&htim2) != HAL_OK)
-  {
-    _Error_Handler(__FILE__, __LINE__);
-  }
-
-  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
-  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-  if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
-  {
-    _Error_Handler(__FILE__, __LINE__);
-  }
-
-  sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = 0;
-  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-  if (HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
-  {
-    _Error_Handler(__FILE__, __LINE__);
-  }
-
-  HAL_TIM_MspPostInit(&htim2);
-
-}
 
 /* TIM6 init function */
 static void MX_TIM6_Init(void)
@@ -502,42 +445,61 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_4|GPIO_PIN_7|GPIO_PIN_10|GPIO_PIN_11 
-                          |GPIO_PIN_12, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_4|GPIO_PIN_9, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_RESET);
 
-  /*Configure GPIO pin : PC13 */
-  GPIO_InitStruct.Pin = GPIO_PIN_13;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : PC4 PC7 PC10 PC11 
-                           PC12 */
-  GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_7|GPIO_PIN_10|GPIO_PIN_11 
-                          |GPIO_PIN_12;
+  /*Configure GPIO pins : PC4 PC7 */
+  GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_9;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-
+	
+  /*Configure GPIO pins : GPIO_3_3V_EN_Pin GPIO_14V_EN_Pin */
+  GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_8;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
   /*Configure GPIO pin : PB2 */
   GPIO_InitStruct.Pin = GPIO_PIN_2;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
+	 /*Configure GPIO pins : EXTI1_END_STOP_Pin EXTI2_END_STOP_Pin */
+  GPIO_InitStruct.Pin = GPIO_PIN_1|GPIO_PIN_2;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
   /* EXTI interrupt init*/
-  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
+  HAL_NVIC_SetPriority(EXTI1_IRQn, 0, 0);
+	HAL_NVIC_EnableIRQ(EXTI1_IRQn);
+
+  HAL_NVIC_SetPriority(EXTI2_TSC_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI2_TSC_IRQn);
 
 }
 
 /* USER CODE BEGIN 4 */
-
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+  if(GPIO_Pin == GPIO_PIN_1) {
+		//HAL_UART_Transmit(&huart3, "Stop Motor pos 1\n", 17, 200 );
+		MC_StopMotor();
+		MC_SixStep_Change_Direction();
+  } 
+	else if (GPIO_Pin == GPIO_PIN_2) {
+		//HAL_UART_Transmit(&huart3, "Stop Motor pos 2\n", 17, 200 );
+		MC_StopMotor();
+		MC_SixStep_Change_Direction();
+	} 
+	else {
+	  __NOP();
+	}
+}
 /* USER CODE END 4 */
 
 /**

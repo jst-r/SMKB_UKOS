@@ -153,7 +153,8 @@ typedef struct
   uint16_t KP;                           /*!< KP parameter for PI regulator */ 
   uint16_t KI;                           /*!< KI parameter for PI regulator */ 
   uint8_t CW_CCW;                        /*!< Set the motor direction */ 
-  uint8_t Potentiometer;                 /*!< Enable/Disable potentiometer for speed control */ 
+ // uint8_t Potentiometer;                 /*!< Enable/Disable potentiometer for speed control */ 
+	uint8_t dir;
 }  SIXSTEP_Base_InitTypeDef;             /*!< Six Step Data Structure */
 
 /**
@@ -192,7 +193,7 @@ void MC_StartMotor(void);
 void MC_StopMotor(void);
 void MC_Set_Speed(uint16_t);
 void MC_EXT_button_SixStep(void);
-void MC_SixStep_Change_Direction(uint8_t);
+void MC_SixStep_Change_Direction(void);
 
 /**
   * @} 

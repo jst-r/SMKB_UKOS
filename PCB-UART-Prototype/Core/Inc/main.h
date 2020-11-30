@@ -63,6 +63,7 @@ void Error_Handler(void);
 #define EXTI1_END_STOP_EXTI_IRQn EXTI1_IRQn
 #define EXTI2_END_STOP_Pin GPIO_PIN_2
 #define EXTI2_END_STOP_GPIO_Port GPIOB
+#define EXTI2_END_STOP_EXTI_IRQn EXTI2_TSC_IRQn
 #define GPIO_3_3V_EN_Pin GPIO_PIN_6
 #define GPIO_3_3V_EN_GPIO_Port GPIOC
 #define GPIO_14V_EN_Pin GPIO_PIN_8

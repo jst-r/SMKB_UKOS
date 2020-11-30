@@ -162,17 +162,6 @@
   * @} 
   */
 
-/** @defgroup HAL_GPIO_EXTI_Callback    HAL_GPIO_EXTI_Callback
-  *  @{
-    * @brief EXT callback 
-*/ 
-  void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
-  {
-    MC_EXT_button_SixStep();
-  }
-/**
-  * @} 
-  */
   
 
 /** @defgroup DisableInput_CH1_D_CH2_D_CH3_D    DisableInput_CH1_D_CH2_D_CH3_D
@@ -181,10 +170,7 @@
   */
 
 void MC_SixStep_DisableInput_CH1_D_CH2_D_CH3_D()
-{
-  HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH1,GPIO_RESET);  //EN1 DISABLE          
-  HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH2,GPIO_RESET);  //EN2 DISABLE
-  HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH3,GPIO_RESET);  //EN3 DISABLE   
+{  
 	HAL_TIMEx_PWMN_Stop(&htim1,TIM_CHANNEL_1);
 	HAL_TIMEx_PWMN_Stop(&htim1,TIM_CHANNEL_2);
 	HAL_TIMEx_PWMN_Stop(&htim1,TIM_CHANNEL_3);

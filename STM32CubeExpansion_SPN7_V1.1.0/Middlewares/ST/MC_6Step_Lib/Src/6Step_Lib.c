@@ -88,7 +88,6 @@ int16_t speed_tmp_array[FILTER_DEEP];               /*!<  Speed filter variable 
 uint16_t HFBuffer[HFBUFFERSIZE];                    /*!<  Buffer for Potentiometer Value Filtering at the High-Frequency ADC conversion REMOVE_ASAP*/    
 uint16_t HFBufferIndex = 0;                         /*!<  High-Frequency Buffer Index ???REMOVE_ASAP???*/    
 uint8_t  array_completed = FALSE;                   /*!<  Speed filter variable */
-//uint8_t  buffer_completed = FALSE;                  /*!<  Potentiometer filter variable REMOVE_ASAP*/
 uint8_t  UART_FLAG_RECEIVE = FALSE;                 /*!<  UART commmunication flag */
 uint32_t ARR_LF = 0;                                /*!<  Autoreload LF TIM variable */
 int32_t Mech_Speed_RPM = 0;                         /*!<  Mechanical motor speed */
@@ -114,7 +113,7 @@ int16_t potent_filtered = 0; 		/*REMOVE_ASAP*/
 uint32_t Tick_cnt = 0;  
 uint32_t counter_ARR_Bemf = 0;
 uint64_t constant_multiplier_tmp = 0;
- 
+uint8_t dir = 0;
 int16_t MC_PI_Controller(SIXSTEP_PI_PARAM_InitTypeDef_t *, int16_t);
 uint64_t MCM_Sqrt(uint64_t );
 int32_t MC_GetElSpeedHz(void);
@@ -150,7 +149,7 @@ void CMD_Parser(char* pCommandString);
     * @param  step_number: step number selected
     * @retval None
   */
-
+	
 void MC_SixStep_TABLE(uint8_t step_number)
 { 
 
@@ -158,12 +157,11 @@ void MC_SixStep_TABLE(uint8_t step_number)
   { 
     case 1:
       {  
+					HAL_TIM_PWM_Start(&HF_TIMx, HF_TIMx_CH1);         	 		//TIM1_CH1 ENABLE   
+					HAL_TIM_PWM_Start(&HF_TIMx, HF_TIMx_CH2);        	   		//TIM1_CH2 ENABLE   
+					HAL_TIM_PWM_Stop(&HF_TIMx, HF_TIMx_CH3);          		 	//TIM1_CH3 DISABLE
           MC_SixStep_HF_TIMx_SetDutyCycle_CH1(SIXSTEP_parameters.pulse_value);
           MC_SixStep_HF_TIMx_SetDutyCycle_CH2(0);
-          MC_SixStep_HF_TIMx_SetDutyCycle_CH3(0);
-					HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH1,GPIO_SET);      //EN1 ENABLE  	  REMOVE_ASAP           
-					HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH2,GPIO_SET);      //EN2 ENABLE			REMOVE_ASAP
-					HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH3,GPIO_RESET);    //EN3 DISABLE		REMOVE_ASAP
 					HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_1);
 					HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_2);
 					HAL_TIMEx_PWMN_Stop(&htim1,TIM_CHANNEL_3);
@@ -171,13 +169,12 @@ void MC_SixStep_TABLE(uint8_t step_number)
       }
      break;
     case 2:
-      {                   
+      {     
+					HAL_TIM_PWM_Start(&HF_TIMx, HF_TIMx_CH1);         	 		//TIM1_CH1 ENABLE   
+					HAL_TIM_PWM_Stop(&HF_TIMx, HF_TIMx_CH2);        	   		//TIM1_CH2 DISABLE
+					HAL_TIM_PWM_Start(&HF_TIMx, HF_TIMx_CH3);          		 	//TIM1_CH3 ENABLE          
           MC_SixStep_HF_TIMx_SetDutyCycle_CH1(SIXSTEP_parameters.pulse_value);
-          MC_SixStep_HF_TIMx_SetDutyCycle_CH2(0);
           MC_SixStep_HF_TIMx_SetDutyCycle_CH3(0); 
-          HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH1,GPIO_SET);    //EN1 ENABLE  			REMOVE_ASAP             
-					HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH2,GPIO_RESET);  //EN2 DISABLE			REMOVE_ASAP
-					HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH3,GPIO_SET);    //EN3 ENABLE  		  REMOVE_ASAP
 					HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_1);
 					HAL_TIMEx_PWMN_Stop(&htim1,TIM_CHANNEL_2);
 					HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_3);  
@@ -185,13 +182,12 @@ void MC_SixStep_TABLE(uint8_t step_number)
       }
      break;     
     case 3:
-      {     
+      {     	
+					HAL_TIM_PWM_Stop(&HF_TIMx, HF_TIMx_CH1);         	 			//TIM1_CH1 DISABLE  
+					HAL_TIM_PWM_Start(&HF_TIMx, HF_TIMx_CH2);        	   		//TIM1_CH2 ENABLE   
+					HAL_TIM_PWM_Start(&HF_TIMx, HF_TIMx_CH3);          		 	//TIM1_CH3 ENABLE
           MC_SixStep_HF_TIMx_SetDutyCycle_CH2(SIXSTEP_parameters.pulse_value);
-          MC_SixStep_HF_TIMx_SetDutyCycle_CH3(0);
-          MC_SixStep_HF_TIMx_SetDutyCycle_CH1(0);  
-          HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH1,GPIO_RESET);  //EN1 DISABLE 		  REMOVE_ASAP              
-					HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH2,GPIO_SET);    //EN2 ENABLE		 	 	REMOVE_ASAP
-					HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH3,GPIO_SET);    //EN3 ENABLE   		REMOVE_ASAP
+          MC_SixStep_HF_TIMx_SetDutyCycle_CH3(0);  
 					HAL_TIMEx_PWMN_Stop(&htim1,TIM_CHANNEL_1);
 					HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_2);
 					HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_3);           
@@ -199,13 +195,12 @@ void MC_SixStep_TABLE(uint8_t step_number)
       }
      break;     
     case 4:
-      { 
+      { 			
+					HAL_TIM_PWM_Start(&HF_TIMx, HF_TIMx_CH1);         	 		//TIM1_CH1 ENABLE   
+					HAL_TIM_PWM_Start(&HF_TIMx, HF_TIMx_CH2);        	   		//TIM1_CH2 ENABLE   
+					HAL_TIM_PWM_Stop(&HF_TIMx, HF_TIMx_CH3);          		 	//TIM1_CH3 DISABLE
           MC_SixStep_HF_TIMx_SetDutyCycle_CH2(SIXSTEP_parameters.pulse_value);
           MC_SixStep_HF_TIMx_SetDutyCycle_CH1(0);
-          MC_SixStep_HF_TIMx_SetDutyCycle_CH3(0);
-					HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH1,GPIO_SET);      //EN1 ENABLE  	  REMOVE_ASAP           
-					HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH2,GPIO_SET);      //EN2 ENABLE			REMOVE_ASAP
-					HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH3,GPIO_RESET);    //EN3 DISABLE		REMOVE_ASAP
 					HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_1);
 					HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_2);
 					HAL_TIMEx_PWMN_Stop(&htim1,TIM_CHANNEL_3);       
@@ -214,12 +209,11 @@ void MC_SixStep_TABLE(uint8_t step_number)
      break;  
     case 5:
       {
+					HAL_TIM_PWM_Start(&HF_TIMx, HF_TIMx_CH1);         	 		//TIM1_CH1 ENABLE   
+					HAL_TIM_PWM_Stop(&HF_TIMx, HF_TIMx_CH2);        	   		//TIM1_CH2 DISABLE
+					HAL_TIM_PWM_Start(&HF_TIMx, HF_TIMx_CH3);          		 	//TIM1_CH3 ENABLE
           MC_SixStep_HF_TIMx_SetDutyCycle_CH3(SIXSTEP_parameters.pulse_value);
-          MC_SixStep_HF_TIMx_SetDutyCycle_CH1(0);
-          MC_SixStep_HF_TIMx_SetDutyCycle_CH2(0);  
-          HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH1,GPIO_SET);    //EN1 ENABLE  			REMOVE_ASAP             
-					HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH2,GPIO_RESET);  //EN2 DISABLE			REMOVE_ASAP
-					HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH3,GPIO_SET);    //EN3 ENABLE  		  REMOVE_ASAP
+          MC_SixStep_HF_TIMx_SetDutyCycle_CH1(0); 
 					HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_1);
 					HAL_TIMEx_PWMN_Stop(&htim1,TIM_CHANNEL_2);
 					HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_3);                    
@@ -227,13 +221,12 @@ void MC_SixStep_TABLE(uint8_t step_number)
       }
      break;
     case 6:
-      {   
+      {   	
+					HAL_TIM_PWM_Stop(&HF_TIMx, HF_TIMx_CH1);         	 			//TIM1_CH1 DISABLE  
+					HAL_TIM_PWM_Start(&HF_TIMx, HF_TIMx_CH2);        	   		//TIM1_CH2 ENABLE   
+					HAL_TIM_PWM_Start(&HF_TIMx, HF_TIMx_CH3);          		 	//TIM1_CH3 ENABLE
           MC_SixStep_HF_TIMx_SetDutyCycle_CH3(SIXSTEP_parameters.pulse_value);
-          MC_SixStep_HF_TIMx_SetDutyCycle_CH2(0);
-          MC_SixStep_HF_TIMx_SetDutyCycle_CH1(0);  
-          HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH1,GPIO_RESET);  //EN1 DISABLE 		  REMOVE_ASAP              
-					HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH2,GPIO_SET);    //EN2 ENABLE		 	 	REMOVE_ASAP
-					HAL_GPIO_WritePin(GPIO_PORT_1,GPIO_CH3,GPIO_SET);    //EN3 ENABLE   		REMOVE_ASAP
+          MC_SixStep_HF_TIMx_SetDutyCycle_CH2(0);  
 					HAL_TIMEx_PWMN_Stop(&htim1,TIM_CHANNEL_1);
 					HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_2);
 					HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_3);              
@@ -257,8 +250,7 @@ void MC_SixStep_NEXT_step()
  
  if(SIXSTEP_parameters.CMD == TRUE)
  { 
-    SIXSTEP_parameters.CMD = FALSE;
-    MC_SixStep_Start_PWM_driving();     
+    SIXSTEP_parameters.CMD = FALSE;     
  } 
   ARR_LF = __HAL_TIM_GetAutoreload(&LF_TIMx);
    
@@ -366,10 +358,16 @@ void MC_SixStep_NEXT_step()
     * @brief Change target direction to opposite
     * @retval None
   */
-void MC_SixStep_Change_Direction(uint8_t dir){
-	SIXSTEP_parameters.CW_CCW = dir;
-}
 
+void MC_SixStep_Change_Direction(void){
+	if (dir == 0){
+		dir = 1;
+		SIXSTEP_parameters.CW_CCW = 1;	
+	} else if (dir == 1) {
+		dir = 0;
+		SIXSTEP_parameters.CW_CCW = 0;
+	}
+}
 /**
   * @} 
   */
@@ -467,7 +465,6 @@ void MC_SixStep_RESET()
  constant_multiplier_tmp = 0;
 
  array_completed = FALSE;
- //buffer_completed = FALSE;
  
  if(PI_parameters.Reference < 0)  
  {
@@ -1372,7 +1369,7 @@ void MC_ADCx_SixStep_Bemf()
 
 
 // TODO REMOVE dir
-uint8_t dir = 0;
+
 void MC_EXT_button_SixStep()
 {
   if(Enable_start_button == TRUE)
@@ -1380,7 +1377,7 @@ void MC_EXT_button_SixStep()
     if(SIXSTEP_parameters.RUN_Motor == 0 && SIXSTEP_parameters.Button_ready == TRUE) 
     {
       dir = !dir;
-      MC_SixStep_Change_Direction(dir);
+      MC_SixStep_Change_Direction();
       MC_StartMotor();
       Enable_start_button = FALSE;
     }

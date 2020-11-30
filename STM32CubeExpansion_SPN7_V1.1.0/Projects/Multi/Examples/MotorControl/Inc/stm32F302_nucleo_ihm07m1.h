@@ -50,12 +50,6 @@
   #define ADCx                  hadc1
 //#define UART                  huart2          //NO NEED IN THIS PORT, USE huart3 instead
 
-  #define GPIO_PORT_1           GPIOC           //NO NEED IN THIS PORT, Used as enable of PWM channels, Remove after complimentaru PWM implementation
-  #define GPIO_CH1              GPIO_PIN_10     //same
-  #define GPIO_PORT_2           GPIOC           //NO NEED IN THIS PORT, Used as enable of PWM channels, Remove after complimentaru PWM implementation
-  #define GPIO_CH2              GPIO_PIN_11     //same    
-  #define GPIO_PORT_3           GPIOC           //NO NEED IN THIS PORT, Used as enable of PWM channels, Remove after complimentaru PWM implementation
-  #define GPIO_CH3              GPIO_PIN_12     //same
   #define GPIO_SET              GPIO_PIN_SET
   #define GPIO_RESET            GPIO_PIN_RESET
 
@@ -81,10 +75,8 @@
   #define HF_TIMx_CCR2          CCR2            /*Channel 2*/
   #define HF_TIMx_CCR3          CCR3            /*Channel 3*/
 
-  #define GPIO_PORT_ZCR         GPIOC           /*!<  GPIO port name for zero crossing detection */
-  #define GPIO_CH_ZCR           GPIO_PIN_7      /*!<  GPIO pin name for zero crossing detection */
-//#define GPIO_PORT_ZCR         GPIOC         /*!<  EDITED _ GPIO port name for zero crossing detection */
-//#define GPIO_CH_ZCR           GPIO_PIN_9    /*!<  EDITED _ GPIO pin name for zero crossing detection */
+	#define GPIO_PORT_ZCR         GPIOC         /*!<  EDITED _ GPIO port name for zero crossing detection */
+	#define GPIO_CH_ZCR           GPIO_PIN_9    /*!<  EDITED _ GPIO pin name for zero crossing detection */
 
 
   #define STARTM_CMD             0     /*!<  Start Motor command received */
