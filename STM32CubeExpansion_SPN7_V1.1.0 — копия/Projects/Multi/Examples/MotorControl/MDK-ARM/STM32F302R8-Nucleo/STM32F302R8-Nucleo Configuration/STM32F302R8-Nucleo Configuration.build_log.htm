@@ -1,0 +1,144 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: µVision V5.31.0.0
+Copyright (C) 2020 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: Michael Gostev, ITMO University, LIC=----
+ 
+Tool Versions:
+Toolchain:       MDK-Lite  Version: 5.31.0.0
+Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 6 (build 750)
+Assembler:       Armasm.exe V5.06 update 6 (build 750)
+Linker/Locator:  ArmLink.exe V5.06 update 6 (build 750)
+Library Manager: ArmAr.exe V5.06 update 6 (build 750)
+Hex Converter:   FromElf.exe V5.06 update 6 (build 750)
+CPU DLL:         SARMCM3.DLL V5.31.0.0
+Dialog DLL:      DCM.DLL V1.17.3.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.0.7.0
+Dialog DLL:      TCM.DLL V1.46.0.0
+ 
+<h2>Project:</h2>
+E:\Äîêóìåíòû\GitHub\SMKB_UKOS\STM32CubeExpansion_SPN7_V1.1.0 — êîïèÿ\Projects\Multi\Examples\MotorControl\MDK-ARM\STM32F302R8-Nucleo\STM32F302R8-Nucleo.uvprojx
+Project File Date:  12/01/2020
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 6 (build 750)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
+Build target 'STM32F302R8-Nucleo'
+assembling startup_stm32f302x8.s...
+compiling stm32f3xx_hal_msp.c...
+..\..\Src\stm32f3xx_hal_msp.c(126): error:  #70: incomplete type is not allowed
+  void HAL_RTC_MspInit
+..\..\Src\stm32f3xx_hal_msp.c(128): error:  #65: expected a ";"
+  void HAL_ADC_MspDeInit(ADC_HandleTypeDef* hadc)
+..\..\Src\stm32f3xx_hal_msp.c(150): warning:  #12-D: parsing restarts here after previous syntax error
+      HAL_GPIO_DeInit(GPIOA, GPIO_PIN_1|GPIO_PIN_7);
+..\..\Src\stm32f3xx_hal_msp.c(152): error:  #79: expected a type specifier
+      HAL_GPIO_DeInit(GPIOB, GPIO_PIN_0|GPIO_PIN_1);
+..\..\Src\stm32f3xx_hal_msp.c(152): error:  #79: expected a type specifier
+      HAL_GPIO_DeInit(GPIOB, GPIO_PIN_0|GPIO_PIN_1);
+..\..\Src\stm32f3xx_hal_msp.c(152): error:  #260-D: explicit type is missing ("int" assumed)
+      HAL_GPIO_DeInit(GPIOB, GPIO_PIN_0|GPIO_PIN_1);
+..\..\Src\stm32f3xx_hal_msp.c(152): error:  #147: declaration is incompatible with "void HAL_GPIO_DeInit(GPIO_TypeDef *, uint32_t)"  (declared at line 274 of "..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_gpio.h")
+      HAL_GPIO_DeInit(GPIOB, GPIO_PIN_0|GPIO_PIN_1);
+..\..\Src\stm32f3xx_hal_msp.c(155): error:  #260-D: explicit type is missing ("int" assumed)
+      HAL_NVIC_DisableIRQ(ADC1_IRQn);
+..\..\Src\stm32f3xx_hal_msp.c(155): error:  #92: identifier-list parameters may only be used in a function definition
+      HAL_NVIC_DisableIRQ(ADC1_IRQn);
+..\..\Src\stm32f3xx_hal_msp.c(155): error:  #147: declaration is incompatible with "void HAL_NVIC_DisableIRQ(IRQn_Type)"  (declared at line 281 of "..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_cortex.h")
+      HAL_NVIC_DisableIRQ(ADC1_IRQn);
+..\..\Src\stm32f3xx_hal_msp.c(159): error:  #169: expected a declaration
+    }
+..\..\Src\stm32f3xx_hal_msp.c(268): warning:  #12-D: parsing restarts here after previous syntax error
+      GPIO_InitStruct.Pin = GPIO_PIN_13|GPIO_PIN_14;
+..\..\Src\stm32f3xx_hal_msp.c(269): error:  #77-D: this declaration has no storage class or type specifier
+      GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+..\..\Src\stm32f3xx_hal_msp.c(269): error:  #65: expected a ";"
+      GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+..\..\Src\stm32f3xx_hal_msp.c(270): error:  #77-D: this declaration has no storage class or type specifier
+      GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+..\..\Src\stm32f3xx_hal_msp.c(270): error:  #65: expected a ";"
+      GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+..\..\Src\stm32f3xx_hal_msp.c(271): error:  #77-D: this declaration has no storage class or type specifier
+      GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+..\..\Src\stm32f3xx_hal_msp.c(271): error:  #65: expected a ";"
+      GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+..\..\Src\stm32f3xx_hal_msp.c(272): error:  #77-D: this declaration has no storage class or type specifier
+      GPIO_InitStruct.Alternate = GPIO_AF6_TIM1;
+..\..\Src\stm32f3xx_hal_msp.c(272): error:  #65: expected a ";"
+      GPIO_InitStruct.Alternate = GPIO_AF6_TIM1;
+..\..\Src\stm32f3xx_hal_msp.c(273): error:  #79: expected a type specifier
+      HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+..\..\Src\stm32f3xx_hal_msp.c(273): error:  #79: expected a type specifier
+      HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+..\..\Src\stm32f3xx_hal_msp.c(273): error:  #260-D: explicit type is missing ("int" assumed)
+      HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+..\..\Src\stm32f3xx_hal_msp.c(273): error:  #147: declaration is incompatible with "void HAL_GPIO_Init(GPIO_TypeDef *, GPIO_InitTypeDef *)"  (declared at line 273 of "..\..\..\..\..\..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_gpio.h")
+      HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+..\..\Src\stm32f3xx_hal_msp.c(275): error:  #77-D: this declaration has no storage class or type specifier
+      GPIO_InitStruct.Pin = GPIO_PIN_15;
+..\..\Src\stm32f3xx_hal_msp.c(275): error:  #65: expected a ";"
+      GPIO_InitStruct.Pin = GPIO_PIN_15;
+..\..\Src\stm32f3xx_hal_msp.c(276): error:  #77-D: this declaration has no storage class or type specifier
+      GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+..\..\Src\stm32f3xx_hal_msp.c(276): error:  #65: expected a ";"
+      GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+..\..\Src\stm32f3xx_hal_msp.c(277): error:  #77-D: this declaration has no storage class or type specifier
+      GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+..\..\Src\stm32f3xx_hal_msp.c(277): error:  #65: expected a ";"
+      GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+..\..\Src\stm32f3xx_hal_msp.c(278): error:  #77-D: this declaration has no storage class or type specifier
+      GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+..\..\Src\stm32f3xx_hal_msp.c(278): error:  #65: expected a ";"
+      GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+..\..\Src\stm32f3xx_hal_msp.c: 2 warnings, 30 errors
+compiling stm32f3xx_hal_adc.c...
+compiling stm32f3xx_hal.c...
+compiling main_F302.c...
+..\..\Src\main_F302.c(49): error:  #20: identifier "RTC_HandleTypeDef" is undefined
+  RTC_HandleTypeDef hrtc;
+..\..\Src\main_F302.c(116): warning:  #223-D: function "MX_RTC_Init" declared implicitly
+  	MX_RTC_Init();
+..\..\Src\main_F302.c: 1 warning, 1 error
+compiling system_stm32f3xx.c...
+compiling stm32f3xx_hal_cortex.c...
+compiling UART_UI.c...
+compiling stm32f3xx_it.c...
+compiling stm32F302_nucleo_ihm07m1.c...
+compiling 6Step_Lib.c...
+compiling stm32f3xx_hal_adc_ex.c...
+compiling stm32f3xx_hal_dac_ex.c...
+compiling stm32f3xx_hal_uart_ex.c...
+compiling stm32f3xx_hal_dac.c...
+compiling stm32f3xx_hal_usart.c...
+compiling stm32f3xx_hal_gpio.c...
+compiling stm32f3xx_hal_rcc_ex.c...
+compiling stm32f3xx_hal_rcc.c...
+compiling stm32f3xx_hal_tim_ex.c...
+compiling stm32f3xx_hal_uart.c...
+compiling stm32f3xx_hal_tim.c...
+compiling stm32f3xx_hal_dma.c...
+compiling stm32f3xx_hal_rtc.c...
+compiling stm32f3xx_hal_pwr.c...
+compiling stm32f3xx_hal_pwr_ex.c...
+compiling stm32f3xx_hal_rtc_ex.c...
+"STM32F302R8-Nucleo Configuration\STM32F302R8-Nucleo Configuration.axf" - 31 Error(s), 3 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: Keil
+                http://www.keil.com/pack/Keil.STM32F3xx_DFP.2.1.0.pack
+                Keil.STM32F3xx_DFP.2.1.0
+                STMicroelectronics STM32F3 Series Device Support and Examples
+
+<h2>Collection of Component include folders:</h2>
+  C:\Users\prizr\AppData\Local\Arm\Packs\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include
+
+<h2>Collection of Component Files used:</h2>
+Target not created.
+Build Time Elapsed:  00:00:07
+</pre>
+</body>
+</html>
