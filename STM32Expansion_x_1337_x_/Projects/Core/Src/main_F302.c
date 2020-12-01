@@ -57,6 +57,12 @@ UART_HandleTypeDef huart3;
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 
+/*somehow make first hold through reset state*/
+uint8_t position = 0; //Current motor position
+uint8_t prev_position = 0;
+uint8_t will = 10; //How much attempts will motor make on the way to end_position
+uint8_t attempt = 0; //represents way to success
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -122,10 +128,6 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 	HAL_NVIC_EnableIRQ(EXTI1_IRQn);
 	HAL_NVIC_EnableIRQ(EXTI2_TSC_IRQn);
 	
-  /****************************************************************************/ 
- /*! ***************** This part enables the boot loader function ************/        
-
-/*! *************************************************************************/  
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -139,16 +141,6 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
   ==============================================================================   
             ###### How to use the 6Step FW Example project ######
   ==============================================================================     
-  This workspace contains the middleware layer with Motor Control library to drive 
-  a motor connected on X-Nucleo board performing a 6-step control algorithm
-  allowing the motor speed regulation through a potentiometer. The 6-step algorithm 
-  is based on 1shunt current sensing mode and sensorless algorithm for bEmf detection.
-  The workspace is provided for STM32Fxx-Nucleo in four different configurations, 
-  normal, demo, comm mode, boot mode. The "normal" mode waits the blue button event 
-  to start the motor, the "demo" mode starts and stop the motor automatically, the 
-  "comm" mode enables the communication protocol with external PC terminal and the 
-  "boot" mode enables the FW for external boot loader.
-    
    A list of APIs is provided to send command to 6Step lib, for instance:
     
     (#)  MC_StartMotor() -> Start the motor
@@ -163,12 +155,21 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
                        ###### USER SPACE ######
   ==============================================================================      
   *****************************************************************************/    
-      
-			if (MC_MotorState() == 0){
-				HAL_Delay(1000);
-				MC_StartMotor();
+		if(prev_position != position){
+			prev_position = position;
+			MC_SixStep_Change_Direction();
+			MC_StopMotor();
+		}
+		if (attempt < will){
+				if (MC_MotorState() == 0){
+					HAL_Delay(1000);
+					MC_StartMotor();
+					attempt++;
+				} else {
+					__NOP();
+				}
 			} else {
-				HAL_Delay(200);
+				MC_StopMotor();
 			}
   /****************************************************************************/    
   }
@@ -494,13 +495,15 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
   if(GPIO_Pin == GPIO_PIN_1) {
 		//HAL_UART_Transmit(&huart3, "Stop Motor pos 1\n", 17, 200 );
-		MC_StopMotor();
-		MC_SixStep_Change_Direction();
+		//MC_StopMotor();
+		position = 1;
+		attempt = 0;
   } 
 	else if (GPIO_Pin == GPIO_PIN_2) {
 		//HAL_UART_Transmit(&huart3, "Stop Motor pos 2\n", 17, 200 );
-		MC_StopMotor();
-		MC_SixStep_Change_Direction();
+		//MC_StopMotor();
+		position = 2;
+		attempt = 0;
 	} 
 	else {
 	  __NOP();
