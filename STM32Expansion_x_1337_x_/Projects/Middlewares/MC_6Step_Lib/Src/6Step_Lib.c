@@ -142,6 +142,7 @@ void UART_Set_Value(void);
 void UART_Communication_Task(void);
 void MC_SixStep_Init_main_data(void);
 void CMD_Parser(char* pCommandString);
+uint8_t MC_MotorState(void);
 
 /** @defgroup MC_SixStep_TABLE    MC_SixStep_TABLE
   *  @{
@@ -149,7 +150,10 @@ void CMD_Parser(char* pCommandString);
     * @param  step_number: step number selected
     * @retval None
   */
-	
+	uint8_t MC_MotorState (){
+	uint8_t a = SIXSTEP_parameters.RUN_Motor;
+	return a;
+	}
 void MC_SixStep_TABLE(uint8_t step_number)
 { 
 

@@ -11,8 +11,6 @@
 "stm32f302r8-nucleo configuration\stm32f3xx_hal_adc.o"
 "stm32f302r8-nucleo configuration\stm32f3xx_hal_adc_ex.o"
 "stm32f302r8-nucleo configuration\stm32f3xx_hal_cortex.o"
-"stm32f302r8-nucleo configuration\stm32f3xx_hal_dac.o"
-"stm32f302r8-nucleo configuration\stm32f3xx_hal_dac_ex.o"
 "stm32f302r8-nucleo configuration\stm32f3xx_hal_gpio.o"
 "stm32f302r8-nucleo configuration\stm32f3xx_hal_rcc.o"
 "stm32f302r8-nucleo configuration\stm32f3xx_hal_rcc_ex.o"

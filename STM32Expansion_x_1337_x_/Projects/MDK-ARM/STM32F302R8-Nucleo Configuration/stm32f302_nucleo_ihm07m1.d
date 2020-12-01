@@ -27,8 +27,6 @@ stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.o: ..\Drivers\STM32F3x
 stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.o: ..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_adc_ex.h
 stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.o: ..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_crc.h
 stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.o: ..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_crc_ex.h
-stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.o: ..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_dac.h
-stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.o: ..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_dac_ex.h
 stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.o: ..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_flash.h
 stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.o: ..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_flash_ex.h
 stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.o: ..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_i2c.h

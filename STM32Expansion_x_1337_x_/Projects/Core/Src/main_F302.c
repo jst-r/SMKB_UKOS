@@ -50,8 +50,8 @@ ADC_HandleTypeDef hadc1;
 
 TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim6;
-TIM_HandleTypeDef htim16;
-TIM_HandleTypeDef htim15;
+//TIM_HandleTypeDef htim16;
+//TIM_HandleTypeDef htim15;
 UART_HandleTypeDef huart3;
 
 /* USER CODE BEGIN PV */
@@ -163,8 +163,13 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
                        ###### USER SPACE ######
   ==============================================================================      
   *****************************************************************************/    
-      HAL_Delay(3000);
-			MC_StartMotor();
+      
+			if (MC_MotorState() == 0){
+				HAL_Delay(1000);
+				MC_StartMotor();
+			} else {
+				HAL_Delay(200);
+			}
   /****************************************************************************/    
   }
   /* USER CODE END 3 */
