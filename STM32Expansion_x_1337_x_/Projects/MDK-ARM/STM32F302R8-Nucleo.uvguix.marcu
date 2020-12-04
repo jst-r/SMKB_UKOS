@@ -3611,9 +3611,9 @@
       </Doc>
       <Doc>
         <Name>..\Core\Src\main_F302.c</Name>
-        <ColumnNumber>21</ColumnNumber>
-        <TopLine>137</TopLine>
-        <CurrentLine>161</CurrentLine>
+        <ColumnNumber>0</ColumnNumber>
+        <TopLine>38</TopLine>
+        <CurrentLine>59</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders>182,243,285,390,416,443</ContractedFolders>
         <PaneID>0</PaneID>
