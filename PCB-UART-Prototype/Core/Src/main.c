@@ -52,10 +52,15 @@ volatile uint16_t status = 1;
 volatile uint16_t resetLength = 0;
 volatile uint16_t setLength = 0;
 char buffer[20];
-volatile uint8_t i = 0;
+volatile uint8_t i = 0; //Do we actually need it?
+volatile uint8_t num = 0;
 volatile uint16_t data = 0;
 volatile uint16_t counter = 0;
+static uint16_t depth = 40;
+static uint16_t sampleRate = 10000;
 volatile uint32_t raw_data[40] = {0}; //Increase array size if neccessary
+static uint16_t timeReject = 600;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -65,8 +70,14 @@ static void MX_USART3_UART_Init(void);
 static void MX_RTC_Init(void);
 static void MX_TIM15_Init(void);
 static void MX_TIM16_Init(void);
-/* USER CODE BEGIN PFP */
 
+/* USER CODE BEGIN PFP */
+void ClearBuffer (void){
+	num = 0;
+	for (i=0; i < (depth - 1); i++){
+		raw_data[i] = 0;
+	}
+}
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -278,9 +289,9 @@ static void MX_TIM15_Init(void)
 
   /* USER CODE END TIM15_Init 1 */
   htim15.Instance = TIM15;
-  htim15.Init.Prescaler = 0;
+  htim15.Init.Prescaler = 71;
   htim15.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim15.Init.Period = 65535;
+  htim15.Init.Period = 99;
   htim15.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim15.Init.RepetitionCounter = 0;
   htim15.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -486,9 +497,35 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 				status = 0;}
 		}
 		*/
-		if((HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_2) == SET & status == 0)||(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == RESET & status == 1)){
-		
-		
+		if((HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_2) == SET & status == 0)||(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == RESET & status == 1)){ //If state has changed - do smth
+			if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == SET){
+				raw_data[num] = raw_data[num] + resetLength;
+				HAL_UART_Transmit_IT(&huart3,(uint8_t*)buffer, sprintf(buffer, "resetLength = %d\n", resetLength));
+				resetLength = 0;
+				num ++;
+			} else { 
+				if (setLength < timeReject){
+					num --;
+					raw_data[num] = raw_data[num] + setLength;
+					setLength = 0;
+				} else {
+					raw_data[num] = (setLength | 131071);
+					HAL_UART_Transmit_IT(&huart3,(uint8_t*)buffer, sprintf(buffer, "setLength = %d\n", setLength));
+					setLength = 0;
+					num ++;
+				}
+			}
+		} else { 
+			if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == SET){
+				setLength ++;
+				if (setLength > (sampleRate * 4)){
+					ClearBuffer();
+				}
+				status = 1;	
+			} else {
+			resetLength ++;
+			status = 0;
+			}
 		}
 	}
 }
