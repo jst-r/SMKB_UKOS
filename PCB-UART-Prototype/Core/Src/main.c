@@ -48,26 +48,14 @@ TIM_HandleTypeDef htim16;
 UART_HandleTypeDef huart3;
 
 /* USER CODE BEGIN PV */
-volatile uint32_t F_CLK = 720000;
-volatile uint16_t NESS_FQ = 1;
-volatile uint16_t gu8_State = 0;
-volatile uint8_t IDLE = 0;
-volatile uint16_t gu32_T1 = 0;
-volatile uint8_t DONE = 1;
-volatile uint16_t gu16_TIM2_OVC = 0;
-volatile uint32_t gu32_T2 = 0;
-volatile uint8_t gu32_Ticks = 0;
 volatile uint16_t status = 1;
-volatile uint16_t zero = 0;
-volatile uint16_t one = 0;
 volatile uint16_t resetLength = 0;
 volatile uint16_t setLength = 0;
-//volatile uint8_t buffer = 0;
-volatile uint8_t buffer2 = 0;
 char buffer[20];
 volatile uint8_t i = 0;
 volatile uint16_t data = 0;
-volatile uint16_t counter = 0;;
+volatile uint16_t counter = 0;
+volatile uint32_t raw_data[40] = {0}; //Increase array size if neccessary
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -451,6 +439,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	
 	//GPIO - SET - > hydrophone -> 0 -> osc -> 1;
 	if (htim->Instance == TIM15) {
+		/*
 		if((HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_2) == SET & status == 0)||(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == RESET & status == 1)){		
 		//HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "resetLength = %d\n", resetLength), 1000);
 		//	HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "resetLength = %d\n", setLength), 1000);
@@ -475,9 +464,13 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 					resetLength = 0;
 					status = 1;
 				} else {
+					if (setLength < 500){
+						resetLength = setLength + resetLength;
+					} 
 					//HAL_UART_Transmit_IT(&huart3,(uint8_t*)buffer, sprintf(buffer, "setLength = %d\n", setLength));
 					setLength = 0;	
 					status = 0;
+					
 				}
 		} else {
 			if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == SET ) {
@@ -491,6 +484,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 				resetLength ++;
 		//		HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "resetLength = %d\n", resetLength), 1000);
 				status = 0;}
+		}
+		*/
+		if((HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_2) == SET & status == 0)||(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == RESET & status == 1)){
+		
+		
 		}
 	}
 }
@@ -515,10 +513,11 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 	return first;
 }
 
-/*int	WordDivider2(X){
+	int	WordDivider2(X){
 	uint16_t second = X % 1000;
 	return second;
 }
+*/
 /* USER CODE END 4 */
 
 /**
