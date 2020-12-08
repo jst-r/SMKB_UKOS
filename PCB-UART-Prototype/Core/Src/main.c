@@ -57,9 +57,9 @@ volatile uint8_t num = 0;
 volatile uint16_t data = 0;
 volatile uint16_t counter = 0;
 static uint16_t depth = 40;
-static uint16_t sampleRate = 10000;
+static uint16_t sample_rate = 10000;
 volatile uint32_t raw_data[40] = {0}; //Increase array size if neccessary
-static uint16_t timeReject = 600;
+static uint16_t time_reject = 600;
 
 /* USER CODE END PV */
 
@@ -72,12 +72,36 @@ static void MX_TIM15_Init(void);
 static void MX_TIM16_Init(void);
 
 /* USER CODE BEGIN PFP */
+
+void CheckData (void){
+	uint32_t  time_sufficient = 0;
+	/*calculate sum non-zero value elements*/
+	for(int k =0; k< (depth-1);k++){
+		if (raw_data[k] !=0  ){
+			if((raw_data[k] & 131072) == 1){
+				time_sufficient = time_sufficient + (raw_data[k] & 131071); 
+			}
+			time_sufficient = time_sufficient + raw_data[k];
+		}
+	}
+	/* ***** */
+	
+	int time_sec = time_sufficient / sample_rate; 
+	if (time_sec > 2){																//Is record time enough for reconstruction
+		__NOP();																				//Insert your filtration here
+	}
+}
+
+
 void ClearBuffer (void){
 	num = 0;
+	CheckData();
 	for (i=0; i < (depth - 1); i++){
 		raw_data[i] = 0;
 	}
 }
+
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -332,9 +356,9 @@ static void MX_TIM16_Init(void)
 
   /* USER CODE END TIM16_Init 1 */
   htim16.Instance = TIM16;
-  htim16.Init.Prescaler = 7200-1;
+  htim16.Init.Prescaler = 7199;
   htim16.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim16.Init.Period = 10000-1;
+  htim16.Init.Period = 9999;
   htim16.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim16.Init.RepetitionCounter = 0;
   htim16.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -504,12 +528,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 				resetLength = 0;
 				num ++;
 			} else { 
-				if (setLength < timeReject){
+				if (setLength < time_reject){
 					num --;
 					raw_data[num] = raw_data[num] + setLength;
 					setLength = 0;
 				} else {
-					raw_data[num] = (setLength | 131071);
+					raw_data[num] = (setLength | 131072);
 					HAL_UART_Transmit_IT(&huart3,(uint8_t*)buffer, sprintf(buffer, "setLength = %d\n", setLength));
 					setLength = 0;
 					num ++;
@@ -518,7 +542,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 		} else { 
 			if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == SET){
 				setLength ++;
-				if (setLength > (sampleRate * 4)){
+				if (setLength > (sample_rate * 4)){
 					ClearBuffer();
 				}
 				status = 1;	
