@@ -10,7 +10,7 @@
       <TargetName>STM32F302R8-Nucleo</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060750::V5.06 update 6 (build 750)::ARMCC</pCCUsed>
+      <pCCUsed>5060750::V5.06 update 6 (build 750)::.\ARMCC</pCCUsed>
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -185,6 +185,7 @@
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
             <RvdsMve>0</RvdsMve>
+            <RvdsCdeCp>0</RvdsCdeCp>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -351,7 +352,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <ClangAsOpt>4</ClangAsOpt>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -508,6 +509,9 @@
               <FilePath>..\Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_dma.c</FilePath>
             </File>
           </Files>
+        </Group>
+        <Group>
+          <GroupName>::Device</GroupName>
         </Group>
       </Groups>
     </Target>
@@ -689,6 +693,7 @@
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
             <RvdsMve>0</RvdsMve>
+            <RvdsCdeCp>0</RvdsCdeCp>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -855,7 +860,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <ClangAsOpt>4</ClangAsOpt>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -1012,6 +1017,9 @@
               <FilePath>..\Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_dma.c</FilePath>
             </File>
           </Files>
+        </Group>
+        <Group>
+          <GroupName>::Device</GroupName>
         </Group>
       </Groups>
     </Target>
@@ -1194,6 +1202,7 @@
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
             <RvdsMve>0</RvdsMve>
+            <RvdsCdeCp>0</RvdsCdeCp>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -1360,7 +1369,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <ClangAsOpt>4</ClangAsOpt>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -1517,6 +1526,9 @@
               <FilePath>..\Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_dma.c</FilePath>
             </File>
           </Files>
+        </Group>
+        <Group>
+          <GroupName>::Device</GroupName>
         </Group>
       </Groups>
     </Target>
@@ -1698,6 +1710,7 @@
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
             <RvdsMve>0</RvdsMve>
+            <RvdsCdeCp>0</RvdsCdeCp>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -1864,7 +1877,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <ClangAsOpt>4</ClangAsOpt>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -2022,14 +2035,71 @@
             </File>
           </Files>
         </Group>
+        <Group>
+          <GroupName>::Device</GroupName>
+        </Group>
       </Groups>
     </Target>
   </Targets>
 
   <RTE>
-    <apis/>
-    <components/>
+    <gpdscs>
+      <gpdsc name="RTE\Device\STM32F302R8\FrameworkCubeMX.gpdsc">
+        <targetInfos>
+          <targetInfo name="STM32F302R8-Nucleo"/>
+          <targetInfo name="STM32F302R8-Nucleo - BOOT mode"/>
+          <targetInfo name="STM32F302R8-Nucleo - COMM mode"/>
+          <targetInfo name="STM32F302R8-Nucleo - DEMO mode"/>
+        </targetInfos>
+      </gpdsc>
+    </gpdscs>
+    <apis>
+      <api Capiversion="1.0.0" Cclass="Device" Cgroup="STM32Cube Framework" exclusive="1">
+        <package name="STM32F3xx_DFP" schemaVersion="1.4.9" url="http://www.keil.com/pack/" vendor="Keil" version="2.1.0"/>
+        <targetInfos>
+          <targetInfo name="STM32F302R8-Nucleo"/>
+          <targetInfo name="STM32F302R8-Nucleo - BOOT mode"/>
+          <targetInfo name="STM32F302R8-Nucleo - COMM mode"/>
+          <targetInfo name="STM32F302R8-Nucleo - DEMO mode"/>
+        </targetInfos>
+      </api>
+    </apis>
+    <components>
+      <component Cbundle="STM32CubeMX" Cclass="Device" Cgroup="STM32Cube Framework" Csub="STM32CubeMX" Cvendor="Keil" Cversion="1.0.0" condition="STM32F3" generator="STM32CubeMX">
+        <package name="STM32F3xx_DFP" schemaVersion="1.4.9" url="http://www.keil.com/pack/" vendor="Keil" version="2.1.0"/>
+        <targetInfos>
+          <targetInfo name="STM32F302R8-Nucleo"/>
+          <targetInfo name="STM32F302R8-Nucleo - BOOT mode"/>
+          <targetInfo name="STM32F302R8-Nucleo - COMM mode"/>
+          <targetInfo name="STM32F302R8-Nucleo - DEMO mode"/>
+        </targetInfos>
+      </component>
+      <component Cbundle="STM32CubeMX" Cclass="Device" Cgroup="STM32Cube HAL" Cvendor="Keil" Cversion="1.9.0" condition="STM32F3 CMSIS STM32CubeMX">
+        <package name="STM32F3xx_DFP" schemaVersion="1.4.9" url="http://www.keil.com/pack/" vendor="Keil" version="2.1.0"/>
+        <targetInfos>
+          <targetInfo name="STM32F302R8-Nucleo"/>
+          <targetInfo name="STM32F302R8-Nucleo - BOOT mode"/>
+          <targetInfo name="STM32F302R8-Nucleo - COMM mode"/>
+          <targetInfo name="STM32F302R8-Nucleo - DEMO mode"/>
+        </targetInfos>
+      </component>
+    </components>
     <files/>
   </RTE>
+
+  <LayerInfo>
+    <Layers>
+      <Layer>
+        <LayName>&lt;Project Info&gt;</LayName>
+        <LayDesc></LayDesc>
+        <LayUrl></LayUrl>
+        <LayKeys></LayKeys>
+        <LayCat></LayCat>
+        <LayLic></LayLic>
+        <LayTarg>0</LayTarg>
+        <LayPrjMark>1</LayPrjMark>
+      </Layer>
+    </Layers>
+  </LayerInfo>
 
 </Project>
