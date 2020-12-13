@@ -600,8 +600,8 @@ interwork --depend="stm32f302r8-nucleo configuration\startup_stm32f302x8.d" -o"
 stm32f302r8-nucleo configuration\startup_stm32f302x8.o" -IC:\Users\prizr\AppDat
 a\Local\Arm\Packs\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\In
 clude -IC:\Keil_v5\ARM\CMSIS\Include --predefine="__EVAL SETA 1" --predefine="_
-_UVISION_VERSION SETA 531" --predefine="STM32F302x8 SETA 1" --list=startup_stm3
-2f302x8.lst startup_stm32f302x8.s
+_UVISION_VERSION SETA 531" --predefine="STM32F302x8 SETA 1" --predefine="STM32F
+302x8 SETA 1" --list=startup_stm32f302x8.lst startup_stm32f302x8.s
 
 
 

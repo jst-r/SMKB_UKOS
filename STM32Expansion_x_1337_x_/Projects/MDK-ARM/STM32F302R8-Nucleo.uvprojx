@@ -510,9 +510,6 @@
             </File>
           </Files>
         </Group>
-        <Group>
-          <GroupName>::Device</GroupName>
-        </Group>
       </Groups>
     </Target>
     <Target>
@@ -1017,9 +1014,6 @@
               <FilePath>..\Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_dma.c</FilePath>
             </File>
           </Files>
-        </Group>
-        <Group>
-          <GroupName>::Device</GroupName>
         </Group>
       </Groups>
     </Target>
@@ -1527,9 +1521,6 @@
             </File>
           </Files>
         </Group>
-        <Group>
-          <GroupName>::Device</GroupName>
-        </Group>
       </Groups>
     </Target>
     <Target>
@@ -2035,55 +2026,13 @@
             </File>
           </Files>
         </Group>
-        <Group>
-          <GroupName>::Device</GroupName>
-        </Group>
       </Groups>
     </Target>
   </Targets>
 
   <RTE>
-    <gpdscs>
-      <gpdsc name="RTE\Device\STM32F302R8\FrameworkCubeMX.gpdsc">
-        <targetInfos>
-          <targetInfo name="STM32F302R8-Nucleo"/>
-          <targetInfo name="STM32F302R8-Nucleo - BOOT mode"/>
-          <targetInfo name="STM32F302R8-Nucleo - COMM mode"/>
-          <targetInfo name="STM32F302R8-Nucleo - DEMO mode"/>
-        </targetInfos>
-      </gpdsc>
-    </gpdscs>
-    <apis>
-      <api Capiversion="1.0.0" Cclass="Device" Cgroup="STM32Cube Framework" exclusive="1">
-        <package name="STM32F3xx_DFP" schemaVersion="1.4.9" url="http://www.keil.com/pack/" vendor="Keil" version="2.1.0"/>
-        <targetInfos>
-          <targetInfo name="STM32F302R8-Nucleo"/>
-          <targetInfo name="STM32F302R8-Nucleo - BOOT mode"/>
-          <targetInfo name="STM32F302R8-Nucleo - COMM mode"/>
-          <targetInfo name="STM32F302R8-Nucleo - DEMO mode"/>
-        </targetInfos>
-      </api>
-    </apis>
-    <components>
-      <component Cbundle="STM32CubeMX" Cclass="Device" Cgroup="STM32Cube Framework" Csub="STM32CubeMX" Cvendor="Keil" Cversion="1.0.0" condition="STM32F3" generator="STM32CubeMX">
-        <package name="STM32F3xx_DFP" schemaVersion="1.4.9" url="http://www.keil.com/pack/" vendor="Keil" version="2.1.0"/>
-        <targetInfos>
-          <targetInfo name="STM32F302R8-Nucleo"/>
-          <targetInfo name="STM32F302R8-Nucleo - BOOT mode"/>
-          <targetInfo name="STM32F302R8-Nucleo - COMM mode"/>
-          <targetInfo name="STM32F302R8-Nucleo - DEMO mode"/>
-        </targetInfos>
-      </component>
-      <component Cbundle="STM32CubeMX" Cclass="Device" Cgroup="STM32Cube HAL" Cvendor="Keil" Cversion="1.9.0" condition="STM32F3 CMSIS STM32CubeMX">
-        <package name="STM32F3xx_DFP" schemaVersion="1.4.9" url="http://www.keil.com/pack/" vendor="Keil" version="2.1.0"/>
-        <targetInfos>
-          <targetInfo name="STM32F302R8-Nucleo"/>
-          <targetInfo name="STM32F302R8-Nucleo - BOOT mode"/>
-          <targetInfo name="STM32F302R8-Nucleo - COMM mode"/>
-          <targetInfo name="STM32F302R8-Nucleo - DEMO mode"/>
-        </targetInfos>
-      </component>
-    </components>
+    <apis/>
+    <components/>
     <files/>
   </RTE>
 
