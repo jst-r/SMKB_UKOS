@@ -22,7 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "math.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -51,14 +51,13 @@ UART_HandleTypeDef huart3;
 volatile uint16_t status = 1;
 volatile uint16_t resetLength = 0;
 volatile uint16_t setLength = 0;
-char buffer[20];
-volatile uint8_t i = 0; //Do we actually need it?
-volatile uint8_t num = 0;
+char buffer[30];
+volatile uint16_t element_num = 0;
 volatile uint16_t data = 0;
 volatile uint16_t counter = 0;
-static uint16_t depth = 40;
+static uint16_t depth = 80;
 static uint16_t sample_rate = 10000;
-volatile uint32_t raw_data[40] = {0}; //Increase array size if neccessary
+volatile uint32_t raw_data[80] = {0}; //Increase array size if neccessary
 static uint16_t time_reject = 600;
 
 /* USER CODE END PV */
@@ -78,10 +77,13 @@ void CheckData (void){
 	/*calculate sum non-zero value elements*/
 	for(int k =0; k< (depth-1);k++){
 		if (raw_data[k] !=0  ){
-			if((raw_data[k] & 131072) == 1){
-				time_sufficient = time_sufficient + (raw_data[k] & 131071); 
+			if(raw_data[k] > 0x20000){
+				time_sufficient = time_sufficient + (raw_data[k] - 0x20000); 
+				//HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "setLength = %d\n", (raw_data[k] - 0x20000)), 200);
+			}else{
+				time_sufficient = time_sufficient + raw_data[k];
+				//HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "resetLength = %d\n", raw_data[k]), 200);
 			}
-			time_sufficient = time_sufficient + raw_data[k];
 		}
 	}
 	/* ***** */
@@ -94,11 +96,13 @@ void CheckData (void){
 
 
 void ClearBuffer (void){
-	num = 0;
+	element_num = 0;
 	CheckData();
-	for (i=0; i < (depth - 1); i++){
+	for (int i = 0; i < (depth - 1); i++){
 		raw_data[i] = 0;
 	}
+	setLength = 0;
+	HAL_UART_Transmit_IT(&huart3,(uint8_t*)buffer, sprintf(buffer, "IDLE\n"));
 }
 
 
@@ -521,36 +525,60 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 				status = 0;}
 		}
 		*/
+		
+		
+		/*
 		if((HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_2) == SET & status == 0)||(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == RESET & status == 1)){ //If state has changed - do smth
 			if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == SET){
-				raw_data[num] = raw_data[num] + resetLength;
-				HAL_UART_Transmit_IT(&huart3,(uint8_t*)buffer, sprintf(buffer, "resetLength = %d\n", resetLength));
+				raw_data[element_num] = raw_data[element_num] + resetLength;
+				//HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "resetLength = %d\n", resetLength), 200);
+				//HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "resetLength = %d\n", raw_data[element_num]), 200);
+				
+				//Filter function call
+				
 				resetLength = 0;
-				num ++;
+				element_num ++;
 			} else { 
-				if (setLength < time_reject){
-					num --;
-					raw_data[num] = raw_data[num] + setLength;
+				if (element_num > 0){
+					if (setLength < time_reject){
+						element_num --;
+						raw_data[element_num] = raw_data[element_num] + setLength;
+						resetLength = resetLength + setLength;
+					} else {
+					raw_data[element_num] = setLength | 0x20000;
+					element_num ++;
+					//HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "setLength = %d\n", setLength), 200);
+					}
 					setLength = 0;
-				} else {
-					raw_data[num] = (setLength | 131072);
-					HAL_UART_Transmit_IT(&huart3,(uint8_t*)buffer, sprintf(buffer, "setLength = %d\n", setLength));
-					setLength = 0;
-					num ++;
-				}
+				} 
 			}
-		} else { 
+		} 
+		*/
+		
+		if((HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_2) == SET & status == 0)||(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == RESET & status == 1)){ //If state has changed - do smth
+			if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == SET){
+				HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "resetLength = %d\n", resetLength), 200);
+				/*Filter function call*/	
+				resetLength = 0;
+			} else { 
+				HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "setLength = %d\n", setLength), 200);
+				/*Filter function call*/
+				setLength = 0;
+				} 
+			}
+		
 			if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == SET){
 				setLength ++;
 				if (setLength > (sample_rate * 4)){
+					setLength = sample_rate * 4;
 					ClearBuffer();
 				}
 				status = 1;	
-			} else {
-			resetLength ++;
-			status = 0;
+			} else if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == RESET){
+				resetLength ++;
+				status = 0;
 			}
-		}
+		
 	}
 }
 
@@ -559,7 +587,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
   if(GPIO_Pin == GPIO_PIN_1) {
 		HAL_UART_Transmit(&huart3, "Stop Motor pos 1\n", 17, 200 );
-		
   } 
 	else if (GPIO_Pin == GPIO_PIN_2) {
 		HAL_UART_Transmit(&huart3, "Stop Motor pos 2\n", 17, 200 );

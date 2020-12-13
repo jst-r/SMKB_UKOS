@@ -28,15 +28,19 @@ Project File Date:  12/07/2020
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\system\Keil_v5\ARM\ARMCC\Bin'
 Build target 'PCB-UART-Prototype'
 compiling main.c...
-../Core/Src/main.c(527): warning:  #223-D: function "sprintf" declared implicitly
-  				HAL_UART_Transmit_IT(&huart3,(uint8_t*)buffer, sprintf(buffer, "resetLength = %d\n", resetLength));
-../Core/Src/main.c(537): warning:  #223-D: function "sprintf" declared implicitly
-  					HAL_UART_Transmit_IT(&huart3,(uint8_t*)buffer, sprintf(buffer, "setLength = %d\n", setLength));
-../Core/Src/main.c: 2 warnings, 0 errors
+../Core/Src/main.c(105): warning:  #223-D: function "sprintf" declared implicitly
+  	HAL_UART_Transmit_IT(&huart3,(uint8_t*)buffer, sprintf(buffer, "IDLE\n"));
+../Core/Src/main.c(560): warning:  #223-D: function "sprintf" declared implicitly
+  				HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "resetLength = %d\n", resetLength), 200);
+../Core/Src/main.c(564): warning:  #223-D: function "sprintf" declared implicitly
+  				HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "setLength = %d\n", setLength), 200);
+../Core/Src/main.c(61): warning:  #177-D: variable "time_reject"  was declared but never referenced
+  static uint16_t time_reject = 600;
+../Core/Src/main.c: 4 warnings, 0 errors
 linking...
-Program Size: Code=10760 RO-data=480 RW-data=32 ZI-data=1496  
+Program Size: Code=10752 RO-data=480 RW-data=32 ZI-data=1664  
 FromELF: creating hex file...
-"PCB-UART-Prototype\PCB-UART-Prototype.axf" - 0 Error(s), 2 Warning(s).
+"PCB-UART-Prototype\PCB-UART-Prototype.axf" - 0 Error(s), 4 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -59,7 +63,7 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.1.2
-Build Time Elapsed:  00:00:01
+Build Time Elapsed:  00:00:02
 </pre>
 </body>
 </html>
