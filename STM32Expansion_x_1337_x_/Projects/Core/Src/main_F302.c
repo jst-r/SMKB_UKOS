@@ -62,7 +62,12 @@ uint8_t position = 0; //Current motor position
 uint8_t prev_position = 0;
 uint8_t will = 10; //How much attempts will motor make on the way to end_position
 uint8_t attempt = 0; //represents way to success
-
+volatile uint16_t status = 1;
+volatile uint16_t resetLength = 0;
+volatile uint16_t setLength = 0;
+char buffer[30];
+static uint16_t sample_rate = 10000;
+volatile uint8_t motor_enable = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -133,6 +138,8 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
 	HAL_NVIC_EnableIRQ(EXTI1_IRQn);
 	HAL_NVIC_EnableIRQ(EXTI2_TSC_IRQn);
+	HAL_TIM_Base_Start_IT(&htim15);
+	HAL_TIM_Base_Start_IT(&htim16);
 	
   /* USER CODE END 2 */
 
@@ -161,11 +168,14 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
                        ###### USER SPACE ######
   ==============================================================================      
   *****************************************************************************/    
-		if(prev_position != position){
+
+	if(prev_position != position){
 			prev_position = position;
 			MC_SixStep_Change_Direction();
 			MC_StopMotor();
+			motor_enable = 0;
 		}
+	if(motor_enable == 1){
 		if (attempt < will){
 				if (MC_MotorState() == 0){
 					HAL_Delay(1000);
@@ -177,6 +187,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 			} else {
 				MC_StopMotor();
 			}
+		}
   /****************************************************************************/    
   }
   /* USER CODE END 3 */
@@ -450,9 +461,9 @@ static void MX_TIM15_Init(void)
 static void MX_TIM16_Init(void)
 {
 	htim16.Instance = TIM16;
-  htim16.Init.Prescaler = 7199;
+  htim16.Init.Prescaler = 71;
   htim16.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim16.Init.Period = 9999;
+  htim16.Init.Period = 99;
   htim16.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim16.Init.RepetitionCounter = 0;
   htim16.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -525,6 +536,11 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+	/*Configure GPIO pin : PC2 */
+  GPIO_InitStruct.Pin = GPIO_PIN_2;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 	 /*Configure GPIO pins : EXTI1_END_STOP_Pin EXTI2_END_STOP_Pin */
   GPIO_InitStruct.Pin = GPIO_PIN_1|GPIO_PIN_2;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
@@ -543,19 +559,60 @@ static void MX_GPIO_Init(void)
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
   if(GPIO_Pin == GPIO_PIN_1) {
-		//HAL_UART_Transmit(&huart3, "Stop Motor pos 1\n", 17, 200 );
+		HAL_UART_Transmit(&huart3, "Stop Motor pos 1\n", 17, 200 );
 		//MC_StopMotor();
 		position = 1;
 		attempt = 0;
   } 
 	else if (GPIO_Pin == GPIO_PIN_2) {
-		//HAL_UART_Transmit(&huart3, "Stop Motor pos 2\n", 17, 200 );
+		HAL_UART_Transmit(&huart3, "Stop Motor pos 2\n", 17, 200 );
 		//MC_StopMotor();
 		position = 2;
 		attempt = 0;
 	} 
 	else {
 	  __NOP();
+	}
+}
+
+
+
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
+	if (htim->Instance == TIM16) {
+		if (motor_enable == 0){
+			if((HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_2) == SET & status == 0)||(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == RESET & status == 1)){ //If state has changed - do smth
+					if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == SET){
+						HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "resetLength = %d\n", resetLength), 200);
+						/*Filter function call*/	
+						if (resetLength > 400){
+							motor_enable = 1;
+						} else {
+							motor_enable = 0;
+						}
+						resetLength = 0;
+					} else { 
+						HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "setLength = %d\n", setLength), 200);
+						/*Filter function call*/
+						setLength = 0;
+						} 
+					}
+					if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == SET){
+						setLength ++;
+						if (setLength > (sample_rate * 4)){
+							setLength = sample_rate * 4;
+						}
+						status = 1;	
+					} else if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == RESET){
+						resetLength ++;
+						status = 0;
+					}
+		} else if (htim->Instance == TIM15){
+			__NOP();
+		}
+	}
+	if (htim->Instance != TIM15 & htim->Instance != TIM16){
+		MC_TIMx_SixStep_timebase();
 	}
 }
 /* USER CODE END 4 */

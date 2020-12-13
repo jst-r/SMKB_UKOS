@@ -142,10 +142,11 @@
   *  @{
     * @brief htim callback 
 */
-  void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+  /*void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   {
     MC_TIMx_SixStep_timebase();
-  }
+		
+  }*/
 /**
   * @} 
   */
