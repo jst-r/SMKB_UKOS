@@ -14,7 +14,7 @@ typedef struct{
 } freqAnaliser;
 
 freqAnaliser initAnaliser(float freq);
-void processSet(freqAnaliser &a, uint16_t resetLenght);
-void processReset(freqAnaliser &a, uint16_t setLenght);
-int getScoreSquare(freqAnaliser &a);
+void processSet(freqAnaliser * a, uint16_t resetLenght);
+void processReset(freqAnaliser * a, uint16_t setLenght);
+int getScoreSquare(freqAnaliser * a);
 #endif
