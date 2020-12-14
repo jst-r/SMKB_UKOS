@@ -17,18 +17,18 @@ freqAnaliser initAnaliser(float freq){
 	return res;
 }
 
-void processSet(freqAnaliser &a, uint16_t resetLenght){
+void processSet(freqAnaliser * a, uint16_t resetLenght){
 	a->time += (float)resetLenght / 10.;
 	a->time = fmod(a->time, a->period);
 	a->scoreReal += cosf(a->time * a->convConst);
 	a->scoreImag += sinf(a->time * a->convConst);
 }
 
-void processReset(freqAnaliser &a, uint16_t setLenght){
+void processReset(freqAnaliser * a, uint16_t setLenght){
 	a->time += (float)setLenght / 10.;
 	a->time = fmod(a->time, a->period);
 }
 
-int getScoreSquare(freqAnaliser &a){
+int getScoreSquare(freqAnaliser * a){
 	return powf(a->scoreReal, 2) + powf(a->scoreImag, 2);
 }
