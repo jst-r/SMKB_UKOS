@@ -23,6 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "math.h"
+#include "freqAnalysis.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -59,6 +60,8 @@ static uint16_t depth = 80;
 static uint16_t sample_rate = 10000;
 volatile uint32_t raw_data[80] = {0}; //Increase array size if neccessary
 static uint16_t time_reject = 600;
+
+freqAnaliser analiser;
 
 /* USER CODE END PV */
 
@@ -119,7 +122,7 @@ void ClearBuffer (void){
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+  analiser = initAnaliser(1.);
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -556,11 +559,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 		if((HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_2) == SET & status == 0)||(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == RESET & status == 1)){ //If state has changed - do smth
 			if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == SET){
 				HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "resetLength = %d\n", resetLength), 200);
-				/*Filter function call*/	
+				processSet(&analiser, resetLength);
+				HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "score = %d\n", getScoreSquare(&analiser)), 200);
 				resetLength = 0;
 			} else { 
 				HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "setLength = %d\n", setLength), 200);
-				/*Filter function call*/
+				processReset(&analiser, setLength);
 				setLength = 0;
 				} 
 			}
