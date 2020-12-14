@@ -61,7 +61,6 @@ volatile uint16_t counter = 0;
 static uint16_t depth = 80;
 static uint16_t sample_rate = 10000;
 volatile uint32_t raw_data[80] = {0}; //Increase array size if neccessary
-static uint16_t time_reject = 600;
 
 freqAnaliser analiser;
 
