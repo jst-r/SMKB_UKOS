@@ -22,48 +22,42 @@ Dialog DLL:      TCM.DLL V1.36.1.0
  
 <h2>Project:</h2>
 C:\Git_workspace\SMKB_UKOS\PCB-UART-Prototype\MDK-ARM\PCB-UART-Prototype.uvprojx
-Project File Date:  12/13/2020
+Project File Date:  12/14/2020
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\system\Keil_v5\ARM\ARMCC\Bin'
 Build target 'PCB-UART-Prototype'
-assembling startup_stm32f302x8.s...
-compiling stm32f3xx_hal.c...
-compiling main.c...
-../Core/Src/main.c(104): warning:  #223-D: function "sprintf" declared implicitly
-  	HAL_UART_Transmit_IT(&huart3,(uint8_t*)buffer, sprintf(buffer, "IDLE\n"));
-../Core/Src/main.c(558): warning:  #223-D: function "sprintf" declared implicitly
-  				HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "resetLength = %d\n", resetLength), 200);
-../Core/Src/main.c(562): warning:  #223-D: function "sprintf" declared implicitly
-  				HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "setLength = %d\n", setLength), 200);
-../Core/Src/main.c(61): warning:  #177-D: variable "time_reject"  was declared but never referenced
-  static uint16_t time_reject = 600;
-../Core/Src/main.c: 4 warnings, 0 errors
-compiling stm32f3xx_hal_msp.c...
-compiling stm32f3xx_it.c...
-compiling stm32f3xx_hal_rcc.c...
-compiling stm32f3xx_hal_rtc_ex.c...
-compiling stm32f3xx_hal_rtc.c...
-compiling stm32f3xx_hal_pwr.c...
-compiling stm32f3xx_hal_dma.c...
-compiling stm32f3xx_hal_cortex.c...
-compiling stm32f3xx_hal_gpio.c...
-compiling stm32f3xx_hal_rcc_ex.c...
-compiling stm32f3xx_hal_pwr_ex.c...
-compiling stm32f3xx_hal_flash.c...
-compiling stm32f3xx_hal_i2c_ex.c...
-compiling stm32f3xx_hal_flash_ex.c...
-compiling stm32f3xx_hal_i2c.c...
-compiling stm32f3xx_hal_exti.c...
-compiling stm32f3xx_hal_tim_ex.c...
-compiling stm32f3xx_hal_tim.c...
-compiling stm32f3xx_hal_uart_ex.c...
-compiling system_stm32f3xx.c...
-compiling stm32f3xx_hal_uart.c...
-linking...
-Program Size: Code=10744 RO-data=480 RW-data=32 ZI-data=1664  
-FromELF: creating hex file...
-"PCB-UART-Prototype\PCB-UART-Prototype.axf" - 0 Error(s), 4 Warning(s).
+compiling freqAnalysis.c...
+..\Core\Src\freqAnalysis.c(20): error:  #18: expected a ")"
+  void processSet(freqAnaliser &a, uint16_t resetLenght){
+..\Core\Src\freqAnalysis.c(20): error:  #147-D: declaration is incompatible with "void processSet(freqAnaliser *, uint16_t)"  (declared at line 17 of "..\Core\Inc\freqAnalysis.h")
+  void processSet(freqAnaliser &a, uint16_t resetLenght){
+..\Core\Src\freqAnalysis.c(20): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+  void processSet(freqAnaliser &a, uint16_t resetLenght){
+..\Core\Src\freqAnalysis.c(21): error:  #20: identifier "a" is undefined
+  	a->time += (float)resetLenght / 10.;
+..\Core\Src\freqAnalysis.c(21): error:  #20: identifier "resetLenght" is undefined
+  	a->time += (float)resetLenght / 10.;
+..\Core\Src\freqAnalysis.c(27): error:  #18: expected a ")"
+  void processReset(freqAnaliser &a, uint16_t setLenght){
+..\Core\Src\freqAnalysis.c(27): error:  #147-D: declaration is incompatible with "void processReset(freqAnaliser *, uint16_t)"  (declared at line 18 of "..\Core\Inc\freqAnalysis.h")
+  void processReset(freqAnaliser &a, uint16_t setLenght){
+..\Core\Src\freqAnalysis.c(27): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+  void processReset(freqAnaliser &a, uint16_t setLenght){
+..\Core\Src\freqAnalysis.c(28): error:  #20: identifier "a" is undefined
+  	a->time += (float)setLenght / 10.;
+..\Core\Src\freqAnalysis.c(28): error:  #20: identifier "setLenght" is undefined
+  	a->time += (float)setLenght / 10.;
+..\Core\Src\freqAnalysis.c(32): error:  #18: expected a ")"
+  int getScoreSquare(freqAnaliser &a){
+..\Core\Src\freqAnalysis.c(32): error:  #147-D: declaration is incompatible with "int getScoreSquare(freqAnaliser *)"  (declared at line 19 of "..\Core\Inc\freqAnalysis.h")
+  int getScoreSquare(freqAnaliser &a){
+..\Core\Src\freqAnalysis.c(32): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+  int getScoreSquare(freqAnaliser &a){
+..\Core\Src\freqAnalysis.c(33): error:  #20: identifier "a" is undefined
+  	return powf(a->scoreReal, 2) + powf(a->scoreImag, 2);
+..\Core\Src\freqAnalysis.c: 0 warnings, 14 errors
+"PCB-UART-Prototype\PCB-UART-Prototype.axf" - 14 Error(s), 0 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -86,7 +80,8 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.1.2
-Build Time Elapsed:  00:00:15
+Target not created.
+Build Time Elapsed:  00:00:01
 </pre>
 </body>
 </html>
