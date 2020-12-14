@@ -2,7 +2,7 @@
 #include "main.h"
 #include <math.h>
 
-static const PI = 3.14159265358979;
+static const float PI = 3.14159265358979;
 
 freqAnaliser initAnaliser(float freq){
 	freqAnaliser res;
