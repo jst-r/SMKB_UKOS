@@ -6,13 +6,13 @@ pcb-uart-prototype\stm32f3xx_hal_uart.o: ../Drivers/STM32F3xx_HAL_Driver/Inc/stm
 pcb-uart-prototype\stm32f3xx_hal_uart.o: ../Drivers/CMSIS/Device/ST/STM32F3xx/Include/stm32f3xx.h
 pcb-uart-prototype\stm32f3xx_hal_uart.o: ../Drivers/CMSIS/Device/ST/STM32F3xx/Include/stm32f302x8.h
 pcb-uart-prototype\stm32f3xx_hal_uart.o: ../Drivers/CMSIS/Include/core_cm4.h
-pcb-uart-prototype\stm32f3xx_hal_uart.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+pcb-uart-prototype\stm32f3xx_hal_uart.o: D:\system\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 pcb-uart-prototype\stm32f3xx_hal_uart.o: ../Drivers/CMSIS/Include/cmsis_version.h
 pcb-uart-prototype\stm32f3xx_hal_uart.o: ../Drivers/CMSIS/Include/cmsis_compiler.h
 pcb-uart-prototype\stm32f3xx_hal_uart.o: ../Drivers/CMSIS/Include/cmsis_armcc.h
 pcb-uart-prototype\stm32f3xx_hal_uart.o: ../Drivers/CMSIS/Device/ST/STM32F3xx/Include/system_stm32f3xx.h
 pcb-uart-prototype\stm32f3xx_hal_uart.o: ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h
-pcb-uart-prototype\stm32f3xx_hal_uart.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+pcb-uart-prototype\stm32f3xx_hal_uart.o: D:\system\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 pcb-uart-prototype\stm32f3xx_hal_uart.o: ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_rcc_ex.h
 pcb-uart-prototype\stm32f3xx_hal_uart.o: ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_gpio.h
 pcb-uart-prototype\stm32f3xx_hal_uart.o: ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_gpio_ex.h

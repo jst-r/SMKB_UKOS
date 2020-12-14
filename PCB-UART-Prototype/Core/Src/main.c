@@ -52,8 +52,8 @@ UART_HandleTypeDef huart3;
 
 /* USER CODE BEGIN PV */
 volatile uint16_t status = 1;
-extern volatile uint16_t resetLength;
-extern volatile uint16_t setLength;
+volatile uint16_t resetLength;
+volatile uint16_t setLength;
 char buffer[30];
 volatile uint16_t element_num = 0;
 volatile uint16_t data = 0;
