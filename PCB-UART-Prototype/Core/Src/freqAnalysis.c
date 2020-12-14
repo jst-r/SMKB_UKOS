@@ -1,13 +1,15 @@
 #include "freqAnalysis.h"
-
+#include "main.h"
 #include <math.h>
+
+static const PI = 3.14159265358979;
 
 freqAnaliser initAnaliser(float freq){
 	freqAnaliser res;
 	res.time = 0;
 	res.freq = freq;
 	res.period = 1/freq;
-	res.convConst = 2 * M_PI * freq;
+	res.convConst = 2 * PI * freq;
 
 	res.scoreReal = 0;
 	res.scoreImag = 0;
