@@ -547,10 +547,10 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
   /* EXTI interrupt init*/
-  HAL_NVIC_SetPriority(EXTI1_IRQn, 0, 0);
+  HAL_NVIC_SetPriority(EXTI1_IRQn, 4, 4);
 	HAL_NVIC_EnableIRQ(EXTI1_IRQn);
 
-  HAL_NVIC_SetPriority(EXTI2_TSC_IRQn, 0, 0);
+  HAL_NVIC_SetPriority(EXTI2_TSC_IRQn, 4, 4);
   HAL_NVIC_EnableIRQ(EXTI2_TSC_IRQn);
 
 }
@@ -559,14 +559,12 @@ static void MX_GPIO_Init(void)
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
   if(GPIO_Pin == GPIO_PIN_1) {
-		HAL_UART_Transmit(&huart3, "Stop Motor pos 1\n", 17, 200 );
-		//MC_StopMotor();
+		HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "Stop Motor pos 1\n"), 200 );
 		position = 1;
 		attempt = 0;
   } 
 	else if (GPIO_Pin == GPIO_PIN_2) {
-		HAL_UART_Transmit(&huart3, "Stop Motor pos 2\n", 17, 200 );
-		//MC_StopMotor();
+		HAL_UART_Transmit(&huart3, (uint8_t*)buffer, sprintf(buffer, "Stop Motor pos 2\n"), 200 );
 		position = 2;
 		attempt = 0;
 	} 
