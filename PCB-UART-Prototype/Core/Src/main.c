@@ -466,7 +466,6 @@ static void MX_GPIO_Init(void)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	
 	if (htim->Instance == TIM16){
-		
 		if ((counter <= 3) & (counter >= 1)){
 			HAL_UART_Transmit(&huart3, "Spinning motor forward\n", 23, 200);
 //			HAL_UART_Transmit(&huart3, "\n", 1, 200);
@@ -475,9 +474,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 			}
 		counter = 0;
 		}
-	
-	
-	
 	//GPIO - SET - > hydrophone -> 0 -> osc -> 1;
 	if (htim->Instance == TIM15) {	
 		if((HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_2) == SET & status == 0)||(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == RESET & status == 1)){ //If state has changed - do smth

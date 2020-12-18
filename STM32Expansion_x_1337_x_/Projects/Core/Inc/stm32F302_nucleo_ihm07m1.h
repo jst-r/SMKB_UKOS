@@ -42,7 +42,6 @@
 
   #include "stm32f3xx_hal.h"
   #include "main_F302.h"
-  //#include "X-NUCLEO-IHM07M1.h"
 
   #define HF_TIMx               htim1
   #define LF_TIMx               htim6
@@ -113,7 +112,6 @@
   uint32_t Get_UART_Data(void);
   void MC_SixStep_ADC_Channel(uint32_t);
   void MC_SixStep_Nucleo_Init(void);
- // void SET_DAC_value(uint16_t);
   void Bemf_delay_calc(void);  
   void MC_SixStep_DisableInput_CH1_D_CH2_D_CH3_D(void);
   void MC_SixStep_Start_PWM_driving(void);

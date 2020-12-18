@@ -1,9 +1,9 @@
 Dependencies for Project 'PCB-UART-Prototype', Target 'PCB-UART-Prototype': (DO NOT MODIFY !)
 F (startup_stm32f302x8.s)(0x5FD61F37)(--cpu Cortex-M4.fp --pd "__EVAL SETA 1" -g --apcs=interwork --pd "__MICROLIB SETA 1"-I.\RTE\_PCB-UART-Prototype-ID:\system\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-ID:\system\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include--pd "__UVISION_VERSION SETA 526" --pd "_RTE_ SETA 1" --pd "STM32F302x8 SETA 1"--list startup_stm32f302x8.lst --xref -o pcb-uart-prototype\startup_stm32f302x8.o --depend pcb-uart-prototype\startup_stm32f302x8.d)
-F (../Core/Src/main.c)(0x5FD79299)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ..\Core\Inc -I ../Core/Inc -I ../Drivers/STM32F3xx_HAL_Driver/Inc -I ../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F3xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_PCB-UART-Prototype-ID:\system\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-ID:\system\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F302x8 -DUSE_HAL_DRIVER -DSTM32F302x8-o pcb-uart-prototype\main.o --omf_browse pcb-uart-prototype\main.crf --depend pcb-uart-prototype\main.d)
-I (../Core/Inc/main.h)(0x5FD78706)
+F (../Core/Src/main.c)(0x5FDC80CE)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ..\Core\Inc -I ../Core/Inc -I ../Drivers/STM32F3xx_HAL_Driver/Inc -I ../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F3xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_PCB-UART-Prototype-ID:\system\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-ID:\system\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F302x8 -DUSE_HAL_DRIVER -DSTM32F302x8-o pcb-uart-prototype\main.o --omf_browse pcb-uart-prototype\main.crf --depend pcb-uart-prototype\main.d)
+I (..\Core\Inc\main.h)(0x5FDC80DB)
 I (../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h)(0x5F82EFF2)
-I (../Core/Inc/stm32f3xx_hal_conf.h)(0x5FD61F34)
+I (..\Core\Inc\stm32f3xx_hal_conf.h)(0x5FD61F34)
 I (../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_rcc.h)(0x5F82EFF2)
 I (../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_def.h)(0x5F82EFF2)
 I (../Drivers/CMSIS/Device/ST/STM32F3xx/Include/stm32f3xx.h)(0x5F82EFDB)
@@ -35,11 +35,11 @@ I (../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_tim_ex.h)(0x5F82EFF2)
 I (../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart.h)(0x5F82EFF2)
 I (../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart_ex.h)(0x5F82EFF2)
 I (D:\system\Keil_v5\ARM\ARMCC\include\math.h)(0x5FD5FDF5)
-I (../Core/Inc/freqAnalysis.h)(0x5FD7862A)
+I (..\Core\Inc\freqAnalysis.h)(0x5FD7862A)
 I (D:\system\Keil_v5\ARM\ARMCC\include\string.h)(0x599F218C)
 I (D:\system\Keil_v5\ARM\ARMCC\include\stdio.h)(0x599F218C)
 F (../Core/Src/stm32f3xx_it.c)(0x5FD61F34)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F3xx_HAL_Driver/Inc -I ../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F3xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_PCB-UART-Prototype-ID:\system\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-ID:\system\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F302x8 -DUSE_HAL_DRIVER -DSTM32F302x8-o pcb-uart-prototype\stm32f3xx_it.o --omf_browse pcb-uart-prototype\stm32f3xx_it.crf --depend pcb-uart-prototype\stm32f3xx_it.d)
-I (../Core/Inc/main.h)(0x5FD78706)
+I (../Core/Inc/main.h)(0x5FDC80DB)
 I (../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h)(0x5F82EFF2)
 I (../Core/Inc/stm32f3xx_hal_conf.h)(0x5FD61F34)
 I (../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_rcc.h)(0x5F82EFF2)
@@ -74,7 +74,7 @@ I (../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart.h)(0x5F82EFF2)
 I (../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart_ex.h)(0x5F82EFF2)
 I (../Core/Inc/stm32f3xx_it.h)(0x5FD61F34)
 F (../Core/Src/stm32f3xx_hal_msp.c)(0x5FD61F34)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F3xx_HAL_Driver/Inc -I ../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F3xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_PCB-UART-Prototype-ID:\system\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-ID:\system\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F302x8 -DUSE_HAL_DRIVER -DSTM32F302x8-o pcb-uart-prototype\stm32f3xx_hal_msp.o --omf_browse pcb-uart-prototype\stm32f3xx_hal_msp.crf --depend pcb-uart-prototype\stm32f3xx_hal_msp.d)
-I (../Core/Inc/main.h)(0x5FD78706)
+I (../Core/Inc/main.h)(0x5FDC80DB)
 I (../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h)(0x5F82EFF2)
 I (../Core/Inc/stm32f3xx_hal_conf.h)(0x5FD61F34)
 I (../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_rcc.h)(0x5F82EFF2)
@@ -109,7 +109,7 @@ I (../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart.h)(0x5F82EFF2)
 I (../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart_ex.h)(0x5F82EFF2)
 F (..\Core\Src\freqAnalysis.c)(0x5FD78656)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F3xx_HAL_Driver/Inc -I ../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F3xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_PCB-UART-Prototype-ID:\system\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-ID:\system\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F302x8 -DUSE_HAL_DRIVER -DSTM32F302x8-o pcb-uart-prototype\freqanalysis.o --omf_browse pcb-uart-prototype\freqanalysis.crf --depend pcb-uart-prototype\freqanalysis.d)
 I (../Core/Inc/freqAnalysis.h)(0x5FD7862A)
-I (../Core/Inc/main.h)(0x5FD78706)
+I (../Core/Inc/main.h)(0x5FDC80DB)
 I (../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h)(0x5F82EFF2)
 I (../Core/Inc/stm32f3xx_hal_conf.h)(0x5FD61F34)
 I (../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_rcc.h)(0x5F82EFF2)
