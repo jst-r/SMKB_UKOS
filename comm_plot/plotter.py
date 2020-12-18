@@ -46,8 +46,8 @@ ser = serial.Serial('COM7', 115200, stopbits=serial.STOPBITS_ONE)
 t = 0
 
 while True:
-    print(1)
     line = ser.readline(timeout=4)
+    print(line, end='')
     if line.beginswtith('resetLength = '):
         rsl = int(re.search(r'(\-{0,1}[0-9]+)', line)[0])
         t += rsl
