@@ -1,7 +1,9 @@
-from time import sleep
 import numpy as np
 import matplotlib.pyplot as plt
-import random
+
+import re
+
+import serial
 
 
 class CommPlotter:
@@ -13,6 +15,7 @@ class CommPlotter:
         self.line_score, = self.ax_score.plot([], [], '-o')
         self.line_signal, = self.ax_signal.plot([], [], '-o')
         plt.show()
+        plt.draw()
 
     
     def update_score(self, x, y):
@@ -37,16 +40,24 @@ class CommPlotter:
 
 
 p = CommPlotter()
-x1 = 0
-y1 = 0
-x2 = 0
-y2 = 0
 
-for i in range(1000):
-    p.update_score([x1], [y1])
-    x1 += random.random() * 2 - 1
-    y1 += random.random() * 2 - 1
+ser = serial.Serial('COM7', 115200, stopbits=serial.STOPBITS_ONE)
 
-    p.update_signal([x2], [y2])
-    x2 += random.random() * 2 - 1
-    y2 += random.random() * 2 - 1
+t = 0
+
+while True:
+    print(1)
+    line = ser.readline(timeout=4)
+    if line.beginswtith('resetLength = '):
+        rsl = int(re.search(r'(\-{0,1}[0-9]+)', line)[0])
+        t += rsl
+        p.update_signal([0, 1], [t, t])
+    elif line.beginswtith('setLength = '):
+        sl = int(re.search(r'(\-{0,1}[0-9]+)', line)[0])
+        t += sl
+        p.update_signal([1, 0], [t, t])
+    elif line.beginswtith('score = '):
+        score = int(re.search(r'(\-{0,1}[0-9]+)', line)[0])
+        p.update_score([score], [t])
+        
+    
