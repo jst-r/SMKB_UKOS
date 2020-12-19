@@ -46,7 +46,7 @@
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc1;
 
-
+RTC_HandleTypeDef  hrtc;
 
 TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim6;
@@ -67,12 +67,14 @@ uint8_t attempt = 0; //represents way to success
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
+static void MX_RTC_Init(void);
 static void MX_GPIO_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_TIM1_Init(void);
 static void MX_TIM6_Init(void);
 static void MX_USART3_UART_Init(void);
-
+static void  MX_TIM15_Init(void);
+static void MX_TIM16_Init(void);
 void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
                                 
                                 
@@ -115,7 +117,11 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
   MX_TIM1_Init();
   MX_TIM6_Init();
   MX_USART3_UART_Init();
-
+	MX_RTC_Init();
+	//HAL_NVIC_EnableIRQ(EXTI1_IRQn);
+	//HAL_NVIC_EnableIRQ(EXTI2_TSC_IRQn);
+	//HAL_TIM_Base_Start_IT(&htim15);
+	//HAL_TIM_Base_Start_IT(&htim16);
   /* USER CODE BEGIN 2 */
  /* **************************************************************************** 
   ==============================================================================   
@@ -190,10 +196,11 @@ void SystemClock_Config(void)
     */
 
 	
-	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE| RCC_OSCILLATORTYPE_HSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.HSEPredivValue = RCC_HSE_PREDIV_DIV1;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+	RCC_OscInitStruct.LSEState = RCC_LSE_OFF;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL9;
@@ -280,6 +287,32 @@ static void MX_ADC1_Init(void)
   }
 
 }
+/*RTC Init function*/
+static void MX_RTC_Init(void)
+{
+	RTC_TimeTypeDef sTime = {0}:
+	RTC_DateTypeDef sDate = {0};
+	RTC_AlarmTupeDef sAlarm = {0};
+	
+	hrtc.Instannce = RTC;
+	hrtc.Init.HourFormat = RTC_HOURFORMAT_24;
+  hrtc.Init.AsynchPrediv = 127;
+  hrtc.Init.SynchPrediv = 255;
+  hrtc.Init.OutPut = RTC_OUTPUT_DISABLE;
+  hrtc.Init.OutPutPolarity = RTC_OUTPUT_POLARITY_HIGH;
+  hrtc.Init.OutPutType = RTC_OUTPUT_TYPE_OPENDRAIN;
+  if (HAL_RTC_Init(&hrtc) != HAL_OK)
+	{
+		Error_Handler();
+	}
+	sTime.Hours = 0x0;
+	sDate.
+}
+
+
+
+
+
 
 /* TIM1 init function */
 static void MX_TIM1_Init(void)

@@ -53,7 +53,7 @@ void HAL_MspInit(void)
   /* USER CODE END MspInit 0 */
 
   __HAL_RCC_SYSCFG_CLK_ENABLE();
-
+	__HAL_RCC_PWR_CLK_ENABLE();
   HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
 
   /* System interrupt init*/
@@ -75,6 +75,27 @@ void HAL_MspInit(void)
   /* USER CODE BEGIN MspInit 1 */
 
   /* USER CODE END MspInit 1 */
+}
+void HAL_RTC_MspInit(RTC_HandleTypeDef* hrtc)
+{
+	if(hrtc->Instance==RTC)
+	{
+		__HAL_RCC_RTC_ENABLE();
+		HAL_NVIC_SetPriority(RTC_WKUP_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(RTC_WKUP_IRQn);
+    HAL_NVIC_SetPriority(RTC_Alarm_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(RTC_Alarm_IRQn);
+	}
+}
+
+void HAL_RTC_MspDeInit(RTC_HandleTypeDef* hrtc)
+{
+	if(hrtc->Instance==RTC)
+	{
+		__HAL_RCC_RTC_DISABLE();
+		HAL_NVIC_DisableIRQ(RTC_WKUP_IRQn);
+    HAL_NVIC_DisableIRQ(RTC_Alarm_IRQn);
+	}
 }
 
 void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
