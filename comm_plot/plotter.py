@@ -42,7 +42,7 @@ class CommPlotter:
 
 p = CommPlotter()
 
-ser = serial.Serial('COM7', 19200, stopbits=serial.STOPBITS_ONE)
+ser = serial.Serial('COM7', 115200, stopbits=serial.STOPBITS_ONE)
 
 t = 0
 i = 0

@@ -581,6 +581,9 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
+	if (htim->Instance != TIM15 & htim->Instance != TIM16){
+		MC_TIMx_SixStep_timebase();
+	}
 	if (htim->Instance == TIM16) {
 		if (motor_enable == 0){
 			if((HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_2) == SET & status == 0)||(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == RESET & status == 1)){ //If state has changed - do smth
@@ -610,18 +613,30 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 						setLength ++;
 						if (setLength > (sample_rate * 4)){
 							setLength = sample_rate * 4;
+							if (getScoreSquare(&analiser) > 80){
+								motor_enable = 1; 
+							} else {
+								motor_enable = 0;
+							}
+							resetScore(&analiser);
 						}
 						status = 1;	
 					} else if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == RESET){
 						resetLength ++;
 						status = 0;
+						if (resetLength > (sample_rate * 4)){
+							resetLength = sample_rate * 4;
+							if (getScoreSquare(&analiser) > 80){
+								motor_enable = 1; 
+							} else {
+								motor_enable = 0;
+							}
+							resetScore(&analiser);
+						}
 					}
 		} else if (htim->Instance == TIM15){
 			__NOP();
 		}
-	}
-	if (htim->Instance != TIM15 & htim->Instance != TIM16){
-		MC_TIMx_SixStep_timebase();
 	}
 }
 /* USER CODE END 4 */
