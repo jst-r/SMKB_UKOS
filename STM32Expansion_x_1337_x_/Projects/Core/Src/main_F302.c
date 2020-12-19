@@ -38,6 +38,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main_F302.h"
 #include "stm32f3xx_hal.h"
+#include "freqAnalysis.h"
 
 /* USER CODE BEGIN Includes */
 #include "6Step_Lib.h"
@@ -46,12 +47,12 @@
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc1;
 
-RTC_HandleTypeDef  hrtc;
+
 
 TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim6;
-//TIM_HandleTypeDef htim16;
-//TIM_HandleTypeDef htim15;
+TIM_HandleTypeDef htim16;
+TIM_HandleTypeDef htim15;
 UART_HandleTypeDef huart3;
 
 /* USER CODE BEGIN PV */
@@ -62,19 +63,29 @@ uint8_t position = 0; //Current motor position
 uint8_t prev_position = 0;
 uint8_t will = 10; //How much attempts will motor make on the way to end_position
 uint8_t attempt = 0; //represents way to success
+volatile uint16_t status = 1;
+volatile uint16_t resetLength = 0;
+volatile uint16_t setLength = 0;
+char buffer[30];
+static uint16_t sample_rate = 10000;
+volatile uint8_t motor_enable = 0;
+
+freqAnaliser analiser;
 
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
-static void MX_RTC_Init(void);
 static void MX_GPIO_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_TIM1_Init(void);
 static void MX_TIM6_Init(void);
-static void MX_USART3_UART_Init(void);
-static void  MX_TIM15_Init(void);
+static void MX_TIM15_Init(void);
 static void MX_TIM16_Init(void);
+//
+static void MX_USART3_UART_Init(void);
+
+
 void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
                                 
                                 
@@ -92,7 +103,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 {
 
   /* USER CODE BEGIN 1 */
- 
+   analiser = initAnaliser(1.);
   /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
@@ -116,12 +127,10 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
   MX_ADC1_Init();
   MX_TIM1_Init();
   MX_TIM6_Init();
+	MX_TIM15_Init();
+	MX_TIM16_Init();
   MX_USART3_UART_Init();
-	MX_RTC_Init();
-	//HAL_NVIC_EnableIRQ(EXTI1_IRQn);
-	//HAL_NVIC_EnableIRQ(EXTI2_TSC_IRQn);
-	//HAL_TIM_Base_Start_IT(&htim15);
-	//HAL_TIM_Base_Start_IT(&htim16);
+
   /* USER CODE BEGIN 2 */
  /* **************************************************************************** 
   ==============================================================================   
@@ -133,6 +142,8 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
 	HAL_NVIC_EnableIRQ(EXTI1_IRQn);
 	HAL_NVIC_EnableIRQ(EXTI2_TSC_IRQn);
+	HAL_TIM_Base_Start_IT(&htim15);
+	HAL_TIM_Base_Start_IT(&htim16);
 	
   /* USER CODE END 2 */
 
@@ -161,11 +172,14 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
                        ###### USER SPACE ######
   ==============================================================================      
   *****************************************************************************/    
-		if(prev_position != position){
+
+	if(prev_position != position){
 			prev_position = position;
 			MC_SixStep_Change_Direction();
 			MC_StopMotor();
+			motor_enable = 0;
 		}
+	if(motor_enable == 1){
 		if (attempt < will){
 				if (MC_MotorState() == 0){
 					HAL_Delay(1000);
@@ -177,6 +191,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 			} else {
 				MC_StopMotor();
 			}
+		}
   /****************************************************************************/    
   }
   /* USER CODE END 3 */
@@ -196,11 +211,10 @@ void SystemClock_Config(void)
     */
 
 	
-	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE| RCC_OSCILLATORTYPE_HSE;
+	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.HSEPredivValue = RCC_HSE_PREDIV_DIV1;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-	RCC_OscInitStruct.LSEState = RCC_LSE_OFF;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL9;
@@ -287,32 +301,6 @@ static void MX_ADC1_Init(void)
   }
 
 }
-/*RTC Init function*/
-static void MX_RTC_Init(void)
-{
-	RTC_TimeTypeDef sTime = {0}:
-	RTC_DateTypeDef sDate = {0};
-	RTC_AlarmTupeDef sAlarm = {0};
-	
-	hrtc.Instannce = RTC;
-	hrtc.Init.HourFormat = RTC_HOURFORMAT_24;
-  hrtc.Init.AsynchPrediv = 127;
-  hrtc.Init.SynchPrediv = 255;
-  hrtc.Init.OutPut = RTC_OUTPUT_DISABLE;
-  hrtc.Init.OutPutPolarity = RTC_OUTPUT_POLARITY_HIGH;
-  hrtc.Init.OutPutType = RTC_OUTPUT_TYPE_OPENDRAIN;
-  if (HAL_RTC_Init(&hrtc) != HAL_OK)
-	{
-		Error_Handler();
-	}
-	sTime.Hours = 0x0;
-	sDate.
-}
-
-
-
-
-
 
 /* TIM1 init function */
 static void MX_TIM1_Init(void)
@@ -443,14 +431,57 @@ static void MX_TIM6_Init(void)
   }
 
 }
+/*TIM15 user init function */
+static void MX_TIM15_Init(void)
+{
+	TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+	TIM_MasterConfigTypeDef sMasterConfig = {0};
+	
+	htim15.Instance = TIM15;
+	htim15.Init.Prescaler = 71;
+	htim15.Init.CounterMode = TIM_COUNTERMODE_UP;
+	htim15.Init.Period = 99;
+	htim15.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+	htim15.Init.RepetitionCounter = 0;
+	htim15.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+	if (HAL_TIM_Base_Init(&htim15) != HAL_OK)
+	{
+		Error_Handler();
+	}
+	sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+	if (HAL_TIM_ConfigClockSource(&htim15, &sClockSourceConfig) != HAL_OK)
+	{
+		Error_Handler();
+	}
+	sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+	sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim15, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+}
 
-
+/*TIM16 user init function */
+static void MX_TIM16_Init(void)
+{
+	htim16.Instance = TIM16;
+  htim16.Init.Prescaler = 71;
+  htim16.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim16.Init.Period = 99;
+  htim16.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim16.Init.RepetitionCounter = 0;
+  htim16.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim16) != HAL_OK)
+  {
+    Error_Handler();
+  }
+}
 /* USART3 init function */
 static void MX_USART3_UART_Init(void)
 {
 
   huart3.Instance = USART3;
-  huart3.Init.BaudRate = 19200;
+  huart3.Init.BaudRate = 115200;
   huart3.Init.WordLength = UART_WORDLENGTH_9B;
   huart3.Init.StopBits = UART_STOPBITS_1;
   huart3.Init.Parity = UART_PARITY_ODD;
@@ -509,16 +540,21 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+	/*Configure GPIO pin : PC2 */
+  GPIO_InitStruct.Pin = GPIO_PIN_2;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 	 /*Configure GPIO pins : EXTI1_END_STOP_Pin EXTI2_END_STOP_Pin */
   GPIO_InitStruct.Pin = GPIO_PIN_1|GPIO_PIN_2;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
   /* EXTI interrupt init*/
-  HAL_NVIC_SetPriority(EXTI1_IRQn, 0, 0);
+  HAL_NVIC_SetPriority(EXTI1_IRQn, 4, 4);
 	HAL_NVIC_EnableIRQ(EXTI1_IRQn);
 
-  HAL_NVIC_SetPriority(EXTI2_TSC_IRQn, 0, 0);
+  HAL_NVIC_SetPriority(EXTI2_TSC_IRQn, 4, 4);
   HAL_NVIC_EnableIRQ(EXTI2_TSC_IRQn);
 
 }
@@ -527,19 +563,65 @@ static void MX_GPIO_Init(void)
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
   if(GPIO_Pin == GPIO_PIN_1) {
-		//HAL_UART_Transmit(&huart3, "Stop Motor pos 1\n", 17, 200 );
-		//MC_StopMotor();
+		HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "Stop Motor pos 1\n"), 200 );
 		position = 1;
 		attempt = 0;
   } 
 	else if (GPIO_Pin == GPIO_PIN_2) {
-		//HAL_UART_Transmit(&huart3, "Stop Motor pos 2\n", 17, 200 );
-		//MC_StopMotor();
+		HAL_UART_Transmit(&huart3, (uint8_t*)buffer, sprintf(buffer, "Stop Motor pos 2\n"), 200 );
 		position = 2;
 		attempt = 0;
 	} 
 	else {
 	  __NOP();
+	}
+}
+
+
+
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
+	if (htim->Instance == TIM16) {
+		if (motor_enable == 0){
+			if((HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_2) == SET & status == 0)||(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == RESET & status == 1)){ //If state has changed - do smth
+					if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == SET){
+						HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "resetLength = %d\n", resetLength), 200);
+						processSet(&analiser, resetLength);
+						HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "score = %d\n", getScoreSquare(&analiser)), 200);
+						/*Filter function call*/	
+						/*
+						if (resetLength > 400){
+							motor_enable = 1;
+						} else {
+							motor_enable = 0;
+						}
+						*/
+						
+						
+						resetLength = 0;
+					} else { 
+						HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "setLength = %d\n", setLength), 200);
+						/*Filter function call*/
+						processReset(&analiser, setLength);
+						setLength = 0;
+						} 
+					}
+					if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == SET){
+						setLength ++;
+						if (setLength > (sample_rate * 4)){
+							setLength = sample_rate * 4;
+						}
+						status = 1;	
+					} else if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == RESET){
+						resetLength ++;
+						status = 0;
+					}
+		} else if (htim->Instance == TIM15){
+			__NOP();
+		}
+	}
+	if (htim->Instance != TIM15 & htim->Instance != TIM16){
+		MC_TIMx_SixStep_timebase();
 	}
 }
 /* USER CODE END 4 */

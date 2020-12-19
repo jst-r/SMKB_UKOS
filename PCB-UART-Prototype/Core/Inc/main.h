@@ -42,7 +42,8 @@ extern "C" {
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
-
+extern volatile uint16_t resetLength;
+extern volatile uint16_t setLength;
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/

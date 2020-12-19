@@ -22,7 +22,10 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "math.h"
+#include "freqAnalysis.h"
+#include "string.h"
+#include "stdio.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -48,26 +51,19 @@ TIM_HandleTypeDef htim16;
 UART_HandleTypeDef huart3;
 
 /* USER CODE BEGIN PV */
-volatile uint32_t F_CLK = 720000;
-volatile uint16_t NESS_FQ = 1;
-volatile uint16_t gu8_State = 0;
-volatile uint8_t IDLE = 0;
-volatile uint16_t gu32_T1 = 0;
-volatile uint8_t DONE = 1;
-volatile uint16_t gu16_TIM2_OVC = 0;
-volatile uint32_t gu32_T2 = 0;
-volatile uint8_t gu32_Ticks = 0;
 volatile uint16_t status = 1;
-volatile uint16_t zero = 0;
-volatile uint16_t one = 0;
-volatile uint16_t resetLength = 0;
-volatile uint16_t setLength = 0;
-//volatile uint8_t buffer = 0;
-volatile uint8_t buffer2 = 0;
-char buffer[20];
-volatile uint8_t i = 0;
+volatile uint16_t resetLength;
+volatile uint16_t setLength;
+char buffer[30];
+volatile uint16_t element_num = 0;
 volatile uint16_t data = 0;
-volatile uint16_t counter = 0;;
+volatile uint16_t counter = 0;
+static uint16_t depth = 80;
+static uint16_t sample_rate = 10000;
+volatile uint32_t raw_data[80] = {0}; //Increase array size if neccessary
+
+freqAnaliser analiser;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -78,6 +74,40 @@ static void MX_RTC_Init(void);
 static void MX_TIM15_Init(void);
 static void MX_TIM16_Init(void);
 /* USER CODE BEGIN PFP */
+
+void CheckData (void){
+	uint32_t  time_sufficient = 0;
+	/*calculate sum non-zero value elements*/
+	for(int k =0; k< (depth-1);k++){
+		if (raw_data[k] !=0  ){
+			if(raw_data[k] > 0x20000){
+				time_sufficient = time_sufficient + (raw_data[k] - 0x20000); 
+				//HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "setLength = %d\n", (raw_data[k] - 0x20000)), 200);
+			}else{
+				time_sufficient = time_sufficient + raw_data[k];
+				//HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "resetLength = %d\n", raw_data[k]), 200);
+			}
+		}
+	}
+	/* ***** */
+	
+	int time_sec = time_sufficient / sample_rate; 
+	if (time_sec > 2){																//Is record time enough for reconstruction
+		__NOP();																				//Insert your filtration here
+	}
+}
+
+
+void ClearBuffer (void){
+	element_num = 0;
+	CheckData();
+	for (int i = 0; i < (depth - 1); i++){
+		raw_data[i] = 0;
+	}
+	setLength = 0;
+	HAL_UART_Transmit_IT(&huart3,(uint8_t*)buffer, sprintf(buffer, "IDLE\n"));
+}
+
 
 /* USER CODE END PFP */
 
@@ -93,7 +123,7 @@ static void MX_TIM16_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+  analiser = initAnaliser(1.);
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -149,10 +179,9 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE|RCC_OSCILLATORTYPE_LSE;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.HSEPredivValue = RCC_HSE_PREDIV_DIV1;
-  RCC_OscInitStruct.LSEState = RCC_LSE_OFF;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
@@ -176,7 +205,7 @@ void SystemClock_Config(void)
   }
   PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_RTC|RCC_PERIPHCLK_TIM15
                               |RCC_PERIPHCLK_TIM16;
-  PeriphClkInit.RTCClockSelection = RCC_RTCCLKSOURCE_LSE;
+  PeriphClkInit.RTCClockSelection = RCC_RTCCLKSOURCE_HSE_DIV32;
   PeriphClkInit.Tim15ClockSelection = RCC_TIM15CLK_HCLK;
   PeriphClkInit.Tim16ClockSelection = RCC_TIM16CLK_HCLK;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
@@ -290,9 +319,9 @@ static void MX_TIM15_Init(void)
 
   /* USER CODE END TIM15_Init 1 */
   htim15.Instance = TIM15;
-  htim15.Init.Prescaler = 0;
+  htim15.Init.Prescaler = 71;
   htim15.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim15.Init.Period = 65535;
+  htim15.Init.Period = 99;
   htim15.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim15.Init.RepetitionCounter = 0;
   htim15.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -333,9 +362,9 @@ static void MX_TIM16_Init(void)
 
   /* USER CODE END TIM16_Init 1 */
   htim16.Instance = TIM16;
-  htim16.Init.Prescaler = 7200-1;
+  htim16.Init.Prescaler = 71;
   htim16.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim16.Init.Period = 10000-1;
+  htim16.Init.Period = 99;
   htim16.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim16.Init.RepetitionCounter = 0;
   htim16.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -437,7 +466,6 @@ static void MX_GPIO_Init(void)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	
 	if (htim->Instance == TIM16){
-		
 		if ((counter <= 3) & (counter >= 1)){
 			HAL_UART_Transmit(&huart3, "Spinning motor forward\n", 23, 200);
 //			HAL_UART_Transmit(&huart3, "\n", 1, 200);
@@ -446,52 +474,33 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 			}
 		counter = 0;
 		}
-	
-	
-	
 	//GPIO - SET - > hydrophone -> 0 -> osc -> 1;
-	if (htim->Instance == TIM15) {
-		if((HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_2) == SET & status == 0)||(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == RESET & status == 1)){		
-		//HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "resetLength = %d\n", resetLength), 1000);
-		//	HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "resetLength = %d\n", setLength), 1000);
-			//	if (setLength / resetLength > 10) {
-		//			HAL_UART_Transmit(&huart3, "Motor control Start\n", 20 ,200);
-		//		} else if (setLength / resetLength <10) {
-		//			HAL_UART_Transmit(&huart3, "Motor control Stop\n", 20, 200);}
-				if(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == SET) {
-					if (resetLength < 1000) {
-						//HAL_UART_Transmit(&huart3, "Less than a 1000\n", 20, 200);
-					if (counter == 0){
-				//	TIM16->CCR1=0;
-				//	HAL_UART_Transmit(&huart3, "Motor is ready\n", 15, 200);
-					}
-					counter ++;
-						
-					}	else {
-						//HAL_UART_Transmit(&huart3, "More than a 1000\n",20, 200);
-					//counter ++;
-					}
-					//HAL_UART_Transmit_IT(&huart3,(uint8_t*)buffer, sprintf(buffer, "resetLength = %d\n", resetLength)); //define the variable
-					resetLength = 0;
-					status = 1;
-				} else {
-					//HAL_UART_Transmit_IT(&huart3,(uint8_t*)buffer, sprintf(buffer, "setLength = %d\n", setLength));
-					setLength = 0;	
-					status = 0;
-				}
-		} else {
-			if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == SET ) {
+	if (htim->Instance == TIM15) {	
+		if((HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_2) == SET & status == 0)||(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == RESET & status == 1)){ //If state has changed - do smth
+			if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == SET){
+				HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "resetLength = %d\n", resetLength), 200);
+				processSet(&analiser, resetLength);
+				HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "score = %d\n", getScoreSquare(&analiser)), 200);
+				resetLength = 0;
+			} else { 
+				HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "setLength = %d\n", setLength), 200);
+				processReset(&analiser, setLength);
+				setLength = 0;
+				} 
+			}
+		
+			if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == SET){
 				setLength ++;
-			//	HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "setLength = %d\n", resetLength), 1000);
-				if (setLength >= 10000) {
-					setLength = 9999;
+				if (setLength > (sample_rate * 4)){
+					setLength = sample_rate * 4;
+					ClearBuffer();
 				}
-				status = 1;
-			} else {
+				status = 1;	
+			} else if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == RESET){
 				resetLength ++;
-		//		HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "resetLength = %d\n", resetLength), 1000);
-				status = 0;}
-		}
+				status = 0;
+			}
+		
 	}
 }
 
@@ -500,7 +509,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
   if(GPIO_Pin == GPIO_PIN_1) {
 		HAL_UART_Transmit(&huart3, "Stop Motor pos 1\n", 17, 200 );
-		
   } 
 	else if (GPIO_Pin == GPIO_PIN_2) {
 		HAL_UART_Transmit(&huart3, "Stop Motor pos 2\n", 17, 200 );
@@ -515,10 +523,11 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 	return first;
 }
 
-/*int	WordDivider2(X){
+	int	WordDivider2(X){
 	uint16_t second = X % 1000;
 	return second;
 }
+*/
 /* USER CODE END 4 */
 
 /**
