@@ -5,7 +5,8 @@
 "lcdxencoder\stm32f1xx_it.o"
 "lcdxencoder\stm32f1xx_hal_msp.o"
 "lcdxencoder\stm32f1xx_hal_gpio_ex.o"
-"lcdxencoder\stm32f1xx_hal_i2c.o"
+"lcdxencoder\stm32f1xx_hal_tim.o"
+"lcdxencoder\stm32f1xx_hal_tim_ex.o"
 "lcdxencoder\stm32f1xx_hal.o"
 "lcdxencoder\stm32f1xx_hal_rcc.o"
 "lcdxencoder\stm32f1xx_hal_rcc_ex.o"
@@ -16,8 +17,6 @@
 "lcdxencoder\stm32f1xx_hal_flash.o"
 "lcdxencoder\stm32f1xx_hal_flash_ex.o"
 "lcdxencoder\stm32f1xx_hal_exti.o"
-"lcdxencoder\stm32f1xx_hal_tim.o"
-"lcdxencoder\stm32f1xx_hal_tim_ex.o"
 "lcdxencoder\system_stm32f1xx.o"
 --library_type=microlib --strict --scatter "LCDxEncoder\LCDxEncoder.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
