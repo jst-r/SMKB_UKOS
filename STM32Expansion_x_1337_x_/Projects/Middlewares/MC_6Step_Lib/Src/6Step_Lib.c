@@ -84,7 +84,6 @@ uint32_t T_single_step_first_value = 0;             /*!<  Startup variable  */
 int32_t  delta = 0;                                 /*!<  Startup variable  */
 uint16_t index_array = 1;                           /*!<  Speed filter variable */
 int16_t speed_tmp_array[FILTER_DEEP];               /*!<  Speed filter variable */
-//uint16_t speed_tmp_buffer[FILTER_DEEP];             /*!<  Potentiometer filter variable REMOVE_ASAP*/
 uint16_t HFBuffer[HFBUFFERSIZE];                    /*!<  Buffer for Potentiometer Value Filtering at the High-Frequency ADC conversion REMOVE_ASAP*/    
 uint16_t HFBufferIndex = 0;                         /*!<  High-Frequency Buffer Index ???REMOVE_ASAP???*/    
 uint8_t  array_completed = FALSE;                   /*!<  Speed filter variable */

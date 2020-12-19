@@ -1,6 +1,6 @@
 #ifndef FREQANALYSIS
 #define FREQANALYSIS
-
+#include "main.h"
 
 typedef struct{
 	float freq;

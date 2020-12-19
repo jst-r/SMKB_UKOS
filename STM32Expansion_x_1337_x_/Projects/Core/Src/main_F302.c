@@ -38,6 +38,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main_F302.h"
 #include "stm32f3xx_hal.h"
+#include "freqAnalysis.h"
 
 /* USER CODE BEGIN Includes */
 #include "6Step_Lib.h"
@@ -68,6 +69,9 @@ volatile uint16_t setLength = 0;
 char buffer[30];
 static uint16_t sample_rate = 10000;
 volatile uint8_t motor_enable = 0;
+
+freqAnaliser analiser;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -99,7 +103,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 {
 
   /* USER CODE BEGIN 1 */
- 
+   analiser = initAnaliser(1.);
   /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
@@ -477,7 +481,7 @@ static void MX_USART3_UART_Init(void)
 {
 
   huart3.Instance = USART3;
-  huart3.Init.BaudRate = 19200;
+  huart3.Init.BaudRate = 115200;
   huart3.Init.WordLength = UART_WORDLENGTH_9B;
   huart3.Init.StopBits = UART_STOPBITS_1;
   huart3.Init.Parity = UART_PARITY_ODD;
@@ -547,10 +551,10 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
   /* EXTI interrupt init*/
-  HAL_NVIC_SetPriority(EXTI1_IRQn, 0, 0);
+  HAL_NVIC_SetPriority(EXTI1_IRQn, 4, 4);
 	HAL_NVIC_EnableIRQ(EXTI1_IRQn);
 
-  HAL_NVIC_SetPriority(EXTI2_TSC_IRQn, 0, 0);
+  HAL_NVIC_SetPriority(EXTI2_TSC_IRQn, 4, 4);
   HAL_NVIC_EnableIRQ(EXTI2_TSC_IRQn);
 
 }
@@ -559,14 +563,12 @@ static void MX_GPIO_Init(void)
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
   if(GPIO_Pin == GPIO_PIN_1) {
-		HAL_UART_Transmit(&huart3, "Stop Motor pos 1\n", 17, 200 );
-		//MC_StopMotor();
+		HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "Stop Motor pos 1\n"), 200 );
 		position = 1;
 		attempt = 0;
   } 
 	else if (GPIO_Pin == GPIO_PIN_2) {
-		HAL_UART_Transmit(&huart3, "Stop Motor pos 2\n", 17, 200 );
-		//MC_StopMotor();
+		HAL_UART_Transmit(&huart3, (uint8_t*)buffer, sprintf(buffer, "Stop Motor pos 2\n"), 200 );
 		position = 2;
 		attempt = 0;
 	} 
@@ -584,16 +586,23 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 			if((HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_2) == SET & status == 0)||(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == RESET & status == 1)){ //If state has changed - do smth
 					if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == SET){
 						HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "resetLength = %d\n", resetLength), 200);
+						processSet(&analiser, resetLength);
+						HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "score = %d\n", getScoreSquare(&analiser)), 200);
 						/*Filter function call*/	
+						/*
 						if (resetLength > 400){
 							motor_enable = 1;
 						} else {
 							motor_enable = 0;
 						}
+						*/
+						
+						
 						resetLength = 0;
 					} else { 
 						HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "setLength = %d\n", setLength), 200);
 						/*Filter function call*/
+						processReset(&analiser, setLength);
 						setLength = 0;
 						} 
 					}

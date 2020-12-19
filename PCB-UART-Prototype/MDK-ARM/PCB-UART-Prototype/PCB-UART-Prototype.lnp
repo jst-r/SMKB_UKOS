@@ -3,6 +3,7 @@
 "pcb-uart-prototype\main.o"
 "pcb-uart-prototype\stm32f3xx_it.o"
 "pcb-uart-prototype\stm32f3xx_hal_msp.o"
+"pcb-uart-prototype\freqanalysis.o"
 "pcb-uart-prototype\stm32f3xx_hal_rtc.o"
 "pcb-uart-prototype\stm32f3xx_hal_rtc_ex.o"
 "pcb-uart-prototype\stm32f3xx_hal.o"
