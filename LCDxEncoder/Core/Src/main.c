@@ -41,6 +41,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 TIM_HandleTypeDef htim1;
+TIM_HandleTypeDef htim2;
 
 /* USER CODE BEGIN PV */
 uint16_t count = 0;
@@ -63,6 +64,7 @@ uint8_t valve = 200;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_TIM1_Init(void);
+static void MX_TIM2_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -101,8 +103,10 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_TIM1_Init();
+  MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
 	HAL_TIM_Encoder_Start(&htim1, TIM_CHANNEL_1);
+	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
   lcd16x2_init_4bits(RS_GPIO_Port, RS_Pin, E_Pin,
 //      D0_GPIO_Port, D0_Pin, D1_Pin, D2_Pin, D3_Pin,
       D4_GPIO_Port, D4_Pin, D5_Pin, D6_Pin, D7_Pin);
@@ -146,7 +150,7 @@ int main(void)
 					frequency /= 10;
 					lcd16x2_clear();
 					lcd16x2_1stLine();
-					lcd16x2_printf("freq = %.1f", frequency);
+					lcd16x2_printf("freq = %.4f", frequency);
 					HAL_Delay(500);
 				}
 			}
@@ -156,7 +160,7 @@ int main(void)
 			HAL_GetTick();
 			status = 2;
 				lcd16x2_1stLine();
-				lcd16x2_printf("freq = %.1f", frequency);
+				lcd16x2_printf("freq = %.2f", 1/frequency);
 				lcd16x2_2ndLine();
 				lcd16x2_printf("pulse num = %d", count);
 				HAL_Delay(500);
@@ -185,6 +189,34 @@ int main(void)
 				}
 			}
 		}
+				
+	/*	if (butt_count == 0){
+				status = 0;
+				lcd16x2_1stLine();
+				lcd16x2_printf("pulse number = %d", count);
+		}
+		else if (butt_count == 1)
+				{
+					status = 1;
+					lcd16x2_1stLine();
+					lcd16x2_printf("Frequency = %.2f", frequency);	
+				}
+		else if (butt_count == 2)
+			{
+				status = 2;
+				lcd16x2_1stLine();
+				lcd16x2_printf("Frequency = %.2f", frequency);
+				lcd16x2_2ndLine();
+				lcd16x2_printf("pulse number = %d", count);
+			}
+		else if (butt_count == 3)
+		{
+			status = 3;
+			Enc_Counter = TIM1 -> CNT;
+			__HAL_TIM_GET_COUNTER(&htim1);
+			TIM2 -> CCR1 = Enc_Counter;
+		}
+		*/
   }
   /* USER CODE END 3 */
 }
@@ -278,6 +310,55 @@ static void MX_TIM1_Init(void)
 }
 
 /**
+  * @brief TIM2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM2_Init(void)
+{
+
+  /* USER CODE BEGIN TIM2_Init 0 */
+
+  /* USER CODE END TIM2_Init 0 */
+
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+  TIM_OC_InitTypeDef sConfigOC = {0};
+
+  /* USER CODE BEGIN TIM2_Init 1 */
+
+  /* USER CODE END TIM2_Init 1 */
+  htim2.Instance = TIM2;
+  htim2.Init.Prescaler = 71;
+  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim2.Init.Period = 500;
+  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_PWM_Init(&htim2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sConfigOC.OCMode = TIM_OCMODE_PWM1;
+  sConfigOC.Pulse = 250;
+  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+  if (HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM2_Init 2 */
+
+  /* USER CODE END TIM2_Init 2 */
+  HAL_TIM_MspPostInit(&htim2);
+
+}
+
+/**
   * @brief GPIO Initialization Function
   * @param None
   * @retval None
@@ -304,6 +385,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
+  /*Configure GPIO pins : PA4 PA7 */
+  GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_7;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
   /*Configure GPIO pin : PB11 */
   GPIO_InitStruct.Pin = GPIO_PIN_11;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
@@ -318,6 +405,12 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI4_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI4_IRQn);
+
+  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
+
   HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 
