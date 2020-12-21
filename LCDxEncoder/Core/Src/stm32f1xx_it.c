@@ -313,7 +313,7 @@ void EXTI15_10_IRQHandler(void)
 				freq_F = 1;
 				run_F = 1;
 				}		
-			else if (butt_count == 4)
+			else if (butt_count >3)
 			{
 				progtime = HAL_GetTick();
 				butt_count = 0;
