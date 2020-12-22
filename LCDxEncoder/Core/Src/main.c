@@ -173,7 +173,7 @@ int main(void)
 				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET);
 				HAL_Delay(valve);
 				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
-				HAL_Delay((1/frequency)-valve);
+				HAL_Delay((1000/frequency)-valve);
 				i++;
 				if(i == count){
 					TIM1 -> CNT = 0;
