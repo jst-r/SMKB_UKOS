@@ -10,7 +10,7 @@
       <TargetName>STM32F302R8-Nucleo</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060960::V5.06 update 7 (build 960)::.\ARMCC</pCCUsed>
+      <pCCUsed>5060750::V5.06 update 6 (build 750)::.\ARMCC</pCCUsed>
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -402,16 +402,6 @@
               <FileName>stm32F302_nucleo_ihm07m1.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Core\Src\stm32F302_nucleo_ihm07m1.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f3xx_hal_rtc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_rtc.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f3xx_hal_rtc_ex.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_rtc_ex.c</FilePath>
             </File>
             <File>
               <FileName>freqAnalysis.c</FileName>
@@ -985,16 +975,6 @@
               <FilePath>..\Core\Src\stm32F302_nucleo_ihm07m1.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f3xx_hal_rtc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_rtc.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f3xx_hal_rtc_ex.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_rtc_ex.c</FilePath>
-            </File>
-            <File>
               <FileName>freqAnalysis.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Core\Src\freqAnalysis.c</FilePath>
@@ -1514,16 +1494,6 @@
               <FileName>stm32F302_nucleo_ihm07m1.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Core\Src\stm32F302_nucleo_ihm07m1.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f3xx_hal_rtc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_rtc.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f3xx_hal_rtc_ex.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_rtc_ex.c</FilePath>
             </File>
             <File>
               <FileName>freqAnalysis.c</FileName>
@@ -2046,16 +2016,6 @@
               <FilePath>..\Core\Src\stm32F302_nucleo_ihm07m1.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f3xx_hal_rtc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_rtc.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f3xx_hal_rtc_ex.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_rtc_ex.c</FilePath>
-            </File>
-            <File>
               <FileName>freqAnalysis.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Core\Src\freqAnalysis.c</FilePath>
@@ -2186,5 +2146,20 @@
     <components/>
     <files/>
   </RTE>
+
+  <LayerInfo>
+    <Layers>
+      <Layer>
+        <LayName>&lt;Project Info&gt;</LayName>
+        <LayDesc></LayDesc>
+        <LayUrl></LayUrl>
+        <LayKeys></LayKeys>
+        <LayCat></LayCat>
+        <LayLic></LayLic>
+        <LayTarg>0</LayTarg>
+        <LayPrjMark>1</LayPrjMark>
+      </Layer>
+    </Layers>
+  </LayerInfo>
 
 </Project>

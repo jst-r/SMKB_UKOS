@@ -40,10 +40,7 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-I2C_HandleTypeDef hi2c1;
-
 TIM_HandleTypeDef htim1;
-TIM_HandleTypeDef htim2;
 
 /* USER CODE BEGIN PV */
 uint16_t count = 0;
@@ -56,17 +53,16 @@ uint16_t run_F = 0;
 uint16_t Enc_Counter = 0;
 float frequency = 0;
 uint16_t status = 0;
-
-
-
+uint16_t i = 0;
+uint16_t  clear_count = 0;
+uint16_t clear_frequency = 0;
+uint8_t valve = 200;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_TIM1_Init(void);
-static void MX_I2C1_Init(void);
-static void MX_TIM2_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -105,15 +101,12 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_TIM1_Init();
-  MX_I2C1_Init();
-  MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
 	HAL_TIM_Encoder_Start(&htim1, TIM_CHANNEL_1);
-	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
   lcd16x2_init_4bits(RS_GPIO_Port, RS_Pin, E_Pin,
 //      D0_GPIO_Port, D0_Pin, D1_Pin, D2_Pin, D3_Pin,
       D4_GPIO_Port, D4_Pin, D5_Pin, D6_Pin, D7_Pin);
-
+	lcd16x2_cursorShow(0);
 	progtime = HAL_GetTick();
   /* USER CODE END 2 */
 
@@ -121,36 +114,78 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+		lcd16x2_clear();
+		
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		if (butt_count == 0){
-				status = 0;
-				lcd16x2_1stLine();
-				lcd16x2_printf("pulse number = %d", count);
-		}
+		if(butt_count == 0)
+			{
+			HAL_GetTick();
+			i = 0;
+			clear_count = 0;
+			count = 0;
+			frequency = 1;				
+			status = 0;
+			count = TIM1 -> CNT;
+			lcd16x2_1stLine();
+			lcd16x2_printf("pulse num = %d", count);
+			HAL_Delay(200);
+			}
 		else if (butt_count == 1)
+			{	
+				HAL_GetTick();
+				status = 1;
+				if (clear_count == 0)
+					{
+					TIM1 -> CNT = 0;
+					clear_count = 1;
+					}
+				else
 				{
-					status = 1;
+					frequency += TIM1 -> CNT;
+					frequency /= 10;
+					lcd16x2_clear();
 					lcd16x2_1stLine();
-					lcd16x2_printf("Frequency = %.2f", frequency);	
+					lcd16x2_printf("freq = %.1f", frequency);
+					HAL_Delay(500);
 				}
+			}
+			
 		else if (butt_count == 2)
 			{
-				status = 2;
+			HAL_GetTick();
+			status = 2;
 				lcd16x2_1stLine();
-				lcd16x2_printf("Frequency = %.2f", frequency);
+				lcd16x2_printf("freq = %.1f", frequency);
 				lcd16x2_2ndLine();
-				lcd16x2_printf("pulse number = %d", count);
+				lcd16x2_printf("pulse num = %d", count);
+				HAL_Delay(500);
 			}
-		else if (butt_count == 3)
-		{
+			else if (butt_count == 3)
 			status = 3;
-			Enc_Counter = TIM1 -> CNT;
-			__HAL_TIM_GET_COUNTER(&htim1);
-			TIM2 -> CCR1 = Enc_Counter;
+			HAL_GetTick();
+			{	while (butt_count == 3 && i != count)
+				{
+				lcd16x2_clear();
+				lcd16x2_1stLine();
+				lcd16x2_printf("pulse number %d", i);
+				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET);
+				HAL_Delay(valve);
+				HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
+				HAL_Delay((1/frequency)-valve);
+				i++;
+				if(i == count){
+					TIM1 -> CNT = 0;
+					lcd16x2_setCursor(0,0);
+					lcd16x2_printf("Press Any Key To");
+					lcd16x2_setCursor(1,0);
+					lcd16x2_printf("Set A Pulse Num");
+					while(butt_count == 3){
+					HAL_Delay(500);}
+				}
+			}
 		}
-		
   }
   /* USER CODE END 3 */
 }
@@ -191,40 +226,6 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-}
-
-/**
-  * @brief I2C1 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_I2C1_Init(void)
-{
-
-  /* USER CODE BEGIN I2C1_Init 0 */
-
-  /* USER CODE END I2C1_Init 0 */
-
-  /* USER CODE BEGIN I2C1_Init 1 */
-
-  /* USER CODE END I2C1_Init 1 */
-  hi2c1.Instance = I2C1;
-  hi2c1.Init.ClockSpeed = 100000;
-  hi2c1.Init.DutyCycle = I2C_DUTYCYCLE_2;
-  hi2c1.Init.OwnAddress1 = 0;
-  hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
-  hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
-  hi2c1.Init.OwnAddress2 = 0;
-  hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
-  hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
-  if (HAL_I2C_Init(&hi2c1) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN I2C1_Init 2 */
-
-  /* USER CODE END I2C1_Init 2 */
-
 }
 
 /**
@@ -278,55 +279,6 @@ static void MX_TIM1_Init(void)
 }
 
 /**
-  * @brief TIM2 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_TIM2_Init(void)
-{
-
-  /* USER CODE BEGIN TIM2_Init 0 */
-
-  /* USER CODE END TIM2_Init 0 */
-
-  TIM_MasterConfigTypeDef sMasterConfig = {0};
-  TIM_OC_InitTypeDef sConfigOC = {0};
-
-  /* USER CODE BEGIN TIM2_Init 1 */
-
-  /* USER CODE END TIM2_Init 1 */
-  htim2.Instance = TIM2;
-  htim2.Init.Prescaler = 71;
-  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 500;
-  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-  if (HAL_TIM_PWM_Init(&htim2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
-  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-  if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = 250;
-  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-  if (HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN TIM2_Init 2 */
-
-  /* USER CODE END TIM2_Init 2 */
-  HAL_TIM_MspPostInit(&htim2);
-
-}
-
-/**
   * @brief GPIO Initialization Function
   * @param None
   * @retval None
@@ -341,23 +293,17 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, D4_Pin|D5_Pin|D6_Pin|D7_Pin
-                          |RS_Pin|E_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1|RS_Pin|E_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : PA4 PA7 */
-  GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_7;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
-  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOB, D4_Pin|D5_Pin|D6_Pin|D7_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : D4_Pin D5_Pin D6_Pin D7_Pin
-                           RS_Pin E_Pin */
-  GPIO_InitStruct.Pin = D4_Pin|D5_Pin|D6_Pin|D7_Pin
-                          |RS_Pin|E_Pin;
+  /*Configure GPIO pins : PA1 RS_Pin E_Pin */
+  GPIO_InitStruct.Pin = GPIO_PIN_1|RS_Pin|E_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_MEDIUM;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PB11 */
   GPIO_InitStruct.Pin = GPIO_PIN_11;
@@ -365,13 +311,14 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
+  /*Configure GPIO pins : D4_Pin D5_Pin D6_Pin D7_Pin */
+  GPIO_InitStruct.Pin = D4_Pin|D5_Pin|D6_Pin|D7_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_MEDIUM;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
   /* EXTI interrupt init*/
-  HAL_NVIC_SetPriority(EXTI4_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(EXTI4_IRQn);
-
-  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
-
   HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 

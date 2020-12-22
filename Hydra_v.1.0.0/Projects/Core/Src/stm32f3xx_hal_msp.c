@@ -76,27 +76,6 @@ void HAL_MspInit(void)
 
   /* USER CODE END MspInit 1 */
 }
-void HAL_RTC_MspInit(RTC_HandleTypeDef* hrtc)
-{
-	if(hrtc->Instance==RTC)
-	{
-		__HAL_RCC_RTC_ENABLE();
-		HAL_NVIC_SetPriority(RTC_WKUP_IRQn, 0, 0);
-    HAL_NVIC_EnableIRQ(RTC_WKUP_IRQn);
-    HAL_NVIC_SetPriority(RTC_Alarm_IRQn, 0, 0);
-    HAL_NVIC_EnableIRQ(RTC_Alarm_IRQn);
-	}
-}
-
-void HAL_RTC_MspDeInit(RTC_HandleTypeDef* hrtc)
-{
-	if(hrtc->Instance==RTC)
-	{
-		__HAL_RCC_RTC_DISABLE();
-		HAL_NVIC_DisableIRQ(RTC_WKUP_IRQn);
-    HAL_NVIC_DisableIRQ(RTC_Alarm_IRQn);
-	}
-}
 
 void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
 {
