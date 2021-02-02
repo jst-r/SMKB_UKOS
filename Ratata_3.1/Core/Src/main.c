@@ -45,8 +45,8 @@
 long frequency = 72000000;
 int time = 0;
 float signal = 0.1;
-float sequence[] = {1,2,3,3,2,1,0};
-float sequence2[] = {5,5,2,2,2,10,10,0};
+float sequence[] = {1,2,3,3,2,1,0.1,0};
+float sequence2[] = {5,5,2,2,2,10,10,0.1,0};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -119,13 +119,13 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_13);
-		HAL_Delay(100);
+		HAL_Delay(200);
 		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_13);
-		HAL_Delay(100);
+		HAL_Delay(200);
 		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_12);
-		HAL_Delay(100);
+		HAL_Delay(200);
 		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_12);
-		HAL_Delay(100);
+		HAL_Delay(200);
 	}
   /* USER CODE END 3 */
 }
@@ -188,20 +188,20 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pins : PB12 PB13 */
   GPIO_InitStruct.Pin = GPIO_PIN_12|GPIO_PIN_13;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PB4 */
   GPIO_InitStruct.Pin = GPIO_PIN_4;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PB6 PB7 */
   GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_7;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
@@ -219,23 +219,29 @@ static void MX_GPIO_Init(void)
   /* NOTE: This function Should not be modified, when the callback is needed,
            the HAL_GPIO_EXTI_Callback could be implemented in the user file
    */
- if(GPIO_Pin == GPIO_PIN_7 & HAL_GetTick()-time > 500)
-	 {
-		 time = HAL_GetTick();
-		 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
-		 Ratata(sequence2);
-		 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET); 
-	 }
-	  else if(GPIO_Pin == GPIO_PIN_6 & HAL_GetTick()-time > 500 )
-	 {
-		 time = HAL_GetTick();
-		 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
-		 Ratata(sequence); 
-		 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
-	 }
- else{
-	 __nop();
+	if(GPIO_Pin == GPIO_PIN_7 & HAL_GetTick()-time > 500)         //Right_Button
+		 {
+			 time = HAL_GetTick();
+			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_13, GPIO_PIN_RESET);
+			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_SET); 
+			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
+			 Ratata(sequence2);
+			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
+			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_RESET);
 		 }
+	else if(GPIO_Pin == GPIO_PIN_6 & HAL_GetTick()-time > 500 )  //Left_Button
+		 {
+			 time = HAL_GetTick();
+			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_RESET);
+			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_13, GPIO_PIN_SET);
+			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
+			 Ratata(sequence); 
+			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
+			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_13, GPIO_PIN_RESET);
+		 }
+	else{
+		__nop();
+			}
 }
 /* USER CODE END 4 */
 
