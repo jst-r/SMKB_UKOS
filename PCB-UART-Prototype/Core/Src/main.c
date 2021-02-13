@@ -62,7 +62,7 @@ static uint16_t depth = 80;
 static uint16_t sample_rate = 10000;
 volatile uint32_t raw_data[80] = {0}; //Increase array size if neccessary
 
-freqAnaliser analiser;
+freqAnalyser analiser;
 
 /* USER CODE END PV */
 
