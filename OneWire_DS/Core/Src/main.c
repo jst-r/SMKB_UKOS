@@ -48,6 +48,7 @@ TIM_HandleTypeDef htim6;
 /* USER CODE BEGIN PV */
 uint8_t Rh_byte1, Rh_byte2, Temp_byte1, Temp_byte2, DS_1, DS_2, DS_3, DS_4, ST_1_0, ST_1_1;
 uint8_t DS_5,DS_6,DS_7,DS_8,DS_9,DS_10,DS_11,DS_12,DS_13,DS_14,DS_15,DS_16, DS_17, DS_18;
+uint8_t SR_0, SR_1, SR_2, SR_1, SR_3, SR_4, SR_5, SR_6, SR_7, SR_8, SR_9, SR_10, SR_11, SR_12, SR_13;
 uint16_t SUM, RH, TEMP, step_3_0, step_3_1;	
 uint8_t Presence = 0;
 uint16_t Response = 0;
@@ -92,7 +93,7 @@ void Set_Pin_Input(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
 		 HAL_GPIO_Init(GPIOx, &GPIO_InitStruct);
 	}
 	
-uint8_t DS28E18_Start(void)
+uint8_t Start(void)
 	{
 		 
 		 Set_Pin_Output(DS28E18_PORT,DS28E18_PIN);//set the pin as output
@@ -161,7 +162,7 @@ uint8_t Read(void)
 			
 uint16_t Step_1(void)
 { 	
-	Presence = DS28E18_Start();
+	Presence = Start();
 	//HAL_Delay(1);
 	Write(0xCC); //skip ROM
 	Write(0x66);
@@ -181,7 +182,7 @@ uint16_t Step_1(void)
 	
 void Step_3(void)
 {
-	Presence = DS28E18_Start();
+	Presence = Start();
 	delay(1);
 	Write(0xCC); //Match ROM
 	/*Write(0x56); // 0 byte
@@ -204,9 +205,28 @@ void Step_3(void)
 	delay(1);
 }	
 
+ void Step_4(void){
+	Start();
+	Write(0x55); //0 bit
+	Write(0x56); // 1 bit
+	Write(0x70); // 2 bit
+	Write(0x8E);
+	Write(0x00);
+	Write(0x00);
+	Write(0x00);
+	Write(0x00);
+	Write(0x43);
+	Write(0x66); 	//
+	Write(0x01);
+	Write(0x7A);
+	Read();
+	Read();
+	Write(0xAA);
+ }
+
 void set2SPI (void)
 {
-	DS28E18_Start();
+	Start();
 	Write(0xCC);
 	Write(0x66);
 	Write(0x02);
@@ -246,6 +266,48 @@ void Check2(void)
 	DS_16 = Read();
 	DS_17 = Read();
 }
+
+void SPI_sequencer(void)
+{
+	Start();
+	Write(0xCC);	//SKIP ROM
+	Write(0x66);  //Command Start
+	Write(0x0E);	//Len
+	Write(0x11);  //Write Sequencer 
+	Write(0xCC);  // SENS_VDD_ON
+	Write(0xDD);  //Delay
+	Write(0x01);	//2^x ms delay
+	Write(0xC0);  //SPI Write/Read byte
+	Write(0x04);  //Lenght of Write
+	Write(0x02);	//Len of Read (bytes)
+	Write(0x80);  //CS LOW
+	Write(0x01);  //CS LHIGH
+	Write(0xDD);  //Delay
+	Write(0x01);	//8ms
+	Write(0xFF);  //Buffer
+	Write(0xFF);  //Buffer
+	Write(0x80);	//CS High
+	SR_11 = Read();
+	SR_12 = Read();
+	Write(0xAA);
+
+	SR_3 = Read();
+	SR_4 = Read();
+	SR_5 = Read();
+	SR_6 = Read();
+	SR_7 = Read();
+	SR_8 = Read();
+	SR_9 = Read();
+	SR_10 = Read();
+}
+
+void Read_Sequencer(void)
+{
+	Start();
+	Write(0xCC);
+	Write(0x66);
+	Write(0x03);
+	
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -294,13 +356,13 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 		/* Test at DS18B20 completed
-	Presence = DS28E18_Start();
+	Presence = Start();
 	HAL_Delay(1);
 	Write(0xCC); //skip ROM
 	Write(0x44);
 	HAL_Delay(800);
 			
-	Presence = DS28E18_Start();
+	Presence = Start();
 	HAL_Delay(1);
 	Write(0xCC);
 	Write(0xBE);
@@ -325,11 +387,19 @@ int main(void)
 	delay(1000);
 	Check1();
 	
+	Step_4();
+	delay(1000);
+	Check2();
+	
 	set2SPI();
 	delay(1000);
 	Check2();
 	
-	HAL_Delay(3000);
+	
+	
+	SPI_sequencer();
+	
+	HAL_Delay(300);
 	
 
 	}
