@@ -49,7 +49,15 @@ TIM_HandleTypeDef htim6;
 uint8_t Rh_byte1, Rh_byte2, Temp_byte1, Temp_byte2, DS_1, DS_2, DS_3, DS_4, ST_1_0, ST_1_1;
 uint8_t DS_5,DS_6,DS_7,DS_8,DS_9,DS_10,DS_11,DS_12,DS_13,DS_14,DS_15,DS_16, DS_17, DS_18;
 uint8_t SR_0, SR_1, SR_2, SR_1, SR_3, SR_4, SR_5, SR_6, SR_7, SR_8, SR_9, SR_10, SR_11, SR_12, SR_13;
-uint16_t SUM, RH, TEMP, step_3_0, step_3_1;	
+uint16_t SUM, RH, TEMP, step_3_0, step_3_1, i, j, Run_0, Run_1;
+/*Read sequencer response handler*/
+uint16_t byte_0, byte_1, byte_2, byte_3, byte_4, byte_5, byte_6, byte_7, byte_7, byte_8, byte_9, byte_10;
+uint16_t byte_11, byte_12, byte_13, byte_14, byte_15, byte_16, byte_17,byte_18, byte_19, byte_20, byte_21;
+/*END*/
+/*Run Sequencer response handler*/
+uint16_t rs_0, rs_1, rs_2, rs_3, rs_4, rs_5, rs_6, rs_7, rs_8, rs_9, rs_10, rs_11, rs_12; 
+/*Result handler*/
+uint16_t res_0, res_1, res_2, res_3, res_4, res_5, res_6, res_7;
 uint8_t Presence = 0;
 uint16_t Response = 0;
 
@@ -231,10 +239,10 @@ void set2SPI (void)
 	Write(0x66);
 	Write(0x02);
 	Write(0x55);
-	Write(0x38);
+	Write(0x3D);
 	DS_11 = Read();
 	DS_12 = Read();
-	if(DS_11 == 0x7E && DS_12 == 0x35)
+	if(DS_11 == 0xBE && DS_12 == 0x36)
 	{
 		Write(0xAA);
 	}
@@ -267,46 +275,125 @@ void Check2(void)
 	DS_17 = Read();
 }
 
-void SPI_sequencer(void)
+void Write_Sequencer(void)
 {
 	Start();
 	Write(0xCC);	//SKIP ROM
 	Write(0x66);  //Command Start
-	Write(0x0E);	//Len
-	Write(0x11);  //Write Sequencer 
+	Write(0x11);	//Len
+	Write(0x11);  //Write Sequencer
+	Write(0x00);  //ADDR_LO
+	Write(0x00);  //ADDR_Hi
 	Write(0xCC);  // SENS_VDD_ON
 	Write(0xDD);  //Delay
 	Write(0x01);	//2^x ms delay
+	Write(0x01);  //CS LOW
+	Write(0x80);  //CS HIGH
 	Write(0xC0);  //SPI Write/Read byte
-	Write(0x04);  //Lenght of Write
+	Write(0x00);  //Lenght of Write
 	Write(0x02);	//Len of Read (bytes)
-	Write(0x80);  //CS LOW
-	Write(0x01);  //CS LHIGH
 	Write(0xDD);  //Delay
-	Write(0x01);	//8ms
-	Write(0xFF);  //Buffer
-	Write(0xFF);  //Buffer
-	Write(0x80);	//CS High
+	Write(0x01);	//2ms
+	Write(0xFF);  //Buffer, ADDR = 0x0A
+	Write(0xFF);  //Buffer  ADDR = 0x0B
+	Write(0x01);	//CS Low
+	Write(0xBB);  //SENS_VDD_OFF
 	SR_11 = Read();
 	SR_12 = Read();
 	Write(0xAA);
-
-	SR_3 = Read();
-	SR_4 = Read();
-	SR_5 = Read();
-	SR_6 = Read();
-	SR_7 = Read();
-	SR_8 = Read();
-	SR_9 = Read();
-	SR_10 = Read();
+	delay(1000);
+	SR_3 = Read();  //must be 0xFF
+	SR_4 = Read();  // 0x01
+	SR_5 = Read();  // 0xAA
+	SR_6 = Read();  // 0x7E
+	SR_7 = Read();  // 0x10
+	
 }
 
 void Read_Sequencer(void)
 {
 	Start();
+	Write(0xCC);  // Skip ROM
+	Write(0x66);  // Start Command
+	Write(0x03);  // Command Len
+	Write(0x22);  // Read Sequencer Command
+	Write(0x00);  // Start ADDR
+	Write(0x34);  // Finish ADDR
+	i = Read();
+	j = Read();
+	Write(0xAA);
+	delay(1000);
+	byte_0 = Read();
+	byte_1 = Read();
+	byte_2 = Read();
+	byte_3 = Read();
+  byte_4 = Read();
+	byte_5 = Read();
+	byte_6 = Read();
+	byte_7 = Read();
+	byte_8 = Read();
+	byte_9 = Read();
+	byte_10 = Read();
+  byte_11 = Read();
+  byte_12 = Read();
+	byte_13 = Read();
+	byte_14 = Read();
+	byte_15 = Read();
+	byte_16 = Read();
+}
+
+
+	
+	
+	
+void Run_Sequencer(void)
+{
+	Start();
 	Write(0xCC);
 	Write(0x66);
-	Write(0x03);
+	Write(0x04);
+	Write(0x33);
+	Write(0x00);
+	Write(0x34);
+	Write(0x00);
+	Run_0 = Read();
+	Run_1 = Read();
+	Write(0xAA);
+	delay(5000);
+}
+void Check_Run(void)
+{
+	Start();
+	rs_0 = Read();
+	rs_1 = Read(); 
+	rs_2 = Read(); 
+	rs_3 = Read(); 
+	rs_4 = Read();
+}
+
+uint16_t Read_Pull(void)
+{
+	Start();
+	Write(0xCC);  // Skip ROM
+	Write(0x66);  // Start Command
+	Write(0x03);  // Command Len
+	Write(0x22);  // Read Sequencer Command
+	Write(0x0A);  // Start ADDR
+	Write(0x0B);  // Finish ADDR
+	i = Read();
+	j = Read();
+	Write(0xAA);
+	delay(1000);
+	res_0 = Read(); //System byte
+	res_1 = Read(); // System byte
+	res_2 = Read(); // System byte
+	res_3 = Read(); //Result
+	res_4 = Read(); //Result
+	res_5 = Read();
+	res_6 = Read();
+	res_7 = Read();
+}
+	
 	
 /* USER CODE END PFP */
 
@@ -395,9 +482,15 @@ int main(void)
 	delay(1000);
 	Check2();
 	
+	Write_Sequencer();
 	
+	Read_Sequencer();
 	
-	SPI_sequencer();
+	Run_Sequencer();
+	
+	Check_Run();
+	
+	Read_Pull(); 
 	
 	HAL_Delay(300);
 	
