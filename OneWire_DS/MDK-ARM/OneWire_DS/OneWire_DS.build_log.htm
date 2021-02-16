@@ -22,19 +22,21 @@ Dialog DLL:      TCM.DLL V1.46.0.0
  
 <h2>Project:</h2>
 C:\Users\User\Documents\GitHub\SMKB_UKOS\OneWire_DS\MDK-ARM\OneWire_DS.uvprojx
-Project File Date:  02/13/2021
+Project File Date:  02/16/2021
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'OneWire_DS'
 compiling main.c...
-../Core/Src/main.c(108): warning:  #68-D: integer conversion resulted in a change of sign
+../Core/Src/main.c(119): warning:  #68-D: integer conversion resulted in a change of sign
   		 else Response = -1;
-../Core/Src/main.c: 1 warning, 0 errors
+../Core/Src/main.c(396): warning:  #940-D: missing return statement at end of non-void function "Read_Pull" 
+  }
+../Core/Src/main.c: 2 warnings, 0 errors
 linking...
-Program Size: Code=4960 RO-data=472 RW-data=52 ZI-data=1100  
+Program Size: Code=5368 RO-data=472 RW-data=160 ZI-data=1104  
 FromELF: creating hex file...
-"OneWire_DS\OneWire_DS.axf" - 0 Error(s), 1 Warning(s).
+"OneWire_DS\OneWire_DS.axf" - 0 Error(s), 2 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -57,7 +59,7 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.4.0
-Build Time Elapsed:  00:00:07
+Build Time Elapsed:  00:00:12
 </pre>
 </body>
 </html>
