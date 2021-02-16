@@ -57,10 +57,7 @@ uint16_t byte_11, byte_12, byte_13, byte_14, byte_15, byte_16, byte_17,byte_18, 
 /*Run Sequencer response handler*/
 uint16_t rs_0, rs_1, rs_2, rs_3, rs_4, rs_5, rs_6, rs_7, rs_8, rs_9, rs_10, rs_11, rs_12; 
 /*Result handler*/
-uint16_t res_0, res_1, res_2, res_3, res_4, res_5, res_6, res_7, res_8, res_9, res_10, res_11, res_12, res_13;
-uint16_t res_14, res_15, res_16, res_17;
-/*POR*/
-uint16_t por_0, por_1, por_2, por_3, por_4, por_5, por_6, por_7, por_8, por_9, por_10; 
+uint16_t res_0, res_1, res_2, res_3, res_4, res_5, res_6, res_7;
 uint8_t Presence = 0;
 uint16_t Response = 0;
 
@@ -166,7 +163,7 @@ uint8_t Read(void)
 		{
 			value |= 1<<i; // read = 1
 		}
-		 delay(60); //wait for 60 microseconds
+		 delay(60); //wait for 60 seconds
 	}
 	return value;
 }
@@ -196,6 +193,13 @@ void Step_3(void)
 	Presence = Start();
 	delay(1);
 	Write(0xCC); //Match ROM
+	/*Write(0x56); // 0 byte
+	Write(0x70); // 1 byte
+	Write(0x8E); // 2 byte
+	Write(0x00); // 3 byte
+	Write(0x00); // 4 byte
+	Write(0x00); // 5 byte
+	Write(0x43); // 6 byte*/
 	Write(0x66); // 7 byte
 	Write(0x05); // num of bytes 
 	Write(0x83); // Write GPIO Config
@@ -206,7 +210,7 @@ void Step_3(void)
 	step_3_0 = Read();
 	step_3_1 = Read();
 	Write(0xAA); // Release byte
-	delay(1000);
+	delay(1);
 }	
 
  void Step_4(void){
@@ -235,13 +239,13 @@ void set2SPI (void)
 	Write(0x66);
 	Write(0x02);
 	Write(0x55);
-	Write(0x38);// least HEX char: 0 - 100kHz Speed, B - 2.3MHz speed
+	Write(0x3D);
 	DS_11 = Read();
 	DS_12 = Read();
-	//if(DS_11 == 0xBE && DS_12 == 0x36)
-//	{
-	Write(0xAA);
-//	}
+	if(DS_11 == 0xBE && DS_12 == 0x36)
+	{
+		Write(0xAA);
+	}
 }
 	
 void Check(void)
@@ -276,24 +280,24 @@ void Write_Sequencer(void)
 	Start();
 	Write(0xCC);	//SKIP ROM
 	Write(0x66);  //Command Start
-	Write(0x0C-2);	//Len
+	Write(0x11);	//Len
 	Write(0x11);  //Write Sequencer
 	Write(0x00);  //ADDR_LO
 	Write(0x00);  //ADDR_Hi
 	Write(0xCC);  // SENS_VDD_ON
-//Write(0x01);  //~CS HIGH
-//	Write(0xDD);  //Delay
-//	Write(0x01);	//2^x ms delay
-	Write(0x80);  //~CS LOW
+	Write(0xDD);  //Delay
+	Write(0x01);	//2^x ms delay
+	Write(0x01);  //CS LOW
+	Write(0x80);  //CS HIGH
 	Write(0xC0);  //SPI Write/Read byte
 	Write(0x00);  //Lenght of Write
 	Write(0x02);	//Len of Read (bytes)
- //Write(0xDD);  //Delay
-//	Write(0x01);	//2ms
+	Write(0xDD);  //Delay
+	Write(0x01);	//2ms
 	Write(0xFF);  //Buffer, ADDR = 0x0A
 	Write(0xFF);  //Buffer  ADDR = 0x0B
-//	Write(0x01);	//~CS HIGH
-//	Write(0xBB);  //SENS_VDD_OFF
+	Write(0x01);	//CS Low
+	Write(0xBB);  //SENS_VDD_OFF
 	SR_11 = Read();
 	SR_12 = Read();
 	Write(0xAA);
@@ -332,11 +336,15 @@ void Read_Sequencer(void)
 	byte_10 = Read();
   byte_11 = Read();
   byte_12 = Read();
-	byte_13 = Read();  // buffer 
-	byte_14 = Read();  // buffer
+	byte_13 = Read();
+	byte_14 = Read();
 	byte_15 = Read();
 	byte_16 = Read();
 }
+
+
+	
+	
 	
 void Run_Sequencer(void)
 {
@@ -351,7 +359,7 @@ void Run_Sequencer(void)
 	Run_0 = Read();
 	Run_1 = Read();
 	Write(0xAA);
-	delay(1000);
+	delay(5000);
 }
 void Check_Run(void)
 {
@@ -363,59 +371,29 @@ void Check_Run(void)
 	rs_4 = Read();
 }
 
-uint16_t Read_Pull(void) // pulls the register from sequencer memory
+uint16_t Read_Pull(void)
 {
 	Start();
 	Write(0xCC);  // Skip ROM
 	Write(0x66);  // Start Command
 	Write(0x03);  // Command Len
 	Write(0x22);  // Read Sequencer Command
-	Write(0x00);  // Start ADDR
-	Write(0x34);  // Finish ADDR
+	Write(0x0A);  // Start ADDR
+	Write(0x0B);  // Finish ADDR
 	i = Read();
 	j = Read();
 	Write(0xAA);
 	delay(1000);
-	res_0 = Read();
-	res_1 = Read();
-	res_2 = Read();
-	res_3 = Read();
-  res_4 = Read();
+	res_0 = Read(); //System byte
+	res_1 = Read(); // System byte
+	res_2 = Read(); // System byte
+	res_3 = Read(); //Result
+	res_4 = Read(); //Result
 	res_5 = Read();
 	res_6 = Read();
 	res_7 = Read();
-	res_8 = Read();
-	res_9 = Read();
-	res_10 = Read();
-  res_11 = Read(); //buffer
-  res_12 = Read(); //buffer
-	res_13 = Read();
-	res_14 = Read();
-	res_15 = Read();
-	res_16 = Read();
 }
-
-void Clear_POR(void)
-{
-	Start();
-	Write(0xCC); // Skip ROM
-	Write(0x66);
-	Write(0x01);
-	Write(0x7A);
-	por_0 = Read();
-	por_1 = Read();
-	Write(0xAA);
-	delay(1000);
-	por_2 = Read(); 
-	por_3 = Read();
-	por_4 = Read();
-	por_5 = Read();
-	por_6 = Read();
-	por_7 = Read();
-	por_8 = Read();
-	por_9 = Read();
-	por_10 = Read();
-}
+	
 	
 /* USER CODE END PFP */
 
@@ -493,13 +471,12 @@ int main(void)
 	Check();
 	
 	Step_3();
+	delay(1000);
 	Check1();
 	
-	Clear_POR();
-	
-//	Step_4();
-//	delay(1000);
-//	Check2();
+	Step_4();
+	delay(1000);
+	Check2();
 	
 	set2SPI();
 	delay(1000);
@@ -510,12 +487,12 @@ int main(void)
 	Read_Sequencer();
 	
 	Run_Sequencer();
-	delay(10000);
-//	Check_Run();
+	
+	Check_Run();
 	
 	Read_Pull(); 
 	
-	HAL_Delay(100);
+	HAL_Delay(300);
 	
 
 	}
@@ -534,12 +511,13 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+  RCC_OscInitStruct.HSEPredivValue = RCC_HSE_PREDIV_DIV1;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
-  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL8;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL12;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -553,7 +531,7 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
   {
     Error_Handler();
   }
@@ -577,7 +555,7 @@ static void MX_TIM6_Init(void)
 
   /* USER CODE END TIM6_Init 1 */
   htim6.Instance = TIM6;
-  htim6.Init.Prescaler = 32-1;
+  htim6.Init.Prescaler = 60-1;
   htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim6.Init.Period = 0xffff-1;
   htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -607,6 +585,7 @@ static void MX_GPIO_Init(void)
   GPIO_InitTypeDef GPIO_InitStruct = {0};
 
   /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOF_CLK_ENABLE();
   __HAL_RCC_GPIOC_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
@@ -625,7 +604,7 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin : PC2 */
   GPIO_InitStruct.Pin = GPIO_PIN_2;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
