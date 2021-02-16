@@ -49,7 +49,7 @@ multibandAnalyser initmultibandAnalyser
 	res.deltaFreq = deltaFreq;
 	res.nSteps = nSteps;
 	
-	/// WARNING may be fatal if number analisers is too large
+	/// WARNING may be fatal if number analysers is too large
 	/// TODO find something better than malloc
 	res.analisers = (freqAnalyser*) malloc(sizeof(multibandAnalyser) * res.nAnalisers); /// allocates memory for analysers
 	
