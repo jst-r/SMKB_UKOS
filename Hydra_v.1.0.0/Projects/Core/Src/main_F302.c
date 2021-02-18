@@ -571,7 +571,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 		position = 1;
 		attempt = 0;
     MC_StopMotor();
-    HAL_Delay(300);
+    HAL_Delay(1500);
     MC_SixStep_Change_Direction();
     MC_StartMotor();
   } 
@@ -580,7 +580,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 		position = 2;
 		attempt = 0;
     MC_StopMotor();
-    HAL_Delay(300);
+    HAL_Delay(1500);
     MC_SixStep_Change_Direction();
     MC_StartMotor();
 	} 

@@ -60,7 +60,7 @@ uint8_t Start(void)
 			 Response = 1;
 			 }
 		 else Response = 2;
-		 delay(40);
+		 delay(48);
 		 return Response;
 	}
 	

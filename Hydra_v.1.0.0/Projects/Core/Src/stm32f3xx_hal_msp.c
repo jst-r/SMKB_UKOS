@@ -91,7 +91,6 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
   
     /**ADC1 GPIO Configuration    
     PC1     ------> ADC1_IN7
-    PC2     ------> ADC1_IN8
     PC3     ------> ADC1_IN9
     PA1     ------> ADC1_IN2
     PA7     ------> ADC1_IN15

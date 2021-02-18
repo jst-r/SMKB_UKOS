@@ -58,7 +58,7 @@
 **************************************************************************** */   
 #define NUM_POLE_PAIRS                       4      /*!< Number of Motor Pole pairs */
 
-#define TARGET_SPEED                      1340      /*!< Target speed in closed loop control */
+#define TARGET_SPEED                      1200      /*!< Target speed in closed loop control */
 
 
 /* **************************************************************************** 
@@ -69,9 +69,9 @@
 /*!< ********************* Open loop control *********************************/
 #define STARTUP_CURRENT_REFERENCE         4000      /*!< StartUP Currente Reference (2000 = 2.2A)*/
 #define ACC                          		 10000      /*!< Mechanical acceleration rate (setting available in manual mode, LOAD_TYPE = 0) */
-#define MINIMUM_ACC                        800      /*!< Mechanical acceleration rate for BIG load application */ 
+#define MINIMUM_ACC                       8000      /*!< Mechanical acceleration rate for BIG load application */ 
 #define NUMBER_OF_STEPS                 	3000      /*!< Number of elements for motor start-UP (max value 65535)*/ 
-#define TIME_FOR_ALIGN                    1000      /*!< Time for alignment (msec)*/ 
+#define TIME_FOR_ALIGN                    1500      /*!< Time for alignment (msec)*/ 
 #define BUTTON_DELAY                      1000      /*!< Delay time to enable push button for new command (1 = 1msec)*/ 
 #define NUMBER_ZCR											    4 	    /*!< Number of zero crossing event during the startup for closed loop control begin */   
 /*!< ********************* Closed Loop control *********************************/
