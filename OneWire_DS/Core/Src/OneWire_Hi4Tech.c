@@ -257,9 +257,11 @@ void Write_Sequencer(void) //check seq = 6
 	Write(0x00);  //ADDR_LO
 	Write(0x00);  //ADDR_Hi
 	Write(0xCC);  // SENS_VDD_ON
+	Write(0xBB);
+	Write(0xCC);
 //Write(0x01);  //~CS HIGH
-	Write(0xDD);  //Delay
-	Write(0x02);	//2^x ms delay
+//	Write(0xDD);  //Delay
+//	Write(0x00);	//2^x ms delay
 	Write(0x80);  //~CS LOW
 	Write(0xC0);  //SPI Write/Read byte
 	Write(0x00);  //Lenght of Write
@@ -294,17 +296,20 @@ void Read_Sequencer(void) //check seq = 5
 void Run_Sequencer(void) //  check seq = 4
 {
 	Start();
-	Write(0xCC); // SKIP ROM
+	Write(0xCC);  // SKIP ROM
 	Write(0x66);  //Start Commmand
 	Write(0x04);  //Command Len
 	Write(0x33);
 	Write(0x00);
 	Write(0x34);
 	Write(0x00);
-	buffer[69] = Read();
-	buffer[70] = Read();
+	delay(100);
+  buffer[69] = Read();
+  buffer[70] = Read();
 	Write(0xAA);
-	delay(1000);
+	delay(100);
+	
+	
 }
 
 void Read_Pull(void) // pulls the register from sequencer memory
@@ -340,25 +345,29 @@ void init_OW(void)
 {
 	Step_1();
 	Check(1);
+//	delay(5000);
 	Step_3();
 	Check(2);
-	Step_4();
-	Check(3);
+//	delay(10000);
+//	Step_4();
+//	Check(3);
+//	delay(7000);
 	Clear_POR();
 	Check(8);
+//	delay(3000);
 	set2SPI();
 	Check(0);
+	Write_Sequencer();
+	Check(6);
 }	
 	
 void run_OW(void)
 {
-	Write_Sequencer();
-	Check(6);
-	Read_Sequencer();
-	Check(5);
-	Run_Sequencer();
-	Check(4);
-	delay(1000);	
-	Read_Pull();
-	Check(7);
+		
+		Read_Sequencer();
+		Check(5);
+		Run_Sequencer();
+		delay(1000);	
+	//	Read_Pull();
+	//	Check(7);
 }
