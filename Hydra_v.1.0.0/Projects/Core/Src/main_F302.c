@@ -144,6 +144,8 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 	HAL_NVIC_EnableIRQ(EXTI2_TSC_IRQn);
 	HAL_TIM_Base_Start_IT(&htim15);
 	HAL_TIM_Base_Start_IT(&htim16);
+
+  MC_StartMotor();
 	
   /* USER CODE END 2 */
 
@@ -173,6 +175,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
   ==============================================================================      
   *****************************************************************************/    
 
+ /*
 	if(prev_position != position){
 			prev_position = position;
 			MC_SixStep_Change_Direction();
@@ -192,6 +195,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 				MC_StopMotor();
 			}
 		}
+  */
   /****************************************************************************/    
   }
   /* USER CODE END 3 */
@@ -566,11 +570,19 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 		HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "Stop Motor pos 1\n"), 200 );
 		position = 1;
 		attempt = 0;
+    MC_StopMotor();
+    HAL_Delay(300);
+    MC_SixStep_Change_Direction();
+    MC_StartMotor();
   } 
 	else if (GPIO_Pin == GPIO_PIN_2) {
 		HAL_UART_Transmit(&huart3, (uint8_t*)buffer, sprintf(buffer, "Stop Motor pos 2\n"), 200 );
 		position = 2;
 		attempt = 0;
+    MC_StopMotor();
+    HAL_Delay(300);
+    MC_SixStep_Change_Direction();
+    MC_StartMotor();
 	} 
 	else {
 	  __NOP();
@@ -585,6 +597,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 		MC_TIMx_SixStep_timebase();
 	}
 	if (htim->Instance == TIM16) {
+    return; //FIXME
 		if (motor_enable == 0){
 			if((HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_2) == SET & status == 0)||(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == RESET & status == 1)){ //If state has changed - do smth
 					if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == SET){
