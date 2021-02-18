@@ -21,6 +21,6 @@ void Read_Sequencer(void);
 void Run_Sequencer(void);
 uint16_t Read_Pull(void);
 void Clear_POR(void);
-void run_it(void);
-void init_it(void);
+void run_OW(void);
+void init_OW(void);
 

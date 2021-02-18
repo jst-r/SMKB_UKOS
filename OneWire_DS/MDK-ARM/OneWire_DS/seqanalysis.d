@@ -1,4 +1,5 @@
 onewire_ds\seqanalysis.o: ..\Core\Src\seqAnalysis.c
+onewire_ds\seqanalysis.o: ../Core/Inc/seqAnalysis.h
 onewire_ds\seqanalysis.o: ../Core/Inc/main.h
 onewire_ds\seqanalysis.o: ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h
 onewire_ds\seqanalysis.o: ../Core/Inc/stm32f3xx_hal_conf.h
@@ -30,4 +31,3 @@ onewire_ds\seqanalysis.o: ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_pwr.
 onewire_ds\seqanalysis.o: ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_pwr_ex.h
 onewire_ds\seqanalysis.o: ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_tim.h
 onewire_ds\seqanalysis.o: ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_tim_ex.h
-onewire_ds\seqanalysis.o: ../Core/Inc/seqAnalysis.h

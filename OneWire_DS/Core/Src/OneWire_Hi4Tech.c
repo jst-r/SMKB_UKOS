@@ -52,7 +52,7 @@ uint8_t Start(void)
 	{
 		 Set_Pin_Output(DS28E18_PORT,DS28E18_PIN);//set the pin as output
 		 HAL_GPIO_WritePin(DS28E18_PORT, DS28E18_PIN, GPIO_PIN_RESET); // pull the pin low
-		 delay(500);
+		 delay(480);
 		 Set_Pin_Input(DS28E18_PORT, DS28E18_PIN);
 		 delay(65);
 		 if((HAL_GPIO_ReadPin(DS28E18_PORT, DS28E18_PIN)== GPIO_PIN_RESET)) 
@@ -109,7 +109,7 @@ uint8_t Read(void)
 		{
 			value |= 1<<i; // read = 1
 		}
-		 delay(60); //wait for 60 microseconds
+		 delay(80); //wait for 60 microseconds
 	}
 	return value;
 }
@@ -162,8 +162,8 @@ void Step_3(void) //Step 2 is skipped, used for multidevice systems
 	Write(0x66); 	// Start command
 	Write(0x01);
 	Write(0x7A);
-	buffer[4] = Read();
-	buffer[5] = Read();
+	//buffer[4] = Read();
+	//buffer[5] = Read();
 	Write(0xAA);
  }
 
@@ -174,7 +174,7 @@ void set2SPI(void) //Check seq = 0
 	Write(0x66);
 	Write(0x02);
 	Write(0x55);
-	Write(0x38);// least HEX char: 0 - 100kHz Speed, B - 2.3MHz speed
+	Write(0x38);// least HEX char: 0 - 100kHz Speed, B - 2.3MHz speed 8 - 400kHz Speed
 	buffer[6] = Read();
 	buffer[7] = Read();
 	Write(0xAA);
@@ -252,14 +252,14 @@ void Write_Sequencer(void) //check seq = 6
 	Start();
 	Write(0xCC);	//SKIP ROM
 	Write(0x66);  //Command Start
-	Write(0x0C-2);	//Len
+	Write(0x0C);	//Len
 	Write(0x11);  //Write Sequencer
 	Write(0x00);  //ADDR_LO
 	Write(0x00);  //ADDR_Hi
 	Write(0xCC);  // SENS_VDD_ON
 //Write(0x01);  //~CS HIGH
-//Write(0xDD);  //Delay
-//Write(0x01);	//2^x ms delay
+	Write(0xDD);  //Delay
+	Write(0x02);	//2^x ms delay
 	Write(0x80);  //~CS LOW
 	Write(0xC0);  //SPI Write/Read byte
 	Write(0x00);  //Lenght of Write
@@ -294,9 +294,9 @@ void Read_Sequencer(void) //check seq = 5
 void Run_Sequencer(void) //  check seq = 4
 {
 	Start();
-	Write(0xCC);
-	Write(0x66);
-	Write(0x04);
+	Write(0xCC); // SKIP ROM
+	Write(0x66);  //Start Commmand
+	Write(0x04);  //Command Len
 	Write(0x33);
 	Write(0x00);
 	Write(0x34);
@@ -336,7 +336,7 @@ void Clear_POR(void) // Check seq = 8
 	delay(1000);
 }
 
-void init_it(void)
+void init_OW(void)
 {
 	Step_1();
 	Check(1);
@@ -350,7 +350,7 @@ void init_it(void)
 	Check(0);
 }	
 	
-void run_it(void)
+void run_OW(void)
 {
 	Write_Sequencer();
 	Check(6);
@@ -358,7 +358,7 @@ void run_it(void)
 	Check(5);
 	Run_Sequencer();
 	Check(4);
-	delay(100);	
+	delay(1000);	
 	Read_Pull();
 	Check(7);
 }

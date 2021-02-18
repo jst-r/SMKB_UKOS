@@ -22,14 +22,14 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "OneWire_Hi4Tech.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 #define DS28E18_PORT GPIOC
 #define DS28E18_PIN GPIO_PIN_2
-#define PullUp_Pin GPIO_PIN_1
+#define PullUp_Pin GPIO_PIN_1 
 	
 /* USER CODE END PTD */
 
@@ -71,7 +71,6 @@ static void MX_TIM6_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -104,7 +103,8 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	run_it();
+		init_OW();
+		run_OW();
 	
 	HAL_Delay(100);
 	

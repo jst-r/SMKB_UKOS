@@ -1,5 +1,6 @@
 #include "seqAnalysis.h"
 
+
 void init_mask() {
 		for (int32_t i = 0; i < buff_size; i++) {
 				mask[i] = 0;
@@ -24,13 +25,13 @@ void listen(){
 		uint8_t v;
 
 		for (int j = 0; j < time_window / sample_time; j++) {
-		for (int32_t i = 0; i < buff_size; i++) {
-				max_val = 0;
-				for (int32_t j = 0; j < time_window / sample_time; j++) {
-				// FIXME add actual signal receiving
-					if (max_val < v){
-					max_val = v;
-					}
+			for (int32_t i = 0; i < buff_size; i++) {
+					max_val = 0;
+					for (int32_t j = 0; j < time_window / sample_time; j++) {
+					// FIXME add actual signal receiving
+						if (max_val < v){
+							max_val = v;
+						}
 				}
 				buff[i] = max_val;
 			}
@@ -38,7 +39,7 @@ void listen(){
 	}
 }
 
-int32_t matched_filter() {
+int32_t matched_filter(void) {
 		int32_t max_score = 0;
 		int32_t score;
 		for (int32_t offset = 0; offset < buff_size; offset++) {
@@ -46,7 +47,10 @@ int32_t matched_filter() {
 				for (int32_t i = 0; i < buff_size; i++) {
 						score += mask[i] * buff[(i + offset) % buff_size];
 				}
-				max_score = max(max_score, score);
+				if (max_score < score)
+				{
+					max_score = score;
+				}
 		}
 		return max_score;
 }

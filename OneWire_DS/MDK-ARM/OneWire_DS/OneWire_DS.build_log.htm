@@ -27,21 +27,12 @@ Project File Date:  02/18/2021
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'OneWire_DS'
-compiling seqAnalysis.c...
-../Core/Inc/seqAnalysis.h(14): warning:  #1295-D: Deprecated declaration listen - give arg types
-  void listen();
-../Core/Inc/seqAnalysis.h(15): warning:  #1295-D: Deprecated declaration init_mask - give arg types
-  void init_mask();
-../Core/Inc/seqAnalysis.h(16): warning:  #1295-D: Deprecated declaration matched_filter - give arg types
-  int matched_filter();
-..\Core\Src\seqAnalysis.c(27): warning:  #223-D: function "max" declared implicitly
-  	            max_val = max(max_val, v);
-..\Core\Src\seqAnalysis.c(27): error:  #20: identifier "v" is undefined
-  	            max_val = max(max_val, v);
-..\Core\Src\seqAnalysis.c(41): warning:  #223-D: function "max" declared implicitly
-          max_score = max(max_score, score);
-..\Core\Src\seqAnalysis.c: 5 warnings, 1 error
-"OneWire_DS\OneWire_DS.axf" - 1 Error(s), 5 Warning(s).
+compiling main.c...
+compiling OneWire_Hi4Tech.c...
+linking...
+Program Size: Code=5380 RO-data=472 RW-data=20 ZI-data=1500  
+FromELF: creating hex file...
+"OneWire_DS\OneWire_DS.axf" - 0 Error(s), 0 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -64,8 +55,7 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.4.0
-Target not created.
-Build Time Elapsed:  00:00:06
+Build Time Elapsed:  00:00:11
 </pre>
 </body>
 </html>
