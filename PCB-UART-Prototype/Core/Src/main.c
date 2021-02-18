@@ -23,7 +23,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "math.h"
-#include "freqAnalysis.h"
+//#include "freqAnalysis.h"
+#include "seqAnalysis.h"
 #include "string.h"
 #include "stdio.h"
 /* USER CODE END Includes */

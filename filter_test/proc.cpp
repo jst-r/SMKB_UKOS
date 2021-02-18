@@ -1,17 +1,20 @@
-#include "proc.h"
+//#include "proc.h"
 
 #include <fstream>
 #include <iostream>
 
 using namespace std;
 
-static const int buff_size = 500;
-static const int time_window = 100;  // ms
-static const int sample_time = 1;
-static double buff[buff_size];
-static double mask[buff_size];
-static double delays[] = {1, 2, 3, 4};
-static double n_delays = 5;
+#define buff_size 500
+#define time_window 100  // ms
+#define sample_time 1   // ms
+
+
+#define n_delays 5
+
+const unsigned char delays[] = {1, 2, 3, 4};
+unsigned char buff[buff_size];
+unsigned char mask[buff_size];
 
 static const int threshold = 15;
 
@@ -33,12 +36,12 @@ void init_mask() {
     }
 }
 
-double matched_filter(){
+double matched_filter() {
     double max_score = 0;
     double score;
-    for (int offset = 0; offset < buff_size; offset++){
+    for (int offset = 0; offset < buff_size; offset++) {
         score = 0;
-        for (int i = 0; i < buff_size; i++){
+        for (int i = 0; i < buff_size; i++) {
             score += mask[i] * buff[(i + offset) % buff_size];
         }
         max_score = max(max_score, score);
@@ -47,32 +50,32 @@ double matched_filter(){
 }
 
 int main() {
+
     int n;
     init_mask();
-    //for (int i = 0; i < buff_size; i++) cout << mask[i] << " "; cout << endl;
+    for (int i = 0; i < buff_size; i++) cout << mask[i] << " "; cout << endl;
 
     ifstream fin("dat.txt");
 
     int i = 0;
     int t = 0;  // ms
 
-    double v;
-    double procesed_val = 5; // initialized to expected mean of signal
-    double alpha = .01;
+    unsigned char v;
 
-    double max_val;
+    unsigned char max_val;
 
     for (int i = 0; i < buff_size; i++) {
         max_val = 0;
         for (int j = 0; j < time_window / sample_time; j++) {
             fin >> v;
-            procesed_val = procesed_val + alpha * (v - procesed_val);
-            max_val = max(max_val, procesed_val);
+            // procesed_val = procesed_val + alpha * (v - procesed_val);
+            max_val = max(max_val, v);
         }
         buff[i] = max_val;
     }
 
-    //for (int i = 0; i < buff_size; i++) cout << (int)buff[i] << " "; cout << endl;
-    
+    // for (int i = 0; i < buff_size; i++) cout << (int)buff[i] << " "; cout <<
+    // endl;
+
     cout << matched_filter() << endl;
 }
