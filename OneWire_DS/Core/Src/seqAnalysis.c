@@ -21,7 +21,7 @@ void init_mask() {
 
 void listen(){
 	for (int i = 0; i < buff_size; i++) {
-	        max_val = 0;
+	        unsigned short max_val = 0;
 	        for (int j = 0; j < time_window / sample_time; j++) {
 	            // FIXME add actual signal receiving
 	            max_val = max(max_val, v);

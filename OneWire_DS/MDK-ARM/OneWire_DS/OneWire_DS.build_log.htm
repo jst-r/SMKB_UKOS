@@ -22,21 +22,26 @@ Dialog DLL:      TCM.DLL V1.46.0.0
  
 <h2>Project:</h2>
 C:\Users\User\Documents\GitHub\SMKB_UKOS\OneWire_DS\MDK-ARM\OneWire_DS.uvprojx
-Project File Date:  02/16/2021
+Project File Date:  02/18/2021
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'OneWire_DS'
-compiling main.c...
-../Core/Src/main.c(119): warning:  #68-D: integer conversion resulted in a change of sign
-  		 else Response = -1;
-../Core/Src/main.c(396): warning:  #940-D: missing return statement at end of non-void function "Read_Pull" 
-  }
-../Core/Src/main.c: 2 warnings, 0 errors
-linking...
-Program Size: Code=5368 RO-data=472 RW-data=160 ZI-data=1104  
-FromELF: creating hex file...
-"OneWire_DS\OneWire_DS.axf" - 0 Error(s), 2 Warning(s).
+compiling seqAnalysis.c...
+../Core/Inc/seqAnalysis.h(14): warning:  #1295-D: Deprecated declaration listen - give arg types
+  void listen();
+../Core/Inc/seqAnalysis.h(15): warning:  #1295-D: Deprecated declaration init_mask - give arg types
+  void init_mask();
+../Core/Inc/seqAnalysis.h(16): warning:  #1295-D: Deprecated declaration matched_filter - give arg types
+  int matched_filter();
+..\Core\Src\seqAnalysis.c(27): warning:  #223-D: function "max" declared implicitly
+  	            max_val = max(max_val, v);
+..\Core\Src\seqAnalysis.c(27): error:  #20: identifier "v" is undefined
+  	            max_val = max(max_val, v);
+..\Core\Src\seqAnalysis.c(41): warning:  #223-D: function "max" declared implicitly
+          max_score = max(max_score, score);
+..\Core\Src\seqAnalysis.c: 5 warnings, 1 error
+"OneWire_DS\OneWire_DS.axf" - 1 Error(s), 5 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -59,7 +64,8 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.4.0
-Build Time Elapsed:  00:00:12
+Target not created.
+Build Time Elapsed:  00:00:06
 </pre>
 </body>
 </html>

@@ -3,6 +3,8 @@
 "onewire_ds\main.o"
 "onewire_ds\stm32f3xx_it.o"
 "onewire_ds\stm32f3xx_hal_msp.o"
+"onewire_ds\onewire_hi4tech.o"
+"onewire_ds\ds18b20.o"
 "onewire_ds\stm32f3xx_hal_tim.o"
 "onewire_ds\stm32f3xx_hal_tim_ex.o"
 "onewire_ds\stm32f3xx_hal.o"

@@ -1,23 +1,17 @@
-#include "OneWire_Hi4Tech.h"
+// DS28E18 library by Hi4Tech
+// Authors: butaforsky, marcus_fur, jstre
 #include "main.h"
 
-TIM_HandleTypeDef htim6;
+extern TIM_HandleTypeDef htim6;
 #define DS28E18_PORT GPIOC
-#define DS28E18_PIN GPIO_PIN_1
-#define PullUp_Pin GPIO_PIN_2
+#define DS28E18_PIN GPIO_PIN_2
+#define PullUp_Pin GPIO_PIN_1
 
 //#include "stm32f3xx_hal_msp.h"
 
 // variables - useful and not
-
 uint8_t Response = 0, Presence = 0;
-uint32_t buffer[20] = {0};
-uint16_t b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b9, b10, b11, b12, b13, b14,
-b15, b16, b17, b18, b19, b20, b21, b22, b23, b24, b25, b26, b27, b28, b29, b30;
-
-
-
-
+uint32_t buffer[100] = {0};
 /*
 //microcontroller setup//
 TIMx Prescaler - (Freq(Mhz) / n(Mhz))-1
@@ -56,7 +50,6 @@ void delay(uint16_t time)
 	
 uint8_t Start(void)
 	{
-		 
 		 Set_Pin_Output(DS28E18_PORT,DS28E18_PIN);//set the pin as output
 		 HAL_GPIO_WritePin(DS28E18_PORT, DS28E18_PIN, GPIO_PIN_RESET); // pull the pin low
 		 delay(500);
@@ -66,7 +59,7 @@ uint8_t Start(void)
 			 {
 			 Response = 1;
 			 }
-		 else Response = -1;
+		 else Response = 2;
 		 delay(400);
 		 return Response;
 	}
@@ -138,7 +131,7 @@ uint16_t Step_1(void)
 	return Presence;
 }
 	
-void Step_3(void) //Step 2 is skipped
+void Step_3(void) //Step 2 is skipped, used for multidevice systems
 {
 	Presence = Start();
 	Write(0xCC); //Skip ROM
@@ -160,13 +153,13 @@ void Step_3(void) //Step 2 is skipped
 	Write(0x55); //0 bit
 	Write(0x56); // 1 bit
 	Write(0x70); // 2 bit
-	Write(0x8E);
-	Write(0x00);
-	Write(0x00);
-	Write(0x00);
-	Write(0x00);
-	Write(0x43);
-	Write(0x66); 	//
+	Write(0x8E); // 3 bit
+	Write(0x00); // 4 bit
+	Write(0x00); // 5 bit
+	Write(0x00); // 6 bit
+	Write(0x00); // 7 bit
+	Write(0x43); // 8 bit
+	Write(0x66); 	// Start command
 	Write(0x01);
 	Write(0x7A);
 	buffer[4] = Read();
@@ -174,7 +167,7 @@ void Step_3(void) //Step 2 is skipped
 	Write(0xAA);
  }
 
-void set2SPI (void)
+void set2SPI(void) //Check seq = 0
 {
 	Start();
 	Write(0xCC);
@@ -185,6 +178,7 @@ void set2SPI (void)
 	buffer[6] = Read();
 	buffer[7] = Read();
 	Write(0xAA);
+	delay(1000);
 }
 	
 void Check(char seq)
@@ -203,30 +197,57 @@ void Check(char seq)
 			buffer[i] = Read();
 		}
 	}
-	else if(seq == 3)
-		
+	else if(seq == 3) //Step 4 check
+	{
+		for(int i = 18; i<=22;i++)
+		{
+			buffer[i] = Read();
+		}
 	}
-}
-
-void Check1(void)
-{
-	DS_6 = Read();
-	DS_7 = Read();
-	DS_8 = Read();
-	DS_9 = Read();
-	DS_10 = Read();
-}
-
-void Check2(void)
-{
-	DS_13 = Read();
-	DS_14 = Read();
-	DS_15 = Read();
-	DS_16 = Read();
-	DS_17 = Read();
-}
-
-void Write_Sequencer(void)
+	else if(seq == 4) // Run Check
+		{
+		for(int i = 23; i<=27; i++)
+				{
+					buffer[i] = Read();
+				}
+		}
+	else if(seq == 5) // Read Check
+		{
+		for(int i = 28; i<=28+15; i++)
+				{
+					buffer[i] = Read();
+				}
+		}
+		else if(seq == 6) // Write Check
+		{
+		for(int i = 46; i<=50; i++)
+				{
+					buffer[i] = Read();
+				}
+		}
+		else if(seq == 7) // Read Pull
+		{
+		for(int i = 51; i<=68; i++)
+				{
+					buffer[i] = Read();
+				}
+		}
+		else if(seq == 8) // Clear POR
+		{
+			for(int  i = 73; i<=82; i++)
+				{
+					buffer[i] = Read();
+				}
+		}
+		else  if(seq == 0) // set2SPI
+		{
+			for(int i = 83; i<=87; i++)
+			{
+				buffer[i] = Read();
+			}
+		}
+	}
+void Write_Sequencer(void) //check seq = 6
 {
 	Start();
 	Write(0xCC);	//SKIP ROM
@@ -249,19 +270,13 @@ void Write_Sequencer(void)
 	Write(0xFF);  //Buffer  ADDR = 0x0B
 //Write(0x01);	//~CS HIGH
 //Write(0xBB);  //SENS_VDD_OFF
-	SR_11 = Read();
-	SR_12 = Read();
+	buffer[44] = Read();
+	buffer[45] = Read();
 	Write(0xAA);
-	delay(1000);
-	SR_3 = Read();  //must be 0xFF
-	SR_4 = Read();  // 0x01
-	SR_5 = Read();  // 0xAA
-	SR_6 = Read();  // 0x7E
-	SR_7 = Read();  // 0x10
-	
+	delay(1000);	
 }
 
-void Read_Sequencer(void)
+void Read_Sequencer(void) //check seq = 5
 {
 	Start();
 	Write(0xCC);  // Skip ROM
@@ -270,30 +285,13 @@ void Read_Sequencer(void)
 	Write(0x22);  // Read Sequencer Command
 	Write(0x00);  // Start ADDR
 	Write(0x34);  // Finish ADDR
-	i = Read();
-	j = Read();
+	buffer[83] = Read();
+	buffer[84] = Read();
 	Write(0xAA);
 	delay(1000);
-	byte_0 = Read();
-	byte_1 = Read();
-	byte_2 = Read();
-	byte_3 = Read();
-  byte_4 = Read();
-	byte_5 = Read();
-	byte_6 = Read();
-	byte_7 = Read();
-	byte_8 = Read();
-	byte_9 = Read();
-	byte_10 = Read();
-  byte_11 = Read();
-  byte_12 = Read();
-	byte_13 = Read();  // buffer 
-	byte_14 = Read();  // buffer
-	byte_15 = Read();
-	byte_16 = Read();
 }
 	
-void Run_Sequencer(void)
+void Run_Sequencer(void) //  check seq = 4
 {
 	Start();
 	Write(0xCC);
@@ -303,22 +301,14 @@ void Run_Sequencer(void)
 	Write(0x00);
 	Write(0x34);
 	Write(0x00);
-	Run_0 = Read();
-	Run_1 = Read();
+	buffer[69] = Read();
+	buffer[70] = Read();
 	Write(0xAA);
 	delay(1000);
 }
-void Check_Run(void)
-{
-	Start();
-	rs_0 = Read();
-	rs_1 = Read(); 
-	rs_2 = Read(); 
-	rs_3 = Read(); 
-	rs_4 = Read();
-}
 
-uint16_t Read_Pull(void) // pulls the register from sequencer memory
+void Read_Pull(void) // pulls the register from sequencer memory
+	// check seq = 7
 {
 	Start();
 	Write(0xCC);  // Skip ROM
@@ -327,47 +317,48 @@ uint16_t Read_Pull(void) // pulls the register from sequencer memory
 	Write(0x22);  // Read Sequencer Command
 	Write(0x00);  // Start ADDR
 	Write(0x34);  // Finish ADDR
-	i = Read();
-	j = Read();
+	buffer[71] = Read();
+	buffer[72] = Read();
 	Write(0xAA);
 	delay(1000);
-	res_0 = Read();
-	res_1 = Read();
-	res_2 = Read();
-	res_3 = Read();
-  res_4 = Read();
-	res_5 = Read();
-	res_6 = Read();
-	res_7 = Read();
-	res_8 = Read();
-	res_9 = Read();
-	res_10 = Read();
-  res_11 = Read(); //buffer
-  res_12 = Read(); //buffer
-	res_13 = Read();
-	res_14 = Read();
-	res_15 = Read();
-	res_16 = Read();
 }
 
-void Clear_POR(void)
+void Clear_POR(void) // Check seq = 8
 {
 	Start();
 	Write(0xCC); // Skip ROM
-	Write(0x66);
-	Write(0x01);
-	Write(0x7A);
-	por_0 = Read();
-	por_1 = Read();
-	Write(0xAA);
+	Write(0x66); // Start Command
+	Write(0x01); // Access
+	Write(0x7A); // Byte  select
+	buffer[85] = Read();
+	buffer[86] = Read();
+	Write(0xAA); // Success byte
 	delay(1000);
-	por_2 = Read(); 
-	por_3 = Read();
-	por_4 = Read();
-	por_5 = Read();
-	por_6 = Read();
-	por_7 = Read();
-	por_8 = Read();
-	por_9 = Read();
-	por_10 = Read();
+}
+
+void init_it(void)
+{
+	Step_1();
+	Check(1);
+	Step_3();
+	Check(2);
+	Step_4();
+	Check(3);
+	Clear_POR();
+	Check(8);
+	set2SPI();
+	Check(0);
+}	
+	
+void run_it(void)
+{
+	Write_Sequencer();
+	Check(6);
+	Read_Sequencer();
+	Check(5);
+	Run_Sequencer();
+	Check(4);
+	delay(100);	
+	Read_Pull();
+	Check(7);
 }

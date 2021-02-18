@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F302x8</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;      ../Drivers/STM32F3xx_HAL_Driver/Inc;      ../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy;      ../Drivers/CMSIS/Device/ST/STM32F3xx/Include;      ../Drivers/CMSIS/Include</IncludePath>
+              <IncludePath>../Core/Inc;       ../Drivers/STM32F3xx_HAL_Driver/Inc;       ../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy;       ../Drivers/CMSIS/Device/ST/STM32F3xx/Include;       ../Drivers/CMSIS/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -394,6 +394,21 @@
           <GroupName>Application/User/Core</GroupName>
           <Files>
             <File>
+              <FileName>OneWire_Hi4Tech.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\OneWire_Hi4Tech.c</FilePath>
+            </File>
+            <File>
+              <FileName>OneWire_Hi4Tech.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\OneWire_Hi4Tech.h</FilePath>
+            </File>
+            <File>
+              <FileName>DS18b20.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\DS18b20.c</FilePath>
+            </File>
+            <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/main.c</FilePath>
@@ -409,19 +424,14 @@
               <FilePath>../Core/Src/stm32f3xx_hal_msp.c</FilePath>
             </File>
             <File>
-              <FileName>OneWire_Hi4Tech.c</FileName>
+              <FileName>seqAnalysis.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Core\Src\OneWire_Hi4Tech.c</FilePath>
+              <FilePath>..\Core\Src\seqAnalysis.c</FilePath>
             </File>
             <File>
-              <FileName>OneWire_Hi4Tech.h</FileName>
+              <FileName>seqAnalysis.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\Core\Inc\OneWire_Hi4Tech.h</FilePath>
-            </File>
-            <File>
-              <FileName>DS18b20.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\DS18b20.c</FilePath>
+              <FilePath>..\Core\Inc\seqAnalysis.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -539,11 +549,6 @@
     <Layers>
       <Layer>
         <LayName>&lt;Project Info&gt;</LayName>
-        <LayDesc></LayDesc>
-        <LayUrl></LayUrl>
-        <LayKeys></LayKeys>
-        <LayCat></LayCat>
-        <LayLic></LayLic>
         <LayTarg>0</LayTarg>
         <LayPrjMark>1</LayPrjMark>
       </Layer>

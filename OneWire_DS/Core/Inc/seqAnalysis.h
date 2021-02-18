@@ -15,5 +15,4 @@ void listen();
 void init_mask();
 int matched_filter();
 
-
 #endif
