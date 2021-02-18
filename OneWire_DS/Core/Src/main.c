@@ -62,7 +62,7 @@ uint16_t res_14, res_15, res_16, res_17;
 /*POR*/
 uint16_t por_0, por_1, por_2, por_3, por_4, por_5, por_6, por_7, por_8, por_9, por_10; 
 uint8_t Presence = 0;
-uint16_t Response = 0;
+uint8_t Response = 0;
 
 float temperature = 0;
 
@@ -464,25 +464,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		/* Test at DS18B20 completed
-	Presence = Start();
-	HAL_Delay(1);
-	Write(0xCC); //skip ROM
-	Write(0x44);
-	HAL_Delay(800);
-			
-	Presence = Start();
-	HAL_Delay(1);
-	Write(0xCC);
-	Write(0xBE);
-	
-	Temp_byte1 = Read();
-	Temp_byte2 = Read();
-	TEMP = (Temp_byte2<<8)|Temp_byte1;
-	temperature = (float)TEMP/16;
-	
-		
-	HAL_Delay(3000);             */
+
   
 	
 
