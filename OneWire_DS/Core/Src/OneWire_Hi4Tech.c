@@ -1,8 +1,9 @@
 // DS28E18 library by Hi4Tech
 // Authors: butaforsky, marcus_fur, jstre
 #include "main.h"
-
+#include "stdio.h"
 extern TIM_HandleTypeDef htim6;
+extern UART_HandleTypeDef huart3;
 #define DS28E18_PORT GPIOC
 #define DS28E18_PIN GPIO_PIN_2
 #define PullUp_Pin GPIO_PIN_1
@@ -10,8 +11,11 @@ extern TIM_HandleTypeDef htim6;
 //#include "stm32f3xx_hal_msp.h"
 
 // variables - useful and not
-uint8_t Response = 0, Presence = 0;
-uint32_t buffer[100] = {0};
+uint8_t Response = 0, Presence = 0, buffer[100] = {0};
+uint32_t read_value[20] = {0};
+char huart[16];
+int16_t prev_data = 0;
+
 /*
 //microcontroller setup//
 TIMx Prescaler - (Freq(Mhz) / n(Mhz))-1
@@ -42,7 +46,7 @@ void Set_Pin_Input(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
 			 
 //Set delay in microseconds
 	
-void delay(uint16_t time) 
+void us_delay(uint16_t time) 
 	{
 	__HAL_TIM_SET_COUNTER(&htim6,0);
 	while((__HAL_TIM_GET_COUNTER(&htim6))<time);
@@ -52,15 +56,15 @@ uint8_t Start(void)
 	{
 		 Set_Pin_Output(DS28E18_PORT,DS28E18_PIN);//set the pin as output
 		 HAL_GPIO_WritePin(DS28E18_PORT, DS28E18_PIN, GPIO_PIN_RESET); // pull the pin low
-		 delay(480);
+		 us_delay(480);
 		 Set_Pin_Input(DS28E18_PORT, DS28E18_PIN);
-		 delay(65);
+		 us_delay(65);
 		 if((HAL_GPIO_ReadPin(DS28E18_PORT, DS28E18_PIN)== GPIO_PIN_RESET)) 
 			 {
 			 Response = 1;
 			 }
 		 else Response = 2;
-		 delay(400);
+		 us_delay(400);
 		 return Response;
 	}
 	
@@ -75,16 +79,16 @@ void Write(uint8_t data)
 				//write 1
 				Set_Pin_Output(DS28E18_PORT, DS28E18_PIN); //set pn as output
 				HAL_GPIO_WritePin(DS28E18_PORT, DS28E18_PIN,GPIO_PIN_RESET);
-				delay(1);
+				us_delay(1);
 				Set_Pin_Input(DS28E18_PORT, DS28E18_PIN);
-				delay(60); 				
+				us_delay(60); 				
 			}	
 			else //if the bus bit is low
 			{
 				// write 0
 				Set_Pin_Output(DS28E18_PORT, DS28E18_PIN);
 				HAL_GPIO_WritePin(DS28E18_PORT, DS28E18_PIN, GPIO_PIN_RESET);
-				delay(60);
+				us_delay(60);
 				
 				Set_Pin_Input(DS28E18_PORT, DS28E18_PIN);
 				//delay(100);
@@ -102,14 +106,14 @@ uint8_t Read(void)
 	{
 		Set_Pin_Output(DS28E18_PORT, DS28E18_PIN);// set as output
 		HAL_GPIO_WritePin(DS28E18_PORT, DS28E18_PIN, GPIO_PIN_RESET);
-		delay(2);
+		us_delay(2);
 		Set_Pin_Input(DS28E18_PORT, DS28E18_PIN); // set as input
 		//delay(5);
 		if(HAL_GPIO_ReadPin(DS28E18_PORT, DS28E18_PIN)) // if GPIO Pin is HIGH
 		{
 			value |= 1<<i; // read = 1
 		}
-		 delay(80); //wait for 60 microseconds
+		 us_delay(80); //wait for 60 microseconds
 	}
 	return value;
 }
@@ -145,7 +149,7 @@ void Step_3(void) //Step 2 is skipped, used for multidevice systems
 	buffer[2] = Read();
 	buffer[3] = Read();
 	Write(0xAA); // Release byte
-	delay(1000);
+	us_delay(1000);
 }	
 
  void Step_4(void){
@@ -178,7 +182,7 @@ void set2SPI(void) //Check seq = 0
 	buffer[6] = Read();
 	buffer[7] = Read();
 	Write(0xAA);
-	delay(1000);
+	us_delay(1000);
 }
 	
 void Check(char seq)
@@ -275,7 +279,7 @@ void Write_Sequencer(void) //check seq = 6
 	buffer[44] = Read();
 	buffer[45] = Read();
 	Write(0xAA);
-	delay(1000);	
+	us_delay(1000);	
 }
 
 void Read_Sequencer(void) //check seq = 5
@@ -290,7 +294,7 @@ void Read_Sequencer(void) //check seq = 5
 	buffer[83] = Read();
 	buffer[84] = Read();
 	Write(0xAA);
-	delay(1000);
+	us_delay(1000);
 }
 	
 void Run_Sequencer(void) //  check seq = 4
@@ -303,16 +307,16 @@ void Run_Sequencer(void) //  check seq = 4
 	Write(0x00);
 	Write(0x34);
 	Write(0x00);
-	delay(100);
+	us_delay(100);
   buffer[69] = Read();
   buffer[70] = Read();
 	Write(0xAA);
-	delay(100);
+	us_delay(100);
 	
 	
 }
 
-void Read_Pull(void) // pulls the register from sequencer memory
+/*void Read_Pull(void) // pulls the register from sequencer memory
 	// check seq = 7
 {
 	Start();
@@ -326,7 +330,7 @@ void Read_Pull(void) // pulls the register from sequencer memory
 	buffer[72] = Read();
 	Write(0xAA);
 	delay(1000);
-}
+} */ // можно удалить, если все ок
 
 void Clear_POR(void) // Check seq = 8
 {
@@ -338,8 +342,10 @@ void Clear_POR(void) // Check seq = 8
 	buffer[85] = Read();
 	buffer[86] = Read();
 	Write(0xAA); // Success byte
-	delay(1000);
+	us_delay(1000);
 }
+
+
 
 void init_OW(void)
 {
@@ -361,13 +367,20 @@ void init_OW(void)
 	Check(6);
 }	
 	
-void run_OW(void)
+int8_t run_OW(void)
 {
-		
 		Read_Sequencer();
 		Check(5);
 		Run_Sequencer();
-		delay(1000);	
-	//	Read_Pull();
-	//	Check(7);
+		us_delay(1000);
+	
+
+uint16_t data10 = buffer[38]; // High byte
+uint16_t data11 = buffer[39]; // Low byte
+
+int16_t datafin0 = ((data10 << 8) & 0xFF00) | data11;
+	int16_t retval = (prev_data-datafin0)/228;
+			HAL_UART_Transmit(&huart3, (uint8_t*)huart, sprintf(huart, "data  = %d\n", retval), 20);
+prev_data = datafin0;
+	return retval;
 }

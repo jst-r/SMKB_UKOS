@@ -1,12 +1,12 @@
 /* Test at DS18B20 completed
 	Presence = Start();
-	HAL_Delay(1);
+	HAL_us_delay(1);
 	Write(0xCC); //skip ROM
 	Write(0x44);
-	HAL_Delay(800);
+	HAL_us_delay(800);
 			
 	Presence = Start();
-	HAL_Delay(1);
+	HAL_us_delay(1);
 	Write(0xCC);
 	Write(0xBE);
 	
@@ -16,4 +16,5 @@
 	temperature = (float)TEMP/16;
 	
 		
-	HAL_Delay(3000);   */          
+	HAL_us_delay(3000);   */
+	

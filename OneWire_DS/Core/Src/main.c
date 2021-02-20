@@ -23,6 +23,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "OneWire_Hi4Tech.h"
+#include "seqAnalysis.h"
+#include "stdio.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -45,8 +47,10 @@
 /* Private variables ---------------------------------------------------------*/
 TIM_HandleTypeDef htim6;
 
-/* USER CODE BEGIN PV */
+UART_HandleTypeDef huart3;
 
+/* USER CODE BEGIN PV */
+char huart2[16];
 
 
 /* USER CODE END PV */
@@ -55,6 +59,7 @@ TIM_HandleTypeDef htim6;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_TIM6_Init(void);
+static void MX_USART3_UART_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -93,9 +98,13 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_TIM6_Init();
+  MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
 	HAL_TIM_Base_Start(&htim6);
-	init_OW();	
+	init_mask();
+	HAL_GPIO_WritePin(GPIOC, PullUp_Pin, GPIO_PIN_SET);
+	init_OW();
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -106,8 +115,14 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-			run_OW();
-	
+			listen();
+			HAL_UART_Transmit(&huart3, (uint8_t*)huart2, sprintf(huart2, "asdfilter\n"), 25);
+			for(int k = 0; k<50; k++)
+			{
+			HAL_UART_Transmit(&huart3, (uint8_t*)huart2, sprintf(huart2," %d", sq_buff[k]), 25);	
+			}
+			int32_t filter_val = matched_filter();
+			HAL_UART_Transmit(&huart3, (uint8_t*)huart2, sprintf(huart2, "filter  = %d\n", filter_val), 20);
 	
 
 	}
@@ -190,6 +205,41 @@ static void MX_TIM6_Init(void)
 }
 
 /**
+  * @brief USART3 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_USART3_UART_Init(void)
+{
+
+  /* USER CODE BEGIN USART3_Init 0 */
+
+  /* USER CODE END USART3_Init 0 */
+
+  /* USER CODE BEGIN USART3_Init 1 */
+
+  /* USER CODE END USART3_Init 1 */
+  huart3.Instance = USART3;
+  huart3.Init.BaudRate = 115200;
+  huart3.Init.WordLength = UART_WORDLENGTH_8B;
+  huart3.Init.StopBits = UART_STOPBITS_1;
+  huart3.Init.Parity = UART_PARITY_NONE;
+  huart3.Init.Mode = UART_MODE_TX_RX;
+  huart3.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart3.Init.OverSampling = UART_OVERSAMPLING_16;
+  huart3.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
+  huart3.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
+  if (HAL_UART_Init(&huart3) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN USART3_Init 2 */
+
+  /* USER CODE END USART3_Init 2 */
+
+}
+
+/**
   * @brief GPIO Initialization Function
   * @param None
   * @retval None
@@ -201,9 +251,10 @@ static void MX_GPIO_Init(void)
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOF_CLK_ENABLE();
   __HAL_RCC_GPIOC_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_1, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_1, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOC, GPIO_PIN_2, GPIO_PIN_SET);

@@ -30,3 +30,6 @@ onewire_ds\onewire_hi4tech.o: ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_
 onewire_ds\onewire_hi4tech.o: ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_pwr_ex.h
 onewire_ds\onewire_hi4tech.o: ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_tim.h
 onewire_ds\onewire_hi4tech.o: ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_tim_ex.h
+onewire_ds\onewire_hi4tech.o: ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart.h
+onewire_ds\onewire_hi4tech.o: ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart_ex.h
+onewire_ds\onewire_hi4tech.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

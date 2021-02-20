@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F302x8</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;       ../Drivers/STM32F3xx_HAL_Driver/Inc;       ../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy;       ../Drivers/CMSIS/Device/ST/STM32F3xx/Include;       ../Drivers/CMSIS/Include</IncludePath>
+              <IncludePath>../Core/Inc;        ../Drivers/STM32F3xx_HAL_Driver/Inc;        ../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy;        ../Drivers/CMSIS/Device/ST/STM32F3xx/Include;        ../Drivers/CMSIS/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -409,6 +409,16 @@
               <FilePath>.\DS18b20.c</FilePath>
             </File>
             <File>
+              <FileName>seqAnalysis.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\seqAnalysis.c</FilePath>
+            </File>
+            <File>
+              <FileName>seqAnalysis.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\seqAnalysis.h</FilePath>
+            </File>
+            <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/main.c</FilePath>
@@ -422,16 +432,6 @@
               <FileName>stm32f3xx_hal_msp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/stm32f3xx_hal_msp.c</FilePath>
-            </File>
-            <File>
-              <FileName>seqAnalysis.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\seqAnalysis.c</FilePath>
-            </File>
-            <File>
-              <FileName>seqAnalysis.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Core\Inc\seqAnalysis.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -512,6 +512,16 @@
               <FileName>stm32f3xx_hal_exti.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_exti.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f3xx_hal_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f3xx_hal_uart_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_uart_ex.c</FilePath>
             </File>
           </Files>
         </Group>
