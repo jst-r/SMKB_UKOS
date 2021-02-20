@@ -3,7 +3,7 @@
 <title>Static Call Graph - [OneWire_DS\OneWire_DS.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image OneWire_DS\OneWire_DS.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060960: Last Updated: Sat Feb 20 19:15:16 2021
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060960: Last Updated: Sat Feb 20 19:48:18 2021
 <BR><P>
 <H3>Maximum Stack Usage =        172 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -479,7 +479,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_InitTick
 </UL>
 
-<P><STRONG><a name="[7e]"></a>HAL_TIMEx_MasterConfigSynchronization</STRONG> (Thumb, 98 bytes, Stack size 20 bytes, stm32f3xx_hal_tim_ex.o(i.HAL_TIMEx_MasterConfigSynchronization))
+<P><STRONG><a name="[7f]"></a>HAL_TIMEx_MasterConfigSynchronization</STRONG> (Thumb, 98 bytes, Stack size 20 bytes, stm32f3xx_hal_tim_ex.o(i.HAL_TIMEx_MasterConfigSynchronization))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = HAL_TIMEx_MasterConfigSynchronization
 </UL>
 <BR>[Called By]<UL><LI><a href="#[3c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -500,7 +500,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_Base_Init
 </UL>
 
-<P><STRONG><a name="[7f]"></a>HAL_TIM_Base_Start</STRONG> (Thumb, 66 bytes, Stack size 0 bytes, stm32f3xx_hal_tim.o(i.HAL_TIM_Base_Start))
+<P><STRONG><a name="[80]"></a>HAL_TIM_Base_Start</STRONG> (Thumb, 66 bytes, Stack size 0 bytes, stm32f3xx_hal_tim.o(i.HAL_TIM_Base_Start))
 <BR><BR>[Called By]<UL><LI><a href="#[3c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
@@ -531,6 +531,7 @@ Global Symbols
 <LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_WaitOnFlagUntilTimeout
 </UL>
 <BR>[Called By]<UL><LI><a href="#[3c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;listen
 <LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;run_OW
 </UL>
 
@@ -757,10 +758,11 @@ Global Symbols
 
 <P><STRONG><a name="[91]"></a>__1sprintf$6</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printf6.o(i.__0sprintf$6), UNUSED)
 
-<P><STRONG><a name="[81]"></a>__2sprintf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printf6.o(i.__0sprintf$6))
+<P><STRONG><a name="[7e]"></a>__2sprintf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printf6.o(i.__0sprintf$6))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = __2sprintf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[3c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;listen
 <LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;run_OW
 </UL>
 
@@ -783,16 +785,18 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[3c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[80]"></a>init_mask</STRONG> (Thumb, 72 bytes, Stack size 20 bytes, seqanalysis.o(i.init_mask))
+<P><STRONG><a name="[81]"></a>init_mask</STRONG> (Thumb, 72 bytes, Stack size 20 bytes, seqanalysis.o(i.init_mask))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = init_mask
 </UL>
 <BR>[Called By]<UL><LI><a href="#[3c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[7c]"></a>listen</STRONG> (Thumb, 54 bytes, Stack size 24 bytes, seqanalysis.o(i.listen))
+<P><STRONG><a name="[7c]"></a>listen</STRONG> (Thumb, 76 bytes, Stack size 24 bytes, seqanalysis.o(i.listen))
 <BR><BR>[Stack]<UL><LI>Max Depth = 156<LI>Call Chain = listen &rArr; run_OW &rArr; Check &rArr; Read &rArr; Set_Pin_Output &rArr; HAL_GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;run_OW
+<BR>[Calls]<UL><LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
+<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;run_OW
+<LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[3c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -800,20 +804,20 @@ Global Symbols
 <P><STRONG><a name="[3c]"></a>main</STRONG> (Thumb, 192 bytes, Stack size 16 bytes, main.o(i.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 172<LI>Call Chain = main &rArr; listen &rArr; run_OW &rArr; Check &rArr; Read &rArr; Set_Pin_Output &rArr; HAL_GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_Base_Start
+<BR>[Calls]<UL><LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_Base_Start
 <LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_Base_Init
-<LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIMEx_MasterConfigSynchronization
+<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIMEx_MasterConfigSynchronization
 <LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Init
 <LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemClock_Config
 <LI><a href="#[68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_USART3_UART_Init
 <LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_GPIO_Init
 <LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;matched_filter
 <LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;listen
-<LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_mask
+<LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_mask
 <LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
 <LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_OW
-<LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
+<LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> entry9a.o(.ARM.Collect$$$$0000000B)
 </UL>
@@ -831,7 +835,7 @@ Global Symbols
 <LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Run_Sequencer
 <LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Sequencer
 <LI><a href="#[49]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Check
-<LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
+<LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;listen
 </UL>

@@ -1,6 +1,9 @@
 #include "seqAnalysis.h"
 #include "OneWire_Hi4Tech.h"
 #include "main.h"
+#include "stdio.h"
+extern UART_HandleTypeDef huart3;
+char huart3buf[16] = {0}; 
 
 static const uint8_t sq_delays[n_sq_delays] = {1, 2};
 
@@ -25,13 +28,14 @@ void init_mask() {
 
 void listen(){
 		uint8_t max_val = 0;
-		uint8_t v;
+		int8_t v;
 
 			for (int32_t i = 0; i < sq_buff_size; i++) {
 					max_val = 0;
 					for (int32_t j = 0; j < time_window / sample_time; j++) {
 					v = run_OW();
 						v = v > 0 ? v : -v;
+						HAL_UART_Transmit(&huart3, (uint8_t*)huart3buf, sprintf(huart3buf," %d\n", v), 25);							
 						if (max_val < v){
 							max_val = v;
 						}
