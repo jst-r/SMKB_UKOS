@@ -1,7 +1,6 @@
 #ifndef FREQANALYSIS
 #define FREQANALYSIS
 #include "main_F302.h"
-#include "stdint.h"
 
 typedef struct{
 	float freq;
@@ -12,11 +11,14 @@ typedef struct{
 
 	float scoreReal;
 	float scoreImag;
-} freqAnaliser;
+} freqAnalyser;
 
-freqAnaliser initAnaliser(float freq);
-void processSet(freqAnaliser * a, uint16_t resetLenght);
-void processReset(freqAnaliser * a, uint16_t setLenght);
-int getScoreSquare(freqAnaliser * a);
-void resetScore(freqAnaliser * a);
+
+freqAnalyser initAnaliser(float freq);
+void setFreq(freqAnalyser * a, float freq);
+void processSet(freqAnalyser * a, float dt);
+float getScoreSquare(freqAnalyser * a);
+
+
+
 #endif

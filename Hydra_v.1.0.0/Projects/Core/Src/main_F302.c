@@ -42,6 +42,7 @@
 
 /* USER CODE BEGIN Includes */
 #include "6Step_Lib.h"
+#include "OneWire_Hi4Tech.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -70,7 +71,7 @@ char buffer[30];
 static uint16_t sample_rate = 10000;
 volatile uint8_t motor_enable = 0;
 
-freqAnaliser analiser;
+freqAnalyser analiser;
 
 /* USER CODE END PV */
 
@@ -650,7 +651,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 		} else if (htim->Instance == TIM15){
 			__NOP();
 		}
-	}
+	} 
 }
 /* USER CODE END 4 */
 

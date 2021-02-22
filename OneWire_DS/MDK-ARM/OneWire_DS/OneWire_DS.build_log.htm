@@ -22,12 +22,25 @@ Dialog DLL:      TCM.DLL V1.46.0.0
  
 <h2>Project:</h2>
 C:\Users\User\Documents\GitHub\SMKB_UKOS\OneWire_DS\MDK-ARM\OneWire_DS.uvprojx
-Project File Date:  02/20/2021
+Project File Date:  02/22/2021
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'OneWire_DS'
-"OneWire_DS\OneWire_DS.axf" - 0 Error(s), 0 Warning(s).
+compiling main.c...
+../Core/Inc/OneWire_Hi4Tech.h(30): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Core/Inc/seqAnalysis.h(15): warning:  #1295-D: Deprecated declaration listen - give arg types
+  void listen();
+../Core/Inc/seqAnalysis.h(16): warning:  #1295-D: Deprecated declaration init_mask - give arg types
+  void init_mask();
+../Core/Inc/seqAnalysis.h(17): warning:  #1295-D: Deprecated declaration matched_filter - give arg types
+  int matched_filter();
+../Core/Src/main.c: 4 warnings, 0 errors
+linking...
+Program Size: Code=13860 RO-data=840 RW-data=24 ZI-data=2192  
+FromELF: creating hex file...
+"OneWire_DS\OneWire_DS.axf" - 0 Error(s), 4 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -50,7 +63,7 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.4.0
-Build Time Elapsed:  00:00:01
+Build Time Elapsed:  00:00:08
 </pre>
 </body>
 </html>

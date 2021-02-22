@@ -4,6 +4,7 @@
 "stm32f302r8-nucleo configuration\stm32f3xx_it.o"
 "stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.o"
 "stm32f302r8-nucleo configuration\freqanalysis.o"
+"stm32f302r8-nucleo configuration\onewire_hi4tech.o"
 "stm32f302r8-nucleo configuration\startup_stm32f302x8.o"
 "stm32f302r8-nucleo configuration\6step_lib.o"
 "stm32f302r8-nucleo configuration\uart_ui.o"

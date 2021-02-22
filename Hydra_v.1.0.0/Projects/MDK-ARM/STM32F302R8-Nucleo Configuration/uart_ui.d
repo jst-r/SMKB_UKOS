@@ -5,6 +5,8 @@ stm32f302r8-nucleo configuration\uart_ui.o: ..\Core\Inc\stm32F302_nucleo_ihm07m1
 stm32f302r8-nucleo configuration\uart_ui.o: ..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal.h
 stm32f302r8-nucleo configuration\uart_ui.o: ..\Core\Inc\stm32f3xx_hal_conf.h
 stm32f302r8-nucleo configuration\uart_ui.o: ..\Core\Inc\main_F302.h
+stm32f302r8-nucleo configuration\uart_ui.o: ..\Core\Inc\freqAnalysis.h
+stm32f302r8-nucleo configuration\uart_ui.o: ..\Core\Inc\main_F302.h
 stm32f302r8-nucleo configuration\uart_ui.o: ..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_rcc.h
 stm32f302r8-nucleo configuration\uart_ui.o: ..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_def.h
 stm32f302r8-nucleo configuration\uart_ui.o: ..\Drivers\CMSIS\Device\ST\STM32F3xx\Include\stm32f3xx.h

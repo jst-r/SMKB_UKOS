@@ -51,7 +51,8 @@ void us_delay(uint16_t time)
 	__HAL_TIM_SET_COUNTER(&htim6,0);
 	while((__HAL_TIM_GET_COUNTER(&htim6))<time);
 	}
-	
+
+// Start OneWire Function Definition	
 uint8_t Start(void)
 	{
 		 Set_Pin_Output(DS28E18_PORT,DS28E18_PIN);//set the pin as output
@@ -303,11 +304,11 @@ void Run_Sequencer(void) //  check seq = 4
 	Write(0xCC);  // SKIP ROM
 	Write(0x66);  //Start Commmand
 	Write(0x04);  //Command Len
-	Write(0x33);
-	Write(0x00);
-	Write(0x34);
-	Write(0x00);
-	us_delay(100);
+	Write(0x33);  //Run Sequencer
+	Write(0x00);  //Start ROM ADDR
+	Write(0x34);	//Finish ROM ADDR
+	Write(0x00);  //Just cause
+	us_delay(100);// Allow to Perform the sequence in x milliseconds
   buffer[69] = Read();
   buffer[70] = Read();
 	Write(0xAA);
@@ -367,7 +368,7 @@ void init_OW(void)
 	Check(6);
 }	
 	
-int8_t run_OW(void)
+int16_t run_OW(void)
 {
 		Read_Sequencer();
 		Check(5);
@@ -375,12 +376,12 @@ int8_t run_OW(void)
 		us_delay(1000);
 	
 
-uint16_t data10 = buffer[38]; // High byte
-uint16_t data11 = buffer[39]; // Low byte
+		uint16_t data10 = buffer[38]; // High byte
+		uint16_t data11 = buffer[39]; // Low byte
 
-int16_t datafin0 = ((data10 << 8) & 0xFF00) | data11;
-	int16_t retval = (prev_data-datafin0)/228;
-			HAL_UART_Transmit(&huart3, (uint8_t*)huart, sprintf(huart, "data  = %d\n", retval), 20);
-prev_data = datafin0;
-	return retval;
+		int16_t datafin0 = ((data10 << 8) & 0xFF00) | data11;
+//int16_t retval = (prev_data-datafin0)/228;
+//			HAL_UART_Transmit(&huart3, (uint8_t*)huart, sprintf(huart, "data  = %d\n", retval), 20);
+// prev_data = datafin0;
+	return datafin0;
 }

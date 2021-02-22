@@ -25,6 +25,7 @@
 #include "OneWire_Hi4Tech.h"
 #include "seqAnalysis.h"
 #include "stdio.h"
+#include "freqAnalysis.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -61,7 +62,7 @@ static void MX_GPIO_Init(void);
 static void MX_TIM6_Init(void);
 static void MX_USART3_UART_Init(void);
 /* USER CODE BEGIN PFP */
-
+freqAnalyser anal, anal2;
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -104,26 +105,26 @@ int main(void)
 	init_mask();
 	HAL_GPIO_WritePin(GPIOC, PullUp_Pin, GPIO_PIN_SET);
 	init_OW();
-
+	anal = initAnaliser(60./60.);
+	anal2 = initAnaliser(75./60.);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+	uint32_t t0 = HAL_GetTick();
   while (1)
   {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
 
-			listen();
-			HAL_UART_Transmit(&huart3, (uint8_t*)huart2, sprintf(huart2, "asdfilter\n"), 25);
-			for(int k = 0; k<50; k++)
-			{
-			HAL_UART_Transmit(&huart3, (uint8_t*)huart2, sprintf(huart2," %d", sq_buff[k]), 25);	
+			int16_t val = run_OW();
+			if (val < 2000){
+				uint32_t t1 = HAL_GetTick();
+				processSet(&anal, t1 - t0);
+				t0 = t1;
+				HAL_UART_Transmit(&huart3, (uint8_t*)huart2, sprintf(huart2, "filter  = %f\n", getScoreSquare(&anal)), 20);
 			}
-			int32_t filter_val = matched_filter();
-			HAL_UART_Transmit(&huart3, (uint8_t*)huart2, sprintf(huart2, "filter  = %d\n", filter_val), 20);
-	
 
 	}
   /* USER CODE END 3 */

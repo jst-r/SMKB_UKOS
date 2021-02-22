@@ -45,8 +45,8 @@
 long frequency = 72000000;
 int time = 0;
 float signal = 0.1;
-float sequence[] = {1,2,3,3,2,1,0.1,0};
-float sequence2[] = {5,5,2,2,2,10,10,0.1,0};
+float sequence[] = {1,2,3,3,2,1,0.1,0}; // anal 
+float sequence2[] = {5,5,2,2,2,10,10,0.1,0}; // anal2
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -73,6 +73,16 @@ void Ratata(float seq[])
 			Delay(seq[i]-signal);
 		}
 }
+void Ratata2(float seq[])
+{
+		for (int i = 0; seq[i] != 0; i++){
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
+			Delay(signal);
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
+			Delay(seq[i] * 75./60. - signal);
+		}
+}
+
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
@@ -229,13 +239,13 @@ static void MX_GPIO_Init(void)
 			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
 			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_RESET);
 		 }
-	else if(GPIO_Pin == GPIO_PIN_6 & HAL_GetTick()-time > 500 )  //Left_Button
+	else if(GPIO_Pin == GPIO_PIN_6 & HAL_GetTick()-time > 500 )  //Left_Button 75bpm
 		 {
 			 time = HAL_GetTick();
 			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_RESET);
 			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_13, GPIO_PIN_SET);
 			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
-			 Ratata(sequence); 
+			 Ratata2(sequence); 
 			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
 			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_13, GPIO_PIN_RESET);
 		 }

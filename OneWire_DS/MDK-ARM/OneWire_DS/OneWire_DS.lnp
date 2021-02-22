@@ -6,6 +6,7 @@
 "onewire_ds\main.o"
 "onewire_ds\stm32f3xx_it.o"
 "onewire_ds\stm32f3xx_hal_msp.o"
+"onewire_ds\freqanalysis.o"
 "onewire_ds\stm32f3xx_hal_tim.o"
 "onewire_ds\stm32f3xx_hal_tim_ex.o"
 "onewire_ds\stm32f3xx_hal.o"

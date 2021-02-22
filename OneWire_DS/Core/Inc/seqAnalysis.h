@@ -3,11 +3,11 @@
 
 #include "main.h"
 
-#define sq_buff_size 50
+#define sq_buff_size 400
 #define time_window 99  // ms
 #define sample_time 33    // ms
 
-#define n_sq_delays 2
+#define n_sq_delays 7
 
 static uint8_t sq_buff[sq_buff_size];
 static uint8_t sq_mask[sq_buff_size];
