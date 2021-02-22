@@ -45,7 +45,7 @@ extern SIXSTEP_Base_InitTypeDef SIXSTEP_parameters; /*!< Main SixStep structure*
 extern ADC_HandleTypeDef hadc1;
 extern TIM_HandleTypeDef htim1;
 extern TIM_HandleTypeDef htim6;
-extern TIM_HandleTypeDef htim15;
+//extern TIM_HandleTypeDef htim15;
 extern TIM_HandleTypeDef htim16;
 extern UART_HandleTypeDef huart3;
 extern void UART_Set_Value(void);
@@ -148,9 +148,7 @@ void TIM1_BRK_TIM15_IRQHandler(void)
 
   /* USER CODE END TIM1_BRK_TIM15_IRQn 0 */
   HAL_TIM_IRQHandler(&htim1);
-  /* USER CODE BEGIN TIM1_BRK_TIM15_IRQn 1 */
-  HAL_TIM_IRQHandler(&htim15);
-  /* USER CODE END TIM1_BRK_TIM15_IRQn 1 */
+  /* USER CODE BEGIN TIM1_BRK_TIM15_IRQn 1 */ 
 }
 
 /**

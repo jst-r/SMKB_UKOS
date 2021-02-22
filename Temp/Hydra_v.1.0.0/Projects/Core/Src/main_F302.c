@@ -52,7 +52,7 @@ ADC_HandleTypeDef hadc1;
 TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim6;
 TIM_HandleTypeDef htim16;
-TIM_HandleTypeDef htim15;
+//TIM_HandleTypeDef htim15;
 UART_HandleTypeDef huart3;
 
 /* USER CODE BEGIN PV */
@@ -80,9 +80,9 @@ static void MX_GPIO_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_TIM1_Init(void);
 static void MX_TIM6_Init(void);
-static void MX_TIM15_Init(void);
+//static void MX_TIM15_Init(void);
 static void MX_TIM16_Init(void);
-//
+
 static void MX_USART3_UART_Init(void);
 
 
@@ -127,7 +127,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
   MX_ADC1_Init();
   MX_TIM1_Init();
   MX_TIM6_Init();
-	MX_TIM15_Init();
+	//MX_TIM15_Init();
 	MX_TIM16_Init();
   MX_USART3_UART_Init();
 
@@ -138,11 +138,10 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
   ============================================================================== 
   **************************************************************************** */     
   MC_SixStep_INIT();
-	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, GPIO_PIN_SET);
-	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET); //MOTOR BUS ENABLE
 	HAL_NVIC_EnableIRQ(EXTI1_IRQn);
 	HAL_NVIC_EnableIRQ(EXTI2_TSC_IRQn);
-	HAL_TIM_Base_Start_IT(&htim15);
+	//HAL_TIM_Base_Start_IT(&htim15);
 	HAL_TIM_Base_Start_IT(&htim16);
 
   MC_StartMotor();
@@ -436,6 +435,7 @@ static void MX_TIM6_Init(void)
 
 }
 /*TIM15 user init function */
+/*
 static void MX_TIM15_Init(void)
 {
 	TIM_ClockConfigTypeDef sClockSourceConfig = {0};
@@ -464,6 +464,8 @@ static void MX_TIM15_Init(void)
     Error_Handler();
   }
 }
+*/
+
 
 /*TIM16 user init function */
 static void MX_TIM16_Init(void)
@@ -520,10 +522,8 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_4|GPIO_PIN_9, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_9, GPIO_PIN_RESET);
 
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : PC9 -> GPIO Bemf*/
   GPIO_InitStruct.Pin = GPIO_PIN_9;
@@ -532,28 +532,19 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 	
-  /*Configure GPIO pins : GPIO_3_3V_EN_Pin GPIO_14V_EN_Pin */
-  GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_8;
+  /*Configure GPIO pins : GPIO_14V_EN_Pin */
+  GPIO_InitStruct.Pin = GPIO_PIN_8;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-  /*Configure GPIO pin : PB2 */
-  GPIO_InitStruct.Pin = GPIO_PIN_2;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-	/*Configure GPIO pin : PC2 */
-  GPIO_InitStruct.Pin = GPIO_PIN_2;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+	
 	 /*Configure GPIO pins : EXTI1_END_STOP_Pin EXTI2_END_STOP_Pin - Edge to Edge Sensors */
   GPIO_InitStruct.Pin = GPIO_PIN_1|GPIO_PIN_2;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+	
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI1_IRQn, 4, 4);
 	HAL_NVIC_EnableIRQ(EXTI1_IRQn);
@@ -593,9 +584,9 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
-	if (htim->Instance != TIM15 & htim->Instance != TIM16){
-		MC_TIMx_SixStep_timebase();
-	}
+	if (htim->Instance == TIM6){
+		MC_TIMx_SixStep_timebase();						//MC LF TIMER
+	}																				
 	/*if (htim->Instance == TIM16) {
     return; //FIXME
 		if (motor_enable == 0){
