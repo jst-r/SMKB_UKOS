@@ -45,7 +45,6 @@ extern SIXSTEP_Base_InitTypeDef SIXSTEP_parameters; /*!< Main SixStep structure*
 extern ADC_HandleTypeDef hadc1;
 extern TIM_HandleTypeDef htim1;
 extern TIM_HandleTypeDef htim6;
-//extern TIM_HandleTypeDef htim15;
 extern TIM_HandleTypeDef htim16;
 extern UART_HandleTypeDef huart3;
 extern void UART_Set_Value(void);

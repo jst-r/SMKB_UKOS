@@ -2,8 +2,8 @@
 // Authors: butaforsky, marcus_fur, jstre
 #include "main.h"
 
-extern TIM_HandleTypeDef htim17;
-#define DS28E18_PORT GPIOC
+extern TIM_HandleTypeDef htim16;		//DEFINE_TIM for us delay
+#define DS28E18_PORT GPIOC					//DEFINE_GPIO ports here
 #define DS28E18_PIN GPIO_PIN_2
 #define PullUp_Pin GPIO_PIN_1
 
@@ -44,8 +44,8 @@ void Set_Pin_Input(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
 	
 void delay(uint16_t time) 
 	{
-	__HAL_TIM_SET_COUNTER(&htim17,0);
-	while((__HAL_TIM_GET_COUNTER(&htim17))<time);
+	__HAL_TIM_SET_COUNTER(&htim16,0);
+	while((__HAL_TIM_GET_COUNTER(&htim16))<time);
 	}
 	
 uint8_t Start(void)
