@@ -1,0 +1,28 @@
+--cpu=Cortex-M4.fp.sp
+"onewire_ds\startup_stm32f302x8.o"
+"onewire_ds\onewire_hi4tech.o"
+"onewire_ds\ds18b20.o"
+"onewire_ds\seqanalysis.o"
+"onewire_ds\main.o"
+"onewire_ds\stm32f3xx_it.o"
+"onewire_ds\stm32f3xx_hal_msp.o"
+"onewire_ds\stm32f3xx_hal_tim.o"
+"onewire_ds\stm32f3xx_hal_tim_ex.o"
+"onewire_ds\stm32f3xx_hal.o"
+"onewire_ds\stm32f3xx_hal_rcc.o"
+"onewire_ds\stm32f3xx_hal_rcc_ex.o"
+"onewire_ds\stm32f3xx_hal_gpio.o"
+"onewire_ds\stm32f3xx_hal_dma.o"
+"onewire_ds\stm32f3xx_hal_cortex.o"
+"onewire_ds\stm32f3xx_hal_pwr.o"
+"onewire_ds\stm32f3xx_hal_pwr_ex.o"
+"onewire_ds\stm32f3xx_hal_flash.o"
+"onewire_ds\stm32f3xx_hal_flash_ex.o"
+"onewire_ds\stm32f3xx_hal_i2c.o"
+"onewire_ds\stm32f3xx_hal_i2c_ex.o"
+"onewire_ds\stm32f3xx_hal_exti.o"
+"onewire_ds\system_stm32f3xx.o"
+--library_type=microlib --strict --scatter "OneWire_DS\OneWire_DS.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "OneWire_DS.map" -o OneWire_DS\OneWire_DS.axf
