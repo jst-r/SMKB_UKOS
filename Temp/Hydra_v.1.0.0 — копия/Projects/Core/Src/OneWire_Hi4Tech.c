@@ -380,8 +380,6 @@ uint16_t run_OW(void)
 		uint16_t data11 = bufferOW[39]; // Low byte
 
 		int16_t datafin0 = ((data10 << 8) & 0xFF00) | data11;
-//int16_t retval = (prev_data-datafin0)/228;
-//			HAL_UART_Transmit(&huart3, (uint8_t*)huart, sprintf(huart, "data  = %d\n", retval), 20);
-// prev_data = datafin0;
-	return datafin0;
+
+		return datafin0;
 }
