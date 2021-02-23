@@ -104,6 +104,7 @@ int main(void)
   MX_TIM15_Init();
   /* USER CODE BEGIN 2 */
     HAL_TIM_Base_Start(&htim6);
+		HAL_TIM_Base_Start(&htim15);
     init_mask();
     HAL_GPIO_WritePin(GPIOC, PullUp_Pin, GPIO_PIN_SET);
     init_OW();
