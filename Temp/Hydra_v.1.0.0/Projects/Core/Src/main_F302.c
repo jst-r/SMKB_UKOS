@@ -49,7 +49,6 @@ ADC_HandleTypeDef hadc1;
 
 TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim6;
-TIM_HandleTypeDef htim16;
 
 UART_HandleTypeDef huart3;
 
@@ -78,7 +77,6 @@ static void MX_GPIO_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_TIM1_Init(void);
 static void MX_TIM6_Init(void);
-static void MX_TIM16_Init(void);
 
 static void MX_USART3_UART_Init(void);
 
@@ -124,7 +122,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
   MX_ADC1_Init();
   MX_TIM1_Init();
   MX_TIM6_Init();
-	MX_TIM16_Init();
+	
   MX_USART3_UART_Init();
 
   /* USER CODE BEGIN 2 */
@@ -137,7 +135,6 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET); //MOTOR BUS ENABLE
 	HAL_NVIC_EnableIRQ(EXTI1_IRQn);
 	HAL_NVIC_EnableIRQ(EXTI2_TSC_IRQn);
-	HAL_TIM_Base_Start_IT(&htim16);
 
   MC_StartMotor();
 	
@@ -235,10 +232,9 @@ void SystemClock_Config(void)
     _Error_Handler(__FILE__, __LINE__);
   }
 
-  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_TIM1|RCC_PERIPHCLK_TIM16
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_TIM1
                               |RCC_PERIPHCLK_ADC1;
   PeriphClkInit.Tim1ClockSelection = RCC_TIM1CLK_HCLK;
-  PeriphClkInit.Tim16ClockSelection = RCC_TIM16CLK_HCLK;
   PeriphClkInit.Adc1ClockSelection = RCC_ADC1PLLCLK_DIV1;
 
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
@@ -428,21 +424,7 @@ static void MX_TIM6_Init(void)
 
 }
 
-/*TIM16 user init function FOR OW*/ 
-static void MX_TIM16_Init(void)
-{
-  htim16.Instance = TIM16;
-  htim16.Init.Prescaler = 0;
-  htim16.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim16.Init.Period = 0xffff-1;
-  htim16.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-  htim16.Init.RepetitionCounter = 0;
-  htim16.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-  if (HAL_TIM_Base_Init(&htim16) != HAL_OK)
-  {
-    Error_Handler();
-  }
-}
+
 /* USART3 init function */
 static void MX_USART3_UART_Init(void)
 {

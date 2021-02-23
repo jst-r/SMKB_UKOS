@@ -3,7 +3,7 @@
 <title>Static Call Graph - [STM32F302R8-Nucleo Configuration\STM32F302R8-Nucleo Configuration.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image STM32F302R8-Nucleo Configuration\STM32F302R8-Nucleo Configuration.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Tue Feb 23 01:05:57 2021
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Tue Feb 23 13:47:49 2021
 <BR><P>
 <H3>Maximum Stack Usage =        248 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -902,8 +902,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_Base_MspInit
 <LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_Base_SetConfig
 </UL>
-<BR>[Called By]<UL><LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_TIM6_Init
+<BR>[Called By]<UL><LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_TIM6_Init
 <LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_TIM1_Init
 </UL>
 
@@ -919,7 +918,6 @@ Global Symbols
 
 <P><STRONG><a name="[ce]"></a>HAL_TIM_Base_Start_IT</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, stm32f3xx_hal_tim.o(i.HAL_TIM_Base_Start_IT))
 <BR><BR>[Called By]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MC_StartMotor
-<LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
 <P><STRONG><a name="[d0]"></a>HAL_TIM_Base_Stop_IT</STRONG> (Thumb, 42 bytes, Stack size 0 bytes, stm32f3xx_hal_tim.o(i.HAL_TIM_Base_Stop_IT))
@@ -962,7 +960,6 @@ Global Symbols
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIMEx_BreakCallback
 </UL>
 <BR>[Called By]<UL><LI><a href="#[37]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM6_DAC_IRQHandler
-<LI><a href="#[27]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM1_UP_TIM16_IRQHandler
 <LI><a href="#[26]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM1_BRK_TIM15_IRQHandler
 </UL>
 
@@ -1217,9 +1214,9 @@ Global Symbols
 <P><STRONG><a name="[c6]"></a>MC_SixStep_NEXT_step</STRONG> (Thumb, 232 bytes, Stack size 24 bytes, 6step_lib.o(i.MC_SixStep_NEXT_step))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = MC_SixStep_NEXT_step &rArr; MC_SixStep_TABLE &rArr; HAL_TIM_PWM_Stop &rArr; TIM_CCxChannelCmd
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MC_SixStep_ADC_Channel
+<BR>[Calls]<UL><LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MC_GetMechSpeedRPM
+<LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MC_SixStep_ADC_Channel
 <LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MC_SixStep_TABLE
-<LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MC_GetMechSpeedRPM
 </UL>
 <BR>[Called By]<UL><LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MC_TIMx_SixStep_timebase
 </UL>
@@ -1290,9 +1287,9 @@ Global Symbols
 <P><STRONG><a name="[77]"></a>MC_StartMotor</STRONG> (Thumb, 46 bytes, Stack size 8 bytes, 6step_lib.o(i.MC_StartMotor))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = MC_StartMotor &rArr; HAL_ADC_Start_IT &rArr; ADC_Enable
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_Base_Start_IT
-<LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+<BR>[Calls]<UL><LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ADC_Start_IT
+<LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_Base_Start_IT
 </UL>
 <BR>[Called By]<UL><LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_EXTI_Callback
@@ -1375,11 +1372,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f302x8.o(RESET)
 </UL>
-<P><STRONG><a name="[27]"></a>TIM1_UP_TIM16_IRQHandler</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, stm32f3xx_it.o(i.TIM1_UP_TIM16_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 200<LI>Call Chain = TIM1_UP_TIM16_IRQHandler &rArr; HAL_TIM_IRQHandler &rArr; HAL_TIM_PeriodElapsedCallback &rArr; MC_TIMx_SixStep_timebase &rArr; MC_SixStep_ARR_step &rArr; MC_StopMotor &rArr; MC_SixStep_RESET &rArr; MC_SixStep_Ramp_Motor_calc &rArr; MCM_Sqrt &rArr; __aeabi_uldivmod
-</UL>
-<BR>[Calls]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_IRQHandler
-</UL>
+<P><STRONG><a name="[27]"></a>TIM1_UP_TIM16_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f3xx_it.o(i.TIM1_UP_TIM16_IRQHandler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f302x8.o(RESET)
 </UL>
 <P><STRONG><a name="[37]"></a>TIM6_DAC_IRQHandler</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, stm32f3xx_it.o(i.TIM6_DAC_IRQHandler))
@@ -1501,14 +1494,12 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[51]"></a>main</STRONG> (Thumb, 124 bytes, Stack size 24 bytes, main_f302.o(i.main))
+<P><STRONG><a name="[51]"></a>main</STRONG> (Thumb, 82 bytes, Stack size 24 bytes, main_f302.o(i.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 248<LI>Call Chain = main &rArr; MX_ADC1_Init &rArr; HAL_ADC_Init &rArr; HAL_ADC_MspInit &rArr; HAL_GPIO_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initAnaliser
 <LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MC_StartMotor
 <LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MC_SixStep_INIT
-<LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_Base_Start_IT
-<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_Base_Init
 <LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_NVIC_EnableIRQ
 <LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Init
 <LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
