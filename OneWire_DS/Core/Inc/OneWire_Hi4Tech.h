@@ -11,6 +11,7 @@
 void Set_Pin_Output(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin);
 void Set_Pin_Input(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin);
 void us_delay(uint16_t);
+void DWT_Init(void);
 uint8_t Start(void);
 void Write(uint8_t);
 uint8_t Read(void);

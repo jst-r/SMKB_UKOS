@@ -1,6 +1,6 @@
 Dependencies for Project 'OneWire_DS', Target 'OneWire_DS': (DO NOT MODIFY !)
 F (startup_stm32f302x8.s)(0x603420B6)(--cpu Cortex-M4.fp --pd "__EVAL SETA 1" -g --apcs=interwork --pd "__MICROLIB SETA 1"-I.\RTE\_OneWire_DS-ID:\system\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-ID:\system\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include--pd "__UVISION_VERSION SETA 526" --pd "_RTE_ SETA 1" --pd "STM32F302x8 SETA 1"--list startup_stm32f302x8.lst --xref -o onewire_ds\startup_stm32f302x8.o --depend onewire_ds\startup_stm32f302x8.d)
-F (..\Core\Src\OneWire_Hi4Tech.c)(0x603420B4)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F3xx_HAL_Driver/Inc -I ../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F3xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_OneWire_DS-ID:\system\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-ID:\system\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F302x8 -DUSE_HAL_DRIVER -DSTM32F302x8-o onewire_ds\onewire_hi4tech.o --omf_browse onewire_ds\onewire_hi4tech.crf --depend onewire_ds\onewire_hi4tech.d)
+F (..\Core\Src\OneWire_Hi4Tech.c)(0x6034DF19)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F3xx_HAL_Driver/Inc -I ../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F3xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_OneWire_DS-ID:\system\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-ID:\system\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F302x8 -DUSE_HAL_DRIVER -DSTM32F302x8-o onewire_ds\onewire_hi4tech.o --omf_browse onewire_ds\onewire_hi4tech.crf --depend onewire_ds\onewire_hi4tech.d)
 I (../Core/Inc/main.h)(0x603420B4)
 I (../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h)(0x603420B5)
 I (../Core/Inc/stm32f3xx_hal_conf.h)(0x603420B4)
@@ -34,7 +34,7 @@ I (../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_tim_ex.h)(0x603420B5)
 I (../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart.h)(0x603420B5)
 I (../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart_ex.h)(0x603420B5)
 I (D:\system\Keil_v5\ARM\ARMCC\include\stdio.h)(0x599F218C)
-F (..\Core\Inc\OneWire_Hi4Tech.h)(0x603420B4)()
+F (..\Core\Inc\OneWire_Hi4Tech.h)(0x6034DF19)()
 F (.\DS18b20.c)(0x603420B5)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F3xx_HAL_Driver/Inc -I ../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F3xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_OneWire_DS-ID:\system\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-ID:\system\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F302x8 -DUSE_HAL_DRIVER -DSTM32F302x8-o onewire_ds\ds18b20.o --omf_browse onewire_ds\ds18b20.crf --depend onewire_ds\ds18b20.d)
 F (..\Core\Src\seqAnalysis.c)(0x603420B4)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F3xx_HAL_Driver/Inc -I ../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F3xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_OneWire_DS-ID:\system\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-ID:\system\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F302x8 -DUSE_HAL_DRIVER -DSTM32F302x8-o onewire_ds\seqanalysis.o --omf_browse onewire_ds\seqanalysis.crf --depend onewire_ds\seqanalysis.d)
 I (../Core/Inc/seqAnalysis.h)(0x603420B4)
@@ -70,10 +70,10 @@ I (../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_tim.h)(0x603420B5)
 I (../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_tim_ex.h)(0x603420B5)
 I (../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart.h)(0x603420B5)
 I (../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart_ex.h)(0x603420B5)
-I (../Core/Inc/OneWire_Hi4Tech.h)(0x603420B4)
+I (../Core/Inc/OneWire_Hi4Tech.h)(0x6034DF19)
 I (D:\system\Keil_v5\ARM\ARMCC\include\stdio.h)(0x599F218C)
 F (..\Core\Inc\seqAnalysis.h)(0x603420B4)()
-F (../Core/Src/main.c)(0x60342CE8)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F3xx_HAL_Driver/Inc -I ../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F3xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_OneWire_DS-ID:\system\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-ID:\system\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F302x8 -DUSE_HAL_DRIVER -DSTM32F302x8-o onewire_ds\main.o --omf_browse onewire_ds\main.crf --depend onewire_ds\main.d)
+F (../Core/Src/main.c)(0x6034DF19)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F3xx_HAL_Driver/Inc -I ../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F3xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_OneWire_DS-ID:\system\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include-ID:\system\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F302x8 -DUSE_HAL_DRIVER -DSTM32F302x8-o onewire_ds\main.o --omf_browse onewire_ds\main.crf --depend onewire_ds\main.d)
 I (../Core/Inc/main.h)(0x603420B4)
 I (../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h)(0x603420B5)
 I (../Core/Inc/stm32f3xx_hal_conf.h)(0x603420B4)
@@ -106,7 +106,7 @@ I (../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_tim.h)(0x603420B5)
 I (../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_tim_ex.h)(0x603420B5)
 I (../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart.h)(0x603420B5)
 I (../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart_ex.h)(0x603420B5)
-I (../Core/Inc/OneWire_Hi4Tech.h)(0x603420B4)
+I (../Core/Inc/OneWire_Hi4Tech.h)(0x6034DF19)
 I (../Core/Inc/seqAnalysis.h)(0x603420B4)
 I (D:\system\Keil_v5\ARM\ARMCC\include\stdio.h)(0x599F218C)
 I (../Core/Inc/freqAnalysis.h)(0x603420B4)
