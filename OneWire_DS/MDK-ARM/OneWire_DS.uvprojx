@@ -185,6 +185,7 @@
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
             <RvdsMve>0</RvdsMve>
+            <RvdsCdeCp>0</RvdsCdeCp>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -338,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F302x8</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;        ../Drivers/STM32F3xx_HAL_Driver/Inc;        ../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy;        ../Drivers/CMSIS/Device/ST/STM32F3xx/Include;        ../Drivers/CMSIS/Include</IncludePath>
+              <IncludePath>../Core/Inc;          ../Drivers/STM32F3xx_HAL_Driver/Inc;          ../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy;          ../Drivers/CMSIS/Device/ST/STM32F3xx/Include;          ../Drivers/CMSIS/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -351,7 +352,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <ClangAsOpt>4</ClangAsOpt>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -418,6 +419,16 @@
               <FilePath>..\Core\Inc\seqAnalysis.h</FilePath>
             </File>
             <File>
+              <FileName>freqAnalysis.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\freqAnalysis.h</FilePath>
+            </File>
+            <File>
+              <FileName>freqAnalysis.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\freqAnalysis.c</FilePath>
+            </File>
+            <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/main.c</FilePath>
@@ -431,16 +442,6 @@
               <FileName>stm32f3xx_hal_msp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/stm32f3xx_hal_msp.c</FilePath>
-            </File>
-            <File>
-              <FileName>freqAnalysis.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Core\Inc\freqAnalysis.h</FilePath>
-            </File>
-            <File>
-              <FileName>freqAnalysis.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Core\Src\freqAnalysis.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -2,7 +2,7 @@
 // Authors: butaforsky, marcus_fur, jstre
 #include "main.h"
 #include "stdio.h"
-extern TIM_HandleTypeDef htim6;
+extern TIM_HandleTypeDef htim15;
 extern UART_HandleTypeDef huart3;
 #define DS28E18_PORT GPIOC
 #define DS28E18_PIN GPIO_PIN_2
@@ -86,8 +86,8 @@ void us_delay_SAS (volatile uint32_t au32_microseconds)
 
 void us_delay (uint16_t time) 
 	{
-	__HAL_TIM_SET_COUNTER(&htim6,0);
-	while((__HAL_TIM_GET_COUNTER(&htim6))<time);
+	__HAL_TIM_SET_COUNTER(&htim15,0);
+	while((__HAL_TIM_GET_COUNTER(&htim15))<time);
 	}
 // Start OneWire Function Definition	
 uint8_t Start(void)
