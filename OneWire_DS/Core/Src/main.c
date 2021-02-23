@@ -105,7 +105,7 @@ int main(void) {
     init_mask();
     HAL_GPIO_WritePin(GPIOC, PullUp_Pin, GPIO_PIN_SET);
     init_OW();
-    DWT_Init();
+    DWT_Delay_Init();
     anal = initAnaliser(60. / 60.);
     anal2 = initAnaliser(75. / 60.);
     /* USER CODE END 2 */
@@ -117,7 +117,7 @@ int main(void) {
         /* USER CODE END WHILE */
 
         /* USER CODE BEGIN 3 */
-
+			
         int16_t val = run_OW();
         if (val < 2000) {
             uint32_t t1 = HAL_GetTick();
@@ -126,10 +126,13 @@ int main(void) {
                               sprintf(huart2, "dt=%d\nval=%d", t1 - t0, val),
                               20);
             t0 = t1;
-            HAL_UART_Transmit(
+           /* HAL_UART_Transmit(
                 &huart3, (uint8_t *)huart2,
                 sprintf(huart2, "filter  = %f\n", getScoreSquare(&anal)), 20);
-        }
+        */
+					}
+				us_delay_SAS(1000);
+		
     }
     /* USER CODE END 3 */
 }

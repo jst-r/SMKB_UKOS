@@ -27,17 +27,6 @@ Project File Date:  02/23/2021
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\system\Keil_v5\ARM\ARMCC\Bin'
 Build target 'OneWire_DS'
-compiling OneWire_Hi4Tech.c...
-compiling seqAnalysis.c...
-../Core/Inc/seqAnalysis.h(15): warning:  #1295-D: Deprecated declaration listen - give arg types
-  void listen();
-../Core/Inc/seqAnalysis.h(16): warning:  #1295-D: Deprecated declaration init_mask - give arg types
-  void init_mask();
-../Core/Inc/seqAnalysis.h(17): warning:  #1295-D: Deprecated declaration matched_filter - give arg types
-  int matched_filter();
-../Core/Inc/OneWire_Hi4Tech.h(31): warning:  #1-D: last line of file ends without a newline
-  #endif
-..\Core\Src\seqAnalysis.c: 4 warnings, 0 errors
 compiling main.c...
 ../Core/Inc/OneWire_Hi4Tech.h(31): warning:  #1-D: last line of file ends without a newline
   #endif
@@ -47,11 +36,15 @@ compiling main.c...
   void init_mask();
 ../Core/Inc/seqAnalysis.h(17): warning:  #1295-D: Deprecated declaration matched_filter - give arg types
   int matched_filter();
-../Core/Src/main.c: 4 warnings, 0 errors
+../Core/Src/main.c(108): warning:  #223-D: function "DWT_Delay_Init" declared implicitly
+      DWT_Delay_Init();
+../Core/Src/main.c(134): warning:  #223-D: function "us_delay_SAS" declared implicitly
+  				us_delay_SAS(1000);
+../Core/Src/main.c: 6 warnings, 0 errors
 linking...
-Program Size: Code=13972 RO-data=840 RW-data=24 ZI-data=2216  
+Program Size: Code=10592 RO-data=520 RW-data=24 ZI-data=2216  
 FromELF: creating hex file...
-"OneWire_DS\OneWire_DS.axf" - 0 Error(s), 8 Warning(s).
+"OneWire_DS\OneWire_DS.axf" - 0 Error(s), 6 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -74,7 +67,7 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.1.2
-Build Time Elapsed:  00:00:05
+Build Time Elapsed:  00:00:03
 </pre>
 </body>
 </html>
