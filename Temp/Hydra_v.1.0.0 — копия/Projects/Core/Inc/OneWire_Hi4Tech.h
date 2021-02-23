@@ -3,6 +3,9 @@
 #ifndef ONE_WIRE_H
 #define ONE_WIRE_H
 
+#define DS28E18_PORT GPIOC
+#define DS28E18_PIN GPIO_PIN_2
+#define PullUp_Pin GPIO_PIN_1
 
 #include "main_F302.h"
 

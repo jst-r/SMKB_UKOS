@@ -3,11 +3,10 @@
 #include "main_F302.h"
 #include "stdio.h"
 #include "delay_micros.h"
+#include "OneWire_Hi4Tech.h"
 extern TIM_HandleTypeDef htim6;
 extern UART_HandleTypeDef huart3;
-#define DS28E18_PORT GPIOC
-#define DS28E18_PIN GPIO_PIN_2
-#define PullUp_Pin GPIO_PIN_1
+
 
 //#include "stm32f3xx_hal_msp.h"
 

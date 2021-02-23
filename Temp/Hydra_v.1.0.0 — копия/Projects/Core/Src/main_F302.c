@@ -71,7 +71,7 @@ char buffer[30];
 static uint16_t sample_rate = 10000;
 volatile uint8_t motor_enable = 0;
 
-freqAnaliser analiser;
+freqAnaliser analiser, anal, anal2;
 
 /* USER CODE END PV */
 
@@ -144,6 +144,15 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 	HAL_NVIC_EnableIRQ(EXTI2_TSC_IRQn);
 	//HAL_TIM_Base_Start_IT(&htim15);
 	HAL_TIM_Base_Start_IT(&htim16);
+
+	//init_mask();
+	HAL_GPIO_WritePin(GPIOC, PullUp_Pin, GPIO_PIN_SET);
+	init_OW();
+	anal = initAnaliser(60./60.);
+	anal2 = initAnaliser(75./60.);
+
+
+
 
   MC_StartMotor();
 	
