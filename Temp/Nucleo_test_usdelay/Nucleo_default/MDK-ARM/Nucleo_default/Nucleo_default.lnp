@@ -1,0 +1,27 @@
+--cpu=Cortex-M4.fp
+"nucleo_default\startup_stm32f302x8.o"
+"nucleo_default\main.o"
+"nucleo_default\stm32f3xx_it.o"
+"nucleo_default\stm32f3xx_hal_msp.o"
+"nucleo_default\stm32f3xx_hal_tim.o"
+"nucleo_default\stm32f3xx_hal_tim_ex.o"
+"nucleo_default\stm32f3xx_hal_uart.o"
+"nucleo_default\stm32f3xx_hal_uart_ex.o"
+"nucleo_default\stm32f3xx_hal.o"
+"nucleo_default\stm32f3xx_hal_rcc.o"
+"nucleo_default\stm32f3xx_hal_rcc_ex.o"
+"nucleo_default\stm32f3xx_hal_gpio.o"
+"nucleo_default\stm32f3xx_hal_dma.o"
+"nucleo_default\stm32f3xx_hal_cortex.o"
+"nucleo_default\stm32f3xx_hal_pwr.o"
+"nucleo_default\stm32f3xx_hal_pwr_ex.o"
+"nucleo_default\stm32f3xx_hal_flash.o"
+"nucleo_default\stm32f3xx_hal_flash_ex.o"
+"nucleo_default\stm32f3xx_hal_i2c.o"
+"nucleo_default\stm32f3xx_hal_i2c_ex.o"
+"nucleo_default\stm32f3xx_hal_exti.o"
+"nucleo_default\system_stm32f3xx.o"
+--library_type=microlib --strict --scatter "Nucleo_default\Nucleo_default.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "Nucleo_default.map" -o Nucleo_default\Nucleo_default.axf
