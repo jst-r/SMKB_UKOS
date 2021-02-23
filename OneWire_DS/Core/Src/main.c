@@ -104,11 +104,8 @@ int main(void)
   MX_TIM15_Init();
   /* USER CODE BEGIN 2 */
     HAL_TIM_Base_Start(&htim6);
-		HAL_TIM_Base_Start(&htim15);
-    init_mask();
     HAL_GPIO_WritePin(GPIOC, PullUp_Pin, GPIO_PIN_SET);
     init_OW();
-   // DWT_Delay_Init();
     anal = initAnaliser(60. / 60.);
     anal2 = initAnaliser(75. / 60.);
   /* USER CODE END 2 */

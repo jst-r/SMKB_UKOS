@@ -46,13 +46,25 @@ void Set_Pin_Input(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
 	}
 			 
 //Set delay in microseconds
-	
-void us_delay(uint16_t time) 
-	{
-	__HAL_TIM_SET_COUNTER(&htim6,0);
-	while((__HAL_TIM_GET_COUNTER(&htim6))<time);
-	}
+/******************DWT_START*********************/
+#define    DWT_CYCCNT    *(volatile unsigned long *)0xE0001004
+#define    DWT_CONTROL   *(volatile unsigned long *)0xE0001000
+#define    SCB_DEMCR     *(volatile unsigned long *)0xE000EDFC
 
+void us_delay (uint32_t us)
+{
+  int32_t us_count_tick =  us * (SystemCoreClock/1000000);
+  //разрешаем использовать счётчик
+  SCB_DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
+        //обнуляем значение счётного регистра
+  DWT_CYCCNT  = 0;
+        //запускаем счётчик
+  DWT_CONTROL |= DWT_CTRL_CYCCNTENA_Msk; 
+  while(DWT_CYCCNT < us_count_tick);
+        //останавливаем счётчик
+  DWT_CONTROL &= ~DWT_CTRL_CYCCNTENA_Msk; 
+}
+/******************DWT_END************************/
 // Start OneWire Function Definition	
 uint8_t Start(void)
 	{

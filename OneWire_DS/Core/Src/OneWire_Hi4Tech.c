@@ -337,22 +337,6 @@ void Run_Sequencer(void) //  check seq = 4
 	
 }
 
-/*void Read_Pull(void) // pulls the register from sequencer memory
-	// check seq = 7
-{
-	Start();
-	Write(0xCC);  // Skip ROM
-	Write(0x66);  // Start Command
-	Write(0x03);  // Command Len
-	Write(0x22);  // Read Sequencer Command
-	Write(0x00);  // Start ADDR
-	Write(0x34);  // Finish ADDR
-	buffer[71] = Read();
-	buffer[72] = Read();
-	Write(0xAA);
-	delay(1000);
-} */ // можно удалить, если все ок
-
 void Clear_POR(void) // Check seq = 8
 {
 	Start();

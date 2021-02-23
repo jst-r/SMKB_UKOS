@@ -1,12 +1,11 @@
 #include "freqAnalysis.h"
 #include "main_F302.h"
 #include <math.h>
-#include "stdio.h"
 
 static const float PI = 3.14159265358979;
 
-freqAnalyser initAnaliser(float freq){
-	freqAnalyser res;
+freqAnaliser initAnaliser(float freq){
+	freqAnaliser res;
 	res.time = 0;
 	res.freq = freq;
 	res.period = 1/freq;
@@ -18,15 +17,23 @@ freqAnalyser initAnaliser(float freq){
 	return res;
 }
 
-void processSet(freqAnalyser * a, float dt){
-	a->time += (float)dt / 1000.;
+void processSet(freqAnaliser * a, uint16_t resetLenght){
+	a->time += (float)resetLenght / 10000;
 	a->time = fmod(a->time, a->period);
 	a->scoreReal += cosf(a->time * a->convConst);
 	a->scoreImag += sinf(a->time * a->convConst);
 }
 
-float getScoreSquare(freqAnalyser * a){
+void processReset(freqAnaliser * a, uint16_t setLenght){
+	a->time += (float)setLenght / 10000;
+	a->time = fmod(a->time, a->period);
+}
+
+int getScoreSquare(freqAnaliser * a){
 	return powf(a->scoreReal, 2) + powf(a->scoreImag, 2);
 }
 
-
+void resetScore(freqAnaliser * a){
+	a->scoreReal = 0.;
+	a->scoreImag = 0.;
+}

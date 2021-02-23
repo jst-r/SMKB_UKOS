@@ -5,12 +5,12 @@ stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.o: ..\Core\Inc\stm32f3
 stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.o: ..\Core\Inc\main_F302.h
 stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.o: ..\Core\Inc\freqAnalysis.h
 stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.o: ..\Core\Inc\main_F302.h
+stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.o: ..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_rcc.h
 stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.o: ..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_def.h
 stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.o: ..\Drivers\CMSIS\Device\ST\STM32F3xx\Include\stm32f3xx.h
 stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.o: ..\Drivers\CMSIS\Device\ST\STM32F3xx\Include\stm32f302x8.h
 stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.o: ..\Drivers\CMSIS\Include\core_cm4.h
-stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.o: ..\Drivers\CMSIS\Include\core_cmInstr.h
 stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.o: ..\Drivers\CMSIS\Include\cmsis_armcc.h
 stm32f302r8-nucleo configuration\stm32f302_nucleo_ihm07m1.o: ..\Drivers\CMSIS\Include\core_cmFunc.h
