@@ -3,15 +3,14 @@
 
 #include "main.h"
 
-#define buff_size 500
-#define time_window 100  // ms
-#define sample_time 1    // ms
+#define sq_buff_size 400
+#define time_window 99  // ms
+#define sample_time 33    // ms
 
-#define n_delays 5
+#define n_sq_delays 7
 
-const uint8_t delays[] = {1, 2, 3, 4};
-uint8_t buff[buff_size];
-uint8_t mask[buff_size];
+static uint8_t sq_buff[sq_buff_size];
+static uint8_t sq_mask[sq_buff_size];
 
 void listen();
 void init_mask();

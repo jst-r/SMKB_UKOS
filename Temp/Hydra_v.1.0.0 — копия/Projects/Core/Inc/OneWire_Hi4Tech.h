@@ -1,13 +1,16 @@
 // DS28E18 library by Hi4Tech
 // Authors: butaforsky, marcus_fur, jstre
+#ifndef ONE_WIRE_H
+#define ONE_WIRE_H
+
 
 #include "main_F302.h"
-#include "delay_micros.h"
+
 
 //Functions Declarations
 void Set_Pin_Output(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin);
 void Set_Pin_Input(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin);
-//void delay_us(uint16_t);
+void us_delay(uint16_t);
 uint8_t Start(void);
 void Write(uint8_t);
 uint8_t Read(void);
@@ -21,6 +24,7 @@ void Read_Sequencer(void);
 void Run_Sequencer(void);
 uint16_t Read_Pull(void);
 void Clear_POR(void);
-void run_OW(void);
+uint16_t run_OW(void);
 void init_OW(void);
 
+#endif

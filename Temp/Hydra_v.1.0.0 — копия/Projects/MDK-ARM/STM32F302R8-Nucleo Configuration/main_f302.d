@@ -43,4 +43,4 @@ stm32f302r8-nucleo configuration\main_f302.o: ..\Core\Inc\stm32F302_nucleo_ihm07
 stm32f302r8-nucleo configuration\main_f302.o: ..\Core\Inc\MC_SixStep_param.h
 stm32f302r8-nucleo configuration\main_f302.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 stm32f302r8-nucleo configuration\main_f302.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
-stm32f302r8-nucleo configuration\main_f302.o: ..\Core\Inc\delay_micros.h
+stm32f302r8-nucleo configuration\main_f302.o: ..\Core\Inc\OneWire_Hi4Tech.h

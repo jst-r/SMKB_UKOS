@@ -1,5 +1,4 @@
 stm32f302r8-nucleo configuration\onewire_hi4tech.o: ..\Core\Src\OneWire_Hi4Tech.c
-stm32f302r8-nucleo configuration\onewire_hi4tech.o: ..\Core\Inc\OneWire_Hi4Tech.h
 stm32f302r8-nucleo configuration\onewire_hi4tech.o: ..\Core\Inc\main_F302.h
 stm32f302r8-nucleo configuration\onewire_hi4tech.o: ..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal.h
 stm32f302r8-nucleo configuration\onewire_hi4tech.o: ..\Core\Inc\stm32f3xx_hal_conf.h

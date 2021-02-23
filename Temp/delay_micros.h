@@ -7,16 +7,22 @@
 
 /******************************************************************************/
 /* Подключение заголовочных файлов используемых модулей */
-#include "main.h"
+#include "main_F302.h"
 
 //#define DWT_CONTROL *(volatile unsigned long *)0xE0001000
 //#define SCB_DEMCR   *(volatile unsigned long *)0xE000EDFC
 
 /******************************************************************************/
 /* inline func */
+
+	 
 __STATIC_INLINE void DWT_Init(void)
 {
 	CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk; // разрешаем использовать счётчик
+      DWT->LAR = 0xC5ACCE55; 
+      DWT->CYCCNT = 0;
+      DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
+	 
 	DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;   // запускаем счётчик
 }
 

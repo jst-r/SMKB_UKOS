@@ -6,6 +6,7 @@
 "onewire_ds\main.o"
 "onewire_ds\stm32f3xx_it.o"
 "onewire_ds\stm32f3xx_hal_msp.o"
+"onewire_ds\freqanalysis.o"
 "onewire_ds\stm32f3xx_hal_tim.o"
 "onewire_ds\stm32f3xx_hal_tim_ex.o"
 "onewire_ds\stm32f3xx_hal.o"
@@ -21,6 +22,8 @@
 "onewire_ds\stm32f3xx_hal_i2c.o"
 "onewire_ds\stm32f3xx_hal_i2c_ex.o"
 "onewire_ds\stm32f3xx_hal_exti.o"
+"onewire_ds\stm32f3xx_hal_uart.o"
+"onewire_ds\stm32f3xx_hal_uart_ex.o"
 "onewire_ds\system_stm32f3xx.o"
 --library_type=microlib --strict --scatter "OneWire_DS\OneWire_DS.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols

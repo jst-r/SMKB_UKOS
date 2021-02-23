@@ -42,7 +42,7 @@
 
 /* USER CODE BEGIN Includes */
 #include "6Step_Lib.h"
-#include "delay_micros.h"
+#include "OneWire_Hi4Tech.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -120,7 +120,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-	DWT_Init();
+
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
