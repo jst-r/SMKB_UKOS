@@ -368,7 +368,7 @@ void init_OW(void)
 	Check(6);
 }	
 	
-int16_t run_OW(void)
+uint16_t run_OW(void)
 {
 		Read_Sequencer();
 		Check(5);

@@ -38,3 +38,4 @@ stm32f302r8-nucleo configuration\onewire_hi4tech.o: ..\Drivers\STM32F3xx_HAL_Dri
 stm32f302r8-nucleo configuration\onewire_hi4tech.o: ..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_uart.h
 stm32f302r8-nucleo configuration\onewire_hi4tech.o: ..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_uart_ex.h
 stm32f302r8-nucleo configuration\onewire_hi4tech.o: ..\Core\Inc\delay_micros.h
+stm32f302r8-nucleo configuration\onewire_hi4tech.o: ..\Core\Inc\OneWire_Hi4Tech.h
