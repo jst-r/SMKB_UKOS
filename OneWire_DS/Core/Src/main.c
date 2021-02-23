@@ -133,9 +133,7 @@ int main(void)
                 &huart3, (uint8_t *)huart2,
                 sprintf(huart2, "filter  = %f\n", getScoreSquare(&anal)), 20);
         */
-					}
-	//			us_delay_SAS(1000);
-		
+					}		
     }
   /* USER CODE END 3 */
 }
