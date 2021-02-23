@@ -27,7 +27,5 @@ onewire_ds\stm32f3xx_hal_rcc_ex.o: ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx
 onewire_ds\stm32f3xx_hal_rcc_ex.o: ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_i2c_ex.h
 onewire_ds\stm32f3xx_hal_rcc_ex.o: ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_pwr.h
 onewire_ds\stm32f3xx_hal_rcc_ex.o: ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_pwr_ex.h
-onewire_ds\stm32f3xx_hal_rcc_ex.o: ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_tim.h
-onewire_ds\stm32f3xx_hal_rcc_ex.o: ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_tim_ex.h
 onewire_ds\stm32f3xx_hal_rcc_ex.o: ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart.h
 onewire_ds\stm32f3xx_hal_rcc_ex.o: ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart_ex.h

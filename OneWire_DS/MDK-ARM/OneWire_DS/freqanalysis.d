@@ -29,8 +29,6 @@ onewire_ds\freqanalysis.o: ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_i2c
 onewire_ds\freqanalysis.o: ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_i2c_ex.h
 onewire_ds\freqanalysis.o: ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_pwr.h
 onewire_ds\freqanalysis.o: ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_pwr_ex.h
-onewire_ds\freqanalysis.o: ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_tim.h
-onewire_ds\freqanalysis.o: ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_tim_ex.h
 onewire_ds\freqanalysis.o: ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart.h
 onewire_ds\freqanalysis.o: ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart_ex.h
 onewire_ds\freqanalysis.o: D:\system\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
