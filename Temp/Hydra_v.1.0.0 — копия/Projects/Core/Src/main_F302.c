@@ -67,7 +67,7 @@ uint8_t attempt = 0; //represents way to success
 volatile uint16_t status = 1;
 volatile uint16_t resetLength = 0;
 volatile uint16_t setLength = 0;
-char buffer[30];
+char huart2buffer[30];
 static uint16_t sample_rate = 10000;
 volatile uint8_t motor_enable = 0;
 
@@ -147,12 +147,19 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 
 	//init_mask();
 	HAL_GPIO_WritePin(GPIOC, PullUp_Pin, GPIO_PIN_SET);
+	uint32_t t0 = HAL_GetTick();
 	init_OW();
 	anal = initAnaliser(60./60.);
 	anal2 = initAnaliser(75./60.);
 
 
-
+	int16_t val = run_OW();
+			if (val < 2000){
+				uint32_t t1 = HAL_GetTick();
+				processSet(&anal, t1 - t0);
+				t0 = t1;
+				HAL_UART_Transmit(&huart3, (uint8_t*)huart2buffer, sprintf(huart2buffer, "filter  = %d\n", getScoreSquare(&anal)), 20);
+			}
 
   MC_StartMotor();
 	
@@ -568,7 +575,7 @@ static void MX_GPIO_Init(void)
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
   if(GPIO_Pin == GPIO_PIN_1) {
-		HAL_UART_Transmit(&huart3,(uint8_t*)buffer, sprintf(buffer, "Stop Motor pos 1\n"), 200 );
+		HAL_UART_Transmit(&huart3,(uint8_t*)huart2buffer, sprintf(huart2buffer, "Stop Motor pos 1\n"), 200 );
 		position = 1;
 		attempt = 0;
     MC_StopMotor();
@@ -577,7 +584,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
     MC_StartMotor();
   } 
 	else if (GPIO_Pin == GPIO_PIN_2) {
-		HAL_UART_Transmit(&huart3, (uint8_t*)buffer, sprintf(buffer, "Stop Motor pos 2\n"), 200 );
+		HAL_UART_Transmit(&huart3, (uint8_t*)huart2buffer, sprintf(huart2buffer, "Stop Motor pos 2\n"), 200 );
 		position = 2;
 		attempt = 0;
     MC_StopMotor();
