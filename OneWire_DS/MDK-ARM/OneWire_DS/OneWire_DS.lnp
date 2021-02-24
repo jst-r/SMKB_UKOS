@@ -1,8 +1,7 @@
---cpu=Cortex-M4.fp
+--cpu=Cortex-M4.fp.sp
 "onewire_ds\startup_stm32f302x8.o"
 "onewire_ds\onewire_hi4tech.o"
 "onewire_ds\ds18b20.o"
-"onewire_ds\seqanalysis.o"
 "onewire_ds\freqanalysis.o"
 "onewire_ds\main.o"
 "onewire_ds\stm32f3xx_it.o"

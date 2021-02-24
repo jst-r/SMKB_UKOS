@@ -29,7 +29,7 @@ void processReset(freqAnaliser * a, uint16_t setLenght){
 	a->time = fmod(a->time, a->period);
 }
 
-int getScoreSquare(freqAnaliser * a){
+int getScoreSquare(freqAnaliser * a){  
 	return powf(a->scoreReal, 2) + powf(a->scoreImag, 2);
 }
 

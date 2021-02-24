@@ -68,9 +68,8 @@ volatile uint16_t status = 1;
 volatile uint16_t resetLength = 0;
 volatile uint16_t setLength = 0;
 char huart2buffer[30];
-static uint16_t sample_rate = 10000;
 volatile uint8_t motor_enable = 0;
-
+uint32_t t1 = 0, t0 = 0;
 freqAnaliser analiser, anal, anal2;
 
 /* USER CODE END PV */
@@ -81,8 +80,8 @@ static void MX_GPIO_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_TIM1_Init(void);
 static void MX_TIM6_Init(void);
-static void MX_TIM15_Init(void);
-static void MX_TIM16_Init(void);
+static void MX_TIM15_Init(void);   //remove if ok
+static void MX_TIM16_Init(void);  // remove if ok
 //
 static void MX_USART3_UART_Init(void);
 
@@ -104,7 +103,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 {
 
   /* USER CODE BEGIN 1 */
-   analiser = initAnaliser(1.);
+ //analiser = initAnaliser(1.);
   /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
@@ -143,12 +142,14 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
 	HAL_NVIC_EnableIRQ(EXTI1_IRQn);
 	HAL_NVIC_EnableIRQ(EXTI2_TSC_IRQn);
-	HAL_TIM_Base_Start_IT(&htim15);     // delete if ok
-	HAL_TIM_Base_Start_IT(&htim16);     // delete if ok
-	uint32_t t0 = HAL_GetTick();
+//HAL_TIM_Base_Start_IT(&htim15);     // delete if ok
+//HAL_TIM_Base_Start_IT(&htim16);     // delete if ok
+	t0 = HAL_GetTick();
 	anal = initAnaliser(60./60.);
 	anal2 = initAnaliser(75./60.);
-  MC_StartMotor();
+	init_OW();
+	MC_StartMotor();
+	
 	
   /* USER CODE END 2 */
 
@@ -156,14 +157,15 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-  /* USER CODE END WHILE */
-		 int16_t val = run_OW();
+		int16_t val = run_OW();
 			if (val < 2000){
-				uint32_t t1 = HAL_GetTick();
+				t1= HAL_GetTick();
 				processSet(&anal, t1 - t0);
 				t0 = t1;
 				HAL_UART_Transmit(&huart3, (uint8_t*)huart2buffer, sprintf(huart2buffer, "filter  = %d\n", getScoreSquare(&anal)), 20);
 			}
+  /* USER CODE END WHILE */
+		 
   /* USER CODE BEGIN 3 */
 /*! **************************************************************************
   ==============================================================================   
@@ -593,9 +595,9 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
     MC_SixStep_Change_Direction();
     MC_StartMotor();
 	} 
-	else {
-	  __NOP();
-	}
+	/*else {
+	  __NOP(); 
+	}      */
 }
 
 

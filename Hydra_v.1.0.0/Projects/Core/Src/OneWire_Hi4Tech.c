@@ -3,7 +3,7 @@
 #include "main_F302.h"
 #include "stdio.h"
 #include "stm32f3xx_hal.h"
-extern TIM_HandleTypeDef htim6;
+//extern TIM_HandleTypeDef htim6;
 extern UART_HandleTypeDef huart3;
 #define DS28E18_PORT GPIOC
 #define DS28E18_PIN GPIO_PIN_2
@@ -13,8 +13,8 @@ extern UART_HandleTypeDef huart3;
 
 // variables - useful and not
 uint8_t Response = 0, Presence = 0, bufferOW[100] = {0};
-uint32_t read_value[20] = {0};
-char huart[16];
+//uint32_t read_value[20] = {0};
+//char huart[16];
 int16_t prev_data = 0;
 
 /*
