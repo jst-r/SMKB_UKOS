@@ -52,8 +52,6 @@ ADC_HandleTypeDef hadc1;
 
 TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim6;
-TIM_HandleTypeDef htim16;
-TIM_HandleTypeDef htim15;
 UART_HandleTypeDef huart3;
 
 /* USER CODE BEGIN PV */
@@ -80,9 +78,7 @@ static void MX_GPIO_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_TIM1_Init(void);
 static void MX_TIM6_Init(void);
-static void MX_TIM15_Init(void);  // remove if ok
-static void MX_TIM16_Init(void);  // remove if ok
-//
+
 static void MX_USART3_UART_Init(void);
 
 void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
@@ -135,7 +131,6 @@ int main(void) {
      ****************************************************************************
    */
     MC_SixStep_INIT();
-    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, GPIO_PIN_SET);
     HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
     HAL_NVIC_EnableIRQ(EXTI1_IRQn);
     HAL_NVIC_EnableIRQ(EXTI2_TSC_IRQn);
@@ -144,7 +139,6 @@ int main(void) {
     anal = initAnaliser(60. / 60.);
     anal2 = initAnaliser(75. / 60.);
     init_OW();
-    MC_StartMotor();
 
     /* USER CODE END 2 */
 
@@ -176,7 +170,7 @@ int main(void) {
             anal2.scoreReal = 0;
             anal2.scoreImag = 0;
             HAL_UART_Transmit(&huart3, (uint8_t *)huart2buffer,
-                              sprintf(huart2buffer, "Restarted filters"),
+                              sprintf(huart2buffer, "Restarted filters\n"),
                               20);
         }
         /* USER CODE END WHILE */
@@ -439,46 +433,7 @@ static void MX_TIM6_Init(void) {
         _Error_Handler(__FILE__, __LINE__);
     }
 }
-/*TIM15 user init function */
-static void MX_TIM15_Init(void) {
-    TIM_ClockConfigTypeDef sClockSourceConfig = {0};
-    TIM_MasterConfigTypeDef sMasterConfig = {0};
 
-    htim15.Instance = TIM15;
-    htim15.Init.Prescaler = 71;
-    htim15.Init.CounterMode = TIM_COUNTERMODE_UP;
-    htim15.Init.Period = 99;
-    htim15.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-    htim15.Init.RepetitionCounter = 0;
-    htim15.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-    if (HAL_TIM_Base_Init(&htim15) != HAL_OK) {
-        Error_Handler();
-    }
-    sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
-    if (HAL_TIM_ConfigClockSource(&htim15, &sClockSourceConfig) != HAL_OK) {
-        Error_Handler();
-    }
-    sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
-    sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-    if (HAL_TIMEx_MasterConfigSynchronization(&htim15, &sMasterConfig) !=
-        HAL_OK) {
-        Error_Handler();
-    }
-}
-
-/*TIM16 user init function */
-static void MX_TIM16_Init(void) {
-    htim16.Instance = TIM16;
-    htim16.Init.Prescaler = 71;
-    htim16.Init.CounterMode = TIM_COUNTERMODE_UP;
-    htim16.Init.Period = 99;
-    htim16.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-    htim16.Init.RepetitionCounter = 0;
-    htim16.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-    if (HAL_TIM_Base_Init(&htim16) != HAL_OK) {
-        Error_Handler();
-    }
-}
 /* USART3 init function */
 static void MX_USART3_UART_Init(void) {
     huart3.Instance = USART3;
@@ -515,29 +470,19 @@ static void MX_GPIO_Init(void) {
     /*Configure GPIO pin Output Level */
     HAL_GPIO_WritePin(GPIOC, GPIO_PIN_4 | GPIO_PIN_9, GPIO_PIN_RESET);
 
-    /*Configure GPIO pin Output Level */
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_RESET);
-
-    /*Configure GPIO pins : PC4 PC7 */
-    GPIO_InitStruct.Pin = GPIO_PIN_4 | GPIO_PIN_9;
+    /*Configure GPIO pin PC9 GPIO_Bemf*/
+    GPIO_InitStruct.Pin = GPIO_PIN_9;
     GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-    /*Configure GPIO pins : GPIO_3_3V_EN_Pin GPIO_14V_EN_Pin */
-    GPIO_InitStruct.Pin = GPIO_PIN_6 | GPIO_PIN_8;
+    /*Configure GPIO pin GPIO_14V_EN_Pin */
+    GPIO_InitStruct.Pin = GPIO_PIN_8;
     GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
     GPIO_InitStruct.Pull = GPIO_PULLUP;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-
-    /*Configure GPIO pin : PB2 */
-    GPIO_InitStruct.Pin = GPIO_PIN_2;
-    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-    GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
     /*Configure GPIO pins : EXTI1_END_STOP_Pin EXTI2_END_STOP_Pin */
     GPIO_InitStruct.Pin = GPIO_PIN_1 | GPIO_PIN_2;
@@ -580,7 +525,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
-    if (htim->Instance != TIM15 & htim->Instance != TIM16) {
+    if (htim->Instance == TIM6) {
         MC_TIMx_SixStep_timebase();
     }
 }

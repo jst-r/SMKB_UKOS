@@ -19,3 +19,4 @@ void processSet(freqAnaliser * a, float resetLenght);
 float getScoreSquare(freqAnaliser * a);
 void resetScore(freqAnaliser * a);
 #endif
+
