@@ -159,6 +159,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 			   if (val < 2000 & val > 0) {
             uint16_t t1 = HAL_GetTick();
             processSet(&anal, t1 - t0);
+            processSet(&anal2, t1 - t0);
             HAL_UART_Transmit(&huart3, (uint8_t *)huart2buffer,
                               sprintf(huart2buffer, "dt=%d\nval=%d\n", t1 - t0, val),
                               20);
