@@ -131,7 +131,7 @@ int main(void) {
      ****************************************************************************
    */
     MC_SixStep_INIT();
-    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);			//ENABLE Motor VCC Bus
     HAL_NVIC_EnableIRQ(EXTI1_IRQn);
     HAL_NVIC_EnableIRQ(EXTI2_TSC_IRQn);
 
@@ -173,31 +173,7 @@ int main(void) {
                               sprintf(huart2buffer, "Restarted filters\n"),
                               20);
         }
-        /* USER CODE END WHILE */
-
-        /* USER CODE BEGIN 3 */
-        /*!
-          **************************************************************************
-          ==============================================================================
-                    ###### How to use the 6Step FW Example project ######
-          ==============================================================================
-           A list of APIs is provided to send command to 6Step lib, for
-          instance:
-
-            (#)  MC_StartMotor() -> Start the motor
-
-            (#)  MC_StoptMotor() -> Stop the motor
-
-            (#)  MC_Set_Speed(...) -> Set the new motor speed
-
-          The MC_SixStep_param.h contains the full list of MC parameters
-
-          ==============================================================================
-                               ###### USER SPACE ######
-          ==============================================================================
-          *****************************************************************************/
-
-        /*
+				 /*
            if(prev_position != position){
                    prev_position = position;
                    MC_SixStep_Change_Direction();
@@ -218,7 +194,17 @@ int main(void) {
                    }
                }
          */
-        /****************************************************************************/
+				
+				
+				
+        /* USER CODE END WHILE */
+
+        /* USER CODE BEGIN 3 */
+				
+        /*!
+          **************************************************************************
+          The MC_SixStep_param.h contains the full list of MC parameters
+          *****************************************************************************/        
     }
     /* USER CODE END 3 */
 }
@@ -519,9 +505,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
         MC_SixStep_Change_Direction();
         MC_StartMotor();
     }
-    /*else {
-      __NOP();
-    }      */
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
