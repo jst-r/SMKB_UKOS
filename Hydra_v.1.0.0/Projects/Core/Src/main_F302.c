@@ -131,7 +131,7 @@ int main(void) {
      ****************************************************************************
    */
     MC_SixStep_INIT();
-    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);			//ENABLE Motor VCC Bus
+    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);			//DISABLE Motor VCC Bus
     HAL_NVIC_EnableIRQ(EXTI1_IRQn);
     HAL_NVIC_EnableIRQ(EXTI2_TSC_IRQn);
 
@@ -145,58 +145,62 @@ int main(void) {
     /* Infinite loop */
     /* USER CODE BEGIN WHILE */
     while (1) {
-        int16_t val = run_OW();
-        if (val<2000 & val> 0) {
-            uint32_t t1 = HAL_GetTick();
-            processSet(&anal, t1 - t0);
-            processSet(&anal2, t1 - t0);
-            HAL_UART_Transmit(
-                &huart3, (uint8_t *)huart2buffer,
-                sprintf(huart2buffer, "dt=%d\nval=%d\n", t1 - t0, val), 20);
-            t0 = t1;
-            HAL_UART_Transmit(&huart3, (uint8_t *)huart2buffer,
-                              sprintf(huart2buffer, "filter60  = %f\n",
-                                      getScoreSquare(&anal)),
-                              20);
-            HAL_UART_Transmit(&huart3, (uint8_t *)huart2buffer,
-                              sprintf(huart2buffer, "filter75  = %f\n",
-                                      getScoreSquare(&anal2)),
-                              20);
-        }
-        if (HAL_GetTick() - t0 > 0xff00) {
-            t0 = HAL_GetTick();
-            anal.scoreImag = 0;
-            anal.scoreReal = 0;
-            anal2.scoreReal = 0;
-            anal2.scoreImag = 0;
-            HAL_UART_Transmit(&huart3, (uint8_t *)huart2buffer,
-                              sprintf(huart2buffer, "Restarted filters\n"),
-                              20);
-        }
-				 /*
-           if(prev_position != position){
-                   prev_position = position;
-                   MC_SixStep_Change_Direction();
-                   MC_StopMotor();
-                   motor_enable = 0;
-               }
-           if(motor_enable == 1){
-               if (attempt < will){
-                       if (MC_MotorState() == 0){
-                           HAL_Delay(1000);
-                           MC_StartMotor();
-                           attempt++;
-                       } else {
-                           __NOP();
-                       }
-                   } else {
-                       MC_StopMotor();
-                   }
-               }
-         */
-				
-				
-				
+        if(motor_enable == 0)				// Motor is OFF, wait for command STATE
+				{		
+					int16_t val = run_OW();
+					if (val<2000 & val> 0) {
+							uint32_t t1 = HAL_GetTick();
+							processSet(&anal, t1 - t0);
+							processSet(&anal2, t1 - t0);
+							HAL_UART_Transmit(
+									&huart3, (uint8_t *)huart2buffer,
+									sprintf(huart2buffer, "dt=%d\nval=%d\n", t1 - t0, val), 20);
+							t0 = t1;
+							HAL_UART_Transmit(&huart3, (uint8_t *)huart2buffer,
+																sprintf(huart2buffer, "filter60  = %f\n",
+																				getScoreSquare(&anal)),
+																20);
+							HAL_UART_Transmit(&huart3, (uint8_t *)huart2buffer,
+																sprintf(huart2buffer, "filter75  = %f\n",
+																				getScoreSquare(&anal2)),
+																20);
+					}
+					if (HAL_GetTick() - t0 > 0xff00) {
+							t0 = HAL_GetTick();
+							anal.scoreImag = 0;
+							anal.scoreReal = 0;
+							anal2.scoreReal = 0;
+							anal2.scoreImag = 0;
+							HAL_UART_Transmit(&huart3, (uint8_t *)huart2buffer,
+																sprintf(huart2buffer, "Restarted filters"),
+																20);
+					}
+					if(getScoreSquare(&anal) > 100 & position == 1) 			 // 	IF command 60./60
+						{
+							HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET); //  ENABLE Motor VCC Bus
+							motor_enable = 1;
+							MC_StartMotor();				
+						}
+					else if(getScoreSquare(&anal2) > 100 & position != 1)  	//	IF command 75./60
+						{
+							HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET); //	ENABLE Motor VCC Bus
+							motor_enable = 1;
+							MC_StartMotor();						
+						}	
+			} else if (motor_enable == 1){							//	If stall occurs this func re-launch motor
+				if (attempt < will){											//	Not more than "will" - defined re-launches
+					if (MC_MotorState() == 0){
+						HAL_Delay(1000);
+						MC_StartMotor();
+						attempt++;
+					} else {
+						__NOP();
+					}
+				} else {
+					MC_StopMotor();
+				}
+			}
+
         /* USER CODE END WHILE */
 
         /* USER CODE BEGIN 3 */
@@ -492,18 +496,20 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
         position = 1;
         attempt = 0;
         MC_StopMotor();
-        HAL_Delay(1500);
+			  HAL_Delay(1500);
         MC_SixStep_Change_Direction();
-        MC_StartMotor();
+				HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
+				motor_enable = 0;
     } else if (GPIO_Pin == GPIO_PIN_2) {
         HAL_UART_Transmit(&huart3, (uint8_t *)huart2buffer,
                           sprintf(huart2buffer, "Stop Motor pos 2\n"), 200);
         position = 2;
         attempt = 0;
         MC_StopMotor();
-        HAL_Delay(1500);
+        HAL_Delay(500);
         MC_SixStep_Change_Direction();
-        MC_StartMotor();
+				HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
+				motor_enable = 0;
     }
 }
 
