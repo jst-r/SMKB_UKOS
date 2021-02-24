@@ -4,7 +4,7 @@ stm32f302r8-nucleo configuration\stm32f3xx_hal_tim.o: ..\Core\Inc\stm32f3xx_hal_
 stm32f302r8-nucleo configuration\stm32f3xx_hal_tim.o: ..\Core\Inc\main_F302.h
 stm32f302r8-nucleo configuration\stm32f3xx_hal_tim.o: ..\Core\Inc\freqAnalysis.h
 stm32f302r8-nucleo configuration\stm32f3xx_hal_tim.o: ..\Core\Inc\main_F302.h
-stm32f302r8-nucleo configuration\stm32f3xx_hal_tim.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+stm32f302r8-nucleo configuration\stm32f3xx_hal_tim.o: D:\system\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 stm32f302r8-nucleo configuration\stm32f3xx_hal_tim.o: ..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_rcc.h
 stm32f302r8-nucleo configuration\stm32f3xx_hal_tim.o: ..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_def.h
 stm32f302r8-nucleo configuration\stm32f3xx_hal_tim.o: ..\Drivers\CMSIS\Device\ST\STM32F3xx\Include\stm32f3xx.h
@@ -17,7 +17,7 @@ stm32f302r8-nucleo configuration\stm32f3xx_hal_tim.o: ..\Drivers\CMSIS\Include\c
 stm32f302r8-nucleo configuration\stm32f3xx_hal_tim.o: ..\Drivers\CMSIS\Device\ST\STM32F3xx\Include\system_stm32f3xx.h
 stm32f302r8-nucleo configuration\stm32f3xx_hal_tim.o: ..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal.h
 stm32f302r8-nucleo configuration\stm32f3xx_hal_tim.o: ..\Drivers\STM32F3xx_HAL_Driver\Inc\Legacy/stm32_hal_legacy.h
-stm32f302r8-nucleo configuration\stm32f3xx_hal_tim.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+stm32f302r8-nucleo configuration\stm32f3xx_hal_tim.o: D:\system\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 stm32f302r8-nucleo configuration\stm32f3xx_hal_tim.o: ..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_rcc_ex.h
 stm32f302r8-nucleo configuration\stm32f3xx_hal_tim.o: ..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_gpio.h
 stm32f302r8-nucleo configuration\stm32f3xx_hal_tim.o: ..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_gpio_ex.h
