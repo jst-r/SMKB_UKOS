@@ -23,7 +23,6 @@ void Check(char);
 void Write_Sequencer(void);
 void Read_Sequencer(void);
 void Run_Sequencer(void);
-uint16_t Read_Pull(void);
 void Clear_POR(void);
 uint16_t run_OW(void);
 void init_OW(void);
