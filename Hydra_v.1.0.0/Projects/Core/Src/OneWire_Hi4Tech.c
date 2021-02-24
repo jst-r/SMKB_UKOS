@@ -11,8 +11,6 @@ extern UART_HandleTypeDef huart3;
 
 //	variables - useful and not
 uint8_t Response = 0, Presence = 0, bufferOW[100] = {0};
-//	uint32_t read_value[20] = {0};
-//	char huart[16];
 int16_t prev_data = 0;
 
 /*Functions Definitions*/
@@ -175,8 +173,6 @@ void Step_3(void) //	Step 2 is skipped, used for multidevice systems
 	Write(0x66); // Start command
 	Write(0x01);
 	Write(0x7A);
-	//bufferOW[4] = Read();
-	//bufferOW[5] = Read();
 	Write(0xAA);
  }
 
@@ -272,19 +268,12 @@ void Write_Sequencer(void) //check seq = 6
 	Write(0xCC);  // SENS_VDD_ON
 	Write(0xBB);
 	Write(0xCC);
-//Write(0x01);  //	~CS HIGH
-//	Write(0xDD);  //Delay
-//	Write(0x00);	//2^x ms delay
 	Write(0x80);  //	~CS LOW
 	Write(0xC0);  //	SPI Write/Read byte
 	Write(0x00);  //	Lenght of Write
 	Write(0x02);	//	Len of Read (bytes)
-//Write(0xDD);  //	Delay
-//Write(0x01);	//	2ms
 	Write(0xFF);  //	bufferOW, ADDR = 0x0A
 	Write(0xFF);  //	bufferOW  ADDR = 0x0B
-//Write(0x01);	//	~CS HIGH
-//Write(0xBB);  //	SENS_VDD_OFF
 	bufferOW[44] = Read();
 	bufferOW[45] = Read();
 	Write(0xAA);
@@ -322,24 +311,7 @@ void Run_Sequencer(void) //  check seq = 4
 	Write(0xAA);
 	us_delay(100);
 	
-	
 }
-
-/*void Read_Pull(void) // pulls the register from sequencer memory
-	// check seq = 7
-{
-	Start();
-	Write(0xCC);  // Skip ROM
-	Write(0x66);  // Start Command
-	Write(0x03);  // Command Len
-	Write(0x22);  // Read Sequencer Command
-	Write(0x00);  // Start ADDR
-	Write(0x34);  // Finish ADDR
-	bufferOW[71] = Read();
-	bufferOW[72] = Read();
-	Write(0xAA);
-	delay(1000);
-} */ // можно удалить, если все ок
 
 void Clear_POR(void) // Check seq = 8
 {
@@ -354,22 +326,14 @@ void Clear_POR(void) // Check seq = 8
 	us_delay(1000);
 }
 
-
-
 void init_OW(void)
 {
 	Step_1();
 	Check(1);
-//	delay(5000);
 	Step_3();
 	Check(2);
-//	delay(10000);
-//	Step_4();
-//	Check(3);
-//	delay(7000);
 	Clear_POR();
 	Check(8);
-//	delay(3000);
 	set2SPI();
 	Check(0);
 	Write_Sequencer();
@@ -388,8 +352,5 @@ int16_t run_OW(void)
 		uint16_t data11 = bufferOW[39]; // Low byte
 
 		int16_t datafin0 = ((data10 << 8) & 0xFF00) | data11;
-//int16_t retval = (prev_data-datafin0)/228;
-//			HAL_UART_Transmit(&huart3, (uint8_t*)huart, sprintf(huart, "data  = %d\n", retval), 20);
-// prev_data = datafin0;
-	return datafin0;
+		return datafin0;
 }

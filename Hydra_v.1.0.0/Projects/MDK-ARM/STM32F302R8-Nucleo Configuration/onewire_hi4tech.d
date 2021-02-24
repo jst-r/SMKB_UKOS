@@ -2,8 +2,8 @@ stm32f302r8-nucleo configuration\onewire_hi4tech.o: ..\Core\Src\OneWire_Hi4Tech.
 stm32f302r8-nucleo configuration\onewire_hi4tech.o: ..\Core\Inc\main_F302.h
 stm32f302r8-nucleo configuration\onewire_hi4tech.o: ..\Core\Inc\freqAnalysis.h
 stm32f302r8-nucleo configuration\onewire_hi4tech.o: ..\Core\Inc\main_F302.h
-stm32f302r8-nucleo configuration\onewire_hi4tech.o: D:\system\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
-stm32f302r8-nucleo configuration\onewire_hi4tech.o: D:\system\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+stm32f302r8-nucleo configuration\onewire_hi4tech.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+stm32f302r8-nucleo configuration\onewire_hi4tech.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 stm32f302r8-nucleo configuration\onewire_hi4tech.o: ..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal.h
 stm32f302r8-nucleo configuration\onewire_hi4tech.o: ..\Core\Inc\stm32f3xx_hal_conf.h
 stm32f302r8-nucleo configuration\onewire_hi4tech.o: ..\Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_rcc.h
