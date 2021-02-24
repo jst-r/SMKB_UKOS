@@ -153,6 +153,7 @@ int main(void) {
     while (1) {
         int16_t val = run_OW();
         if (val<2000 & val> 0) {
+						MC_StopMotor();
             uint32_t t1 = HAL_GetTick();
             processSet(&anal, t1 - t0);
             processSet(&anal2, t1 - t0);
@@ -179,6 +180,16 @@ int main(void) {
                               sprintf(huart2buffer, "Restarted filters"),
                               20);
         }
+				if(getScoreSquare(&anal) > 300 & motor_enable == 1 & position == 2)  // Если считана последовательность 60./60
+					{
+						HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET); // Включить линию 14V
+						MC_StartMotor();				
+					}
+				else if(getScoreSquare(&anal2) > 300 & motor_enable == 1 & position == 1)  //Если 75./75
+				  {
+						HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET); // Включить линию 14V
+						MC_StartMotor();						
+					}
         /* USER CODE END WHILE */
 
         /* USER CODE BEGIN 3 */
@@ -559,20 +570,27 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
         HAL_UART_Transmit(&huart3, (uint8_t *)huart2buffer,
                           sprintf(huart2buffer, "Stop Motor pos 1\n"), 200);
         position = 1;
+				prev_position = 2;
         attempt = 0;
         MC_StopMotor();
-        HAL_Delay(1500);
+        //  HAL_Delay(1500);
         MC_SixStep_Change_Direction();
-        MC_StartMotor();
+      //  MC_StartMotor();
+				HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET); //Turn off the 14 V Supply
+				HAL_GPIO_WritePin(GPIOC, GPIO_PIN_2, GPIO_PIN_SET);// Turn On OW
+			
     } else if (GPIO_Pin == GPIO_PIN_2) {
         HAL_UART_Transmit(&huart3, (uint8_t *)huart2buffer,
                           sprintf(huart2buffer, "Stop Motor pos 2\n"), 200);
-        position = 2;
+        prev_position = 1;
+				position = 2;
         attempt = 0;
         MC_StopMotor();
-        HAL_Delay(1500);
+      //  HAL_Delay(1500);
         MC_SixStep_Change_Direction();
-        MC_StartMotor();
+      //  MC_StartMotor();
+				HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET); //Turn off the 14 V Supply
+				HAL_GPIO_WritePin(GPIOC, GPIO_PIN_2, GPIO_PIN_SET);// Turn On OW
     }
     /*else {
       __NOP();
