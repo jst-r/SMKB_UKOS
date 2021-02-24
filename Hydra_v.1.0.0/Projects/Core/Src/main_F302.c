@@ -156,19 +156,19 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
   while (1)
   {
 		int16_t val = run_OW();
-			   if (val < 2000) {
-            uint32_t t1 = HAL_GetTick();
+			   if (val < 2000 & val > 0) {
+            uint16_t t1 = HAL_GetTick();
             processSet(&anal, t1 - t0);
             HAL_UART_Transmit(&huart3, (uint8_t *)huart2buffer,
-                              sprintf(huart2buffer, "dt=%d\nval=%d", t1 - t0, val),
+                              sprintf(huart2buffer, "dt=%d\nval=%d\n", t1 - t0, val),
                               20);
             t0 = t1;
             HAL_UART_Transmit(
                 &huart3, (uint8_t *)huart2buffer,
-                sprintf(huart2buffer, "filter  = %f\n", getScoreSquare(&anal)), 20);
+                sprintf(huart2buffer, "filter60  = %f\n", getScoreSquare(&anal)), 20);
 						HAL_UART_Transmit(
                 &huart3, (uint8_t *)huart2buffer,
-                sprintf(huart2buffer, "filter  = %f\n", getScoreSquare(&anal2)), 20);
+                sprintf(huart2buffer, "filter75  = %f\n", getScoreSquare(&anal2)), 20);
 				}	
   /* USER CODE END WHILE */
 		 
