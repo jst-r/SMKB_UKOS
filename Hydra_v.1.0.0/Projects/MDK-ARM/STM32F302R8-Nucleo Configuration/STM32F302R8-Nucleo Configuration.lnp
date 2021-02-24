@@ -1,4 +1,4 @@
---cpu=Cortex-M4.fp.sp
+--cpu=Cortex-M4.fp
 "stm32f302r8-nucleo configuration\main_f302.o"
 "stm32f302r8-nucleo configuration\stm32f3xx_hal_msp.o"
 "stm32f302r8-nucleo configuration\stm32f3xx_it.o"
@@ -22,8 +22,8 @@
 "stm32f302r8-nucleo configuration\stm32f3xx_hal_uart_ex.o"
 "stm32f302r8-nucleo configuration\stm32f3xx_hal_usart.o"
 "stm32f302r8-nucleo configuration\stm32f3xx_hal_dma.o"
-"stm32f302r8-nucleo configuration\stm32f3xx_hal_rtc_1.o"
-"stm32f302r8-nucleo configuration\stm32f3xx_hal_rtc_ex_1.o"
+"stm32f302r8-nucleo configuration\stm32f3xx_hal_rtc.o"
+"stm32f302r8-nucleo configuration\stm32f3xx_hal_rtc_ex.o"
 --strict --scatter "STM32F302R8-Nucleo Configuration\STM32F302R8-Nucleo Configuration.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

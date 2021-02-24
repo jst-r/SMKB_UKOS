@@ -126,10 +126,10 @@ int main(void)
                               sprintf(huart2, "dt=%d\nval=%d", t1 - t0, val),
                               20);
             t0 = t1;
-           /* HAL_UART_Transmit(
+            HAL_UART_Transmit(
                 &huart3, (uint8_t *)huart2,
                 sprintf(huart2, "filter  = %f\n", getScoreSquare(&anal)), 20);
-        */
+        
 					}		
     }
   /* USER CODE END 3 */

@@ -127,8 +127,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
   MX_ADC1_Init();
   MX_TIM1_Init();
   MX_TIM6_Init();
-	MX_TIM15_Init(); // удалить, если все ок
-	MX_TIM16_Init(); // удалить, если ок
+
   MX_USART3_UART_Init();
 
   /* USER CODE BEGIN 2 */
@@ -142,8 +141,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
 	HAL_NVIC_EnableIRQ(EXTI1_IRQn);
 	HAL_NVIC_EnableIRQ(EXTI2_TSC_IRQn);
-//HAL_TIM_Base_Start_IT(&htim15);     // delete if ok
-//HAL_TIM_Base_Start_IT(&htim16);     // delete if ok
+
 	uint32_t t0 = HAL_GetTick();
 	anal = initAnaliser(60./60.);
 	anal2 = initAnaliser(75./60.);
@@ -158,12 +156,20 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
   while (1)
   {
 		int16_t val = run_OW();
-			if (val < 2000){
-				uint32_t t1= HAL_GetTick();
-				processSet(&anal, t1 - t0);
-				t0 = t1;
-				HAL_UART_Transmit(&huart3, (uint8_t*)huart2buffer, sprintf(huart2buffer, "filter  = %d\n", getScoreSquare(&anal)), 20);
-			}
+			   if (val < 2000) {
+            uint32_t t1 = HAL_GetTick();
+            processSet(&anal, t1 - t0);
+            HAL_UART_Transmit(&huart3, (uint8_t *)huart2buffer,
+                              sprintf(huart2buffer, "dt=%d\nval=%d", t1 - t0, val),
+                              20);
+            t0 = t1;
+            HAL_UART_Transmit(
+                &huart3, (uint8_t *)huart2buffer,
+                sprintf(huart2buffer, "filter  = %f\n", getScoreSquare(&anal)), 20);
+						HAL_UART_Transmit(
+                &huart3, (uint8_t *)huart2buffer,
+                sprintf(huart2buffer, "filter  = %f\n", getScoreSquare(&anal2)), 20);
+				}	
   /* USER CODE END WHILE */
 		 
   /* USER CODE BEGIN 3 */
@@ -549,22 +555,20 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+	
   /*Configure GPIO pin : PB2 */
   GPIO_InitStruct.Pin = GPIO_PIN_2;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-	/*Configure GPIO pin : PC2 */
-  GPIO_InitStruct.Pin = GPIO_PIN_2;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
 	 /*Configure GPIO pins : EXTI1_END_STOP_Pin EXTI2_END_STOP_Pin */
   GPIO_InitStruct.Pin = GPIO_PIN_1|GPIO_PIN_2;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+	
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI1_IRQn, 4, 4);
 	HAL_NVIC_EnableIRQ(EXTI1_IRQn);
