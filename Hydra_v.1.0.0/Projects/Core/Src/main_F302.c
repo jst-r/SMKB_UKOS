@@ -69,7 +69,7 @@ volatile uint16_t resetLength = 0;
 volatile uint16_t setLength = 0;
 char huart2buffer[30];
 volatile uint8_t motor_enable = 0;
-uint32_t t1 = 0, t0 = 0;
+//uint32_t t1 = 0, t0 = 0;
 freqAnaliser analiser, anal, anal2;
 
 /* USER CODE END PV */
@@ -144,7 +144,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 	HAL_NVIC_EnableIRQ(EXTI2_TSC_IRQn);
 //HAL_TIM_Base_Start_IT(&htim15);     // delete if ok
 //HAL_TIM_Base_Start_IT(&htim16);     // delete if ok
-	t0 = HAL_GetTick();
+	uint32_t t0 = HAL_GetTick();
 	anal = initAnaliser(60./60.);
 	anal2 = initAnaliser(75./60.);
 	init_OW();
@@ -159,7 +159,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
   {
 		int16_t val = run_OW();
 			if (val < 2000){
-				t1= HAL_GetTick();
+				uint32_t t1= HAL_GetTick();
 				processSet(&anal, t1 - t0);
 				t0 = t1;
 				HAL_UART_Transmit(&huart3, (uint8_t*)huart2buffer, sprintf(huart2buffer, "filter  = %d\n", getScoreSquare(&anal)), 20);
