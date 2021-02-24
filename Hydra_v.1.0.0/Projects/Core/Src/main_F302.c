@@ -153,7 +153,7 @@ int main(void) {
     while (1) {
         int16_t val = run_OW();
         if (val<2000 & val> 0) {
-            uint16_t t1 = HAL_GetTick();
+            uint32_t t1 = HAL_GetTick();
             processSet(&anal, t1 - t0);
             processSet(&anal2, t1 - t0);
             HAL_UART_Transmit(
@@ -169,12 +169,15 @@ int main(void) {
                                       getScoreSquare(&anal2)),
                               20);
         }
-        if (HAL_GetTick() - t0 > 30000) {
+        if (HAL_GetTick() - t0 > 0xff00) {
             t0 = HAL_GetTick();
             anal.scoreImag = 0;
             anal.scoreReal = 0;
             anal2.scoreReal = 0;
             anal2.scoreImag = 0;
+            HAL_UART_Transmit(&huart3, (uint8_t *)huart2buffer,
+                              sprintf(huart2buffer, "Restarted filters"),
+                              20);
         }
         /* USER CODE END WHILE */
 
