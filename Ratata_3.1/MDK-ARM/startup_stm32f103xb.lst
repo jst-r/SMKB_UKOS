@@ -463,12 +463,12 @@ ARM Macro Assembler    Page 8
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
 ork --depend=ratata_3.1\startup_stm32f103xb.d -oratata_3.1\startup_stm32f103xb.
-o -I.\RTE\_Ratata_3.1 -IC:\Users\User\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\C
-MSIS\Core\Include -IC:\Users\User\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.
-3.0\Device\Include --predefine="__EVAL SETA 1" --predefine="__MICROLIB SETA 1" 
---predefine="__UVISION_VERSION SETA 532" --predefine="_RTE_ SETA 1" --predefine
-="STM32F10X_MD SETA 1" --predefine="_RTE_ SETA 1" --list=startup_stm32f103xb.ls
-t startup_stm32f103xb.s
+o -I.\RTE\_Ratata_3.1 -IC:\Users\prizr\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\
+CMSIS\Core\Include -IC:\Users\prizr\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\
+2.3.0\Device\Include --predefine="__EVAL SETA 1" --predefine="__MICROLIB SETA 1
+" --predefine="__UVISION_VERSION SETA 533" --predefine="_RTE_ SETA 1" --predefi
+ne="STM32F10X_MD SETA 1" --predefine="_RTE_ SETA 1" --list=startup_stm32f103xb.
+lst startup_stm32f103xb.s
 
 
 

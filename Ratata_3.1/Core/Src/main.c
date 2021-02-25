@@ -238,6 +238,7 @@ static void MX_GPIO_Init(void)
 			 Ratata(sequence2);
 			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
 			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_RESET);
+			 HAL_NVIC_SystemReset();
 		 }
 	else if(GPIO_Pin == GPIO_PIN_6 & HAL_GetTick()-time > 500 )  //Left_Button 75bpm
 		 {
@@ -248,6 +249,7 @@ static void MX_GPIO_Init(void)
 			 Ratata2(sequence); 
 			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
 			 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_13, GPIO_PIN_RESET);
+			 HAL_NVIC_SystemReset();
 		 }
 	else{
 		__nop();
