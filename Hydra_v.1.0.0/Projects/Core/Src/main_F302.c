@@ -153,7 +153,7 @@ int main(void) {
 							processSet(&anal2, t1 - t0);
 							HAL_UART_Transmit(
 									&huart3, (uint8_t *)huart2buffer,
-									sprintf(huart2buffer, "dt=%d\n nval=%d\n", t1 - t0, val), 20);
+									sprintf(huart2buffer, "dt=%u\n nval=%u\n", t1 - t0, val), 20);
 							t0 = t1;
 							HAL_UART_Transmit(&huart3, (uint8_t *)huart2buffer,
 																sprintf(huart2buffer, "filter60  = %f\n",
@@ -171,7 +171,7 @@ int main(void) {
 							anal2.scoreReal = 0;
 							anal2.scoreImag = 0;
 							HAL_UART_Transmit(&huart3, (uint8_t *)huart2buffer,
-																sprintf(huart2buffer, "Restarted filters"),
+																sprintf(huart2buffer, "Restarted filters\n"),
 																20);
 					}
 					if(getScoreSquare(&anal) > 100 & position == 1) 			 // 	IF command 60./60 and VALVE CLOSED
