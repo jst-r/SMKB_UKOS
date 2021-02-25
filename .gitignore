@@ -10,8 +10,6 @@
 *.uvguix*
 
 # Build files for stm
-*.s
-*.ld
 *.crf
 
 # Below is generated content
