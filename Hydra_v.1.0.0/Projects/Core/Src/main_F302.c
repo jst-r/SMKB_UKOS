@@ -193,6 +193,9 @@ int main(void) {
 							anal2.scoreReal = 0;
 							anal2.scoreImag = 0;
 							HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET); //	ENABLE Motor VCC Bus
+							HAL_UART_Transmit(&huart3, (uint8_t *)huart2buffer,
+																sprintf(huart2buffer, "Enable VCC Bus\n"),
+																20);
 							motor_enable = 1;
 							MC_SixStep_Change_Direction();
 							MC_StartMotor();						
@@ -203,6 +206,9 @@ int main(void) {
 						HAL_Delay(1000);
 						MC_StartMotor();
 						attempt++;
+						HAL_UART_Transmit(&huart3, (uint8_t *)huart2buffer,
+																sprintf(huart2buffer, "attempt %d\n", attempt),
+																20);
 					} else {
 						__NOP();
 					}
