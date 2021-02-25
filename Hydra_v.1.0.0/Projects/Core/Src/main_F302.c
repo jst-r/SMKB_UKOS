@@ -515,7 +515,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 				motor_enable = 0;
 			  HAL_Delay(500);
 				HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
-				
+				init_OW();
+			
     } else if (GPIO_Pin == GPIO_PIN_2) {
         HAL_UART_Transmit(&huart3, (uint8_t *)huart2buffer,
                           sprintf(huart2buffer, "Stop Motor pos 2\n"), 200);
@@ -525,7 +526,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 				motor_enable = 0;
         HAL_Delay(500);
 				HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
-				
+				init_OW();
     }
 }
 
