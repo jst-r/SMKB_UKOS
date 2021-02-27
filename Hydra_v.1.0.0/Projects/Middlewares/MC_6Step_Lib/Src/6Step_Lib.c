@@ -362,14 +362,12 @@ void MC_SixStep_NEXT_step()
     * @retval None
   */
 
-void MC_SixStep_Change_Direction(void){
-	if (dir == 0){
-		dir = 1;
-		SIXSTEP_parameters.CW_CCW = 1;	
-	} else if (dir == 1) {
-		dir = 0;
-		SIXSTEP_parameters.CW_CCW = 0;
-	}
+void MC_Set_Direction(int dir){
+	SIXSTEP_parameters.CW_CCW = dir;
+}
+
+int MC_Get_Direction(){
+	return SIXSTEP_parameters.CW_CCW;
 }
 /**
   * @} 
