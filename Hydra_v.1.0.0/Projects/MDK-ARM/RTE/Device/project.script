@@ -1,0 +1,4 @@
+load STM32F302R8 
+project name STCubeGenerated 
+project toolchain "MDK-ARM V5" 
+project path "E:\Документы\GitHub\SMKB_UKOS\STM32Expansion_x_1337_x_\Projects\MDK-ARM\RTE\Device\STM32F302R8\" 
