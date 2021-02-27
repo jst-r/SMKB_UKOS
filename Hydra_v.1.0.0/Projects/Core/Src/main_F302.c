@@ -153,7 +153,7 @@ int main(void) {
 							processSet(&anal2, t1 - t0);
 							HAL_UART_Transmit(
 									&huart3, (uint8_t *)huart2buffer,
-									sprintf(huart2buffer, "dt=%u\n nval=%u\n", t1 - t0, val), 20);
+									sprintf(huart2buffer, "dt=%u\nval=%u\n", t1 - t0, val), 20);
 							t0 = t1;
 							HAL_UART_Transmit(&huart3, (uint8_t *)huart2buffer,
 																sprintf(huart2buffer, "filter60  = %f\n",
@@ -507,9 +507,15 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
         attempt = 0;
         MC_StopMotor();
 				motor_enable = 0;
-			  HAL_Delay(500);
+			 // HAL_Delay(500);
 				HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
+				for(uint32_t i; i<=7200000; i++)
+				{
+				}
 				init_OW();
+				for(uint32_t i; i<=7200000; i++)
+				{
+				}
 			
     } else if (GPIO_Pin == GPIO_PIN_2) {
         HAL_UART_Transmit(&huart3, (uint8_t *)huart2buffer,
@@ -518,9 +524,15 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
         attempt = 0;
         MC_StopMotor();
 				motor_enable = 0;
-        HAL_Delay(500);
+       // HAL_Delay(500);
 				HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
+				for(uint32_t i; i<=7200000; i++)
+				{
+				}
 				init_OW();
+				for(uint32_t i; i<=7200000; i++)
+				{
+				}
     }
 }
 

@@ -1371,7 +1371,7 @@ void MC_ADCx_SixStep_Bemf()
 
 // TODO REMOVE dir
 
-void MC_EXT_button_SixStep()
+/*void MC_EXT_button_SixStep()
 {
   if(Enable_start_button == TRUE)
   {
@@ -1389,7 +1389,7 @@ void MC_EXT_button_SixStep()
     }
   }
 
-}
+}*/
 
 /**
   * @} 
