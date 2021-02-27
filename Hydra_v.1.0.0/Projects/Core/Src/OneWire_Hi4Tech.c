@@ -64,7 +64,7 @@ uint8_t Start(void)
 	{
 		 Set_Pin_Output(DS28E18_PORT,DS28E18_PIN);											//	set the pin as output
 		 HAL_GPIO_WritePin(DS28E18_PORT, DS28E18_PIN, GPIO_PIN_RESET); 	//	pull the pin low
-		 us_delay(480);
+		 us_delay(490);
 		 Set_Pin_Input(DS28E18_PORT, DS28E18_PIN);
 		 us_delay(65);
 		 if((HAL_GPIO_ReadPin(DS28E18_PORT, DS28E18_PIN)== GPIO_PIN_RESET)) 
@@ -72,7 +72,7 @@ uint8_t Start(void)
 			 Response = 1;
 			 }
 		 else Response = 2;
-		 us_delay(400);
+		 us_delay(550);
 		 return Response;
 	}
 	
@@ -89,14 +89,14 @@ void Write(uint8_t data)
 				HAL_GPIO_WritePin(DS28E18_PORT, DS28E18_PIN,GPIO_PIN_RESET);
 				us_delay(1);
 				Set_Pin_Input(DS28E18_PORT, DS28E18_PIN);
-				us_delay(60); 				
+				us_delay(90); 				
 			}	
 			else 																					//	if the bus bit is low
 			{
 																										//	write 0
 				Set_Pin_Output(DS28E18_PORT, DS28E18_PIN);
 				HAL_GPIO_WritePin(DS28E18_PORT, DS28E18_PIN, GPIO_PIN_RESET);
-				us_delay(60);
+				us_delay(85);
 				
 				Set_Pin_Input(DS28E18_PORT, DS28E18_PIN);
 				us_delay(100);
@@ -120,7 +120,7 @@ uint8_t Read(void)
 		{
 			value |= 1<<i; 																// read = 1
 		}
-		 us_delay(80); 																	//	wait for 60 microseconds
+		 us_delay(85); 																	//	wait for 60 microseconds
 	}
 	return value;
 }
@@ -265,9 +265,9 @@ void Write_Sequencer(void) //check seq = 6
 	Write(0x11);  //	Write Sequencer
 	Write(0x00);  //	ADDR_LO
 	Write(0x00);  //	ADDR_Hi
-	Write(0xCC);  // SENS_VDD_ON
-	Write(0xBB);
-	Write(0xCC);
+	Write(0xCC);  // 	SENS_VDD_ON
+	Write(0xBB);	//  SENS_VDD_OFF
+	Write(0xCC);	// 	SENS_VDD_ON
 	Write(0x80);  //	~CS LOW
 	Write(0xC0);  //	SPI Write/Read byte
 	Write(0x00);  //	Lenght of Write
@@ -305,11 +305,11 @@ void Run_Sequencer(void) //  check seq = 4
 	Write(0x00);  //	Start ROM ADDR
 	Write(0x34);	//	Finish ROM ADDR
 	Write(0x00);  //	Just cause
-	us_delay(100);//	Allow to Perform the sequence in x milliseconds
+	us_delay(100);//	Allow to Perform the sequence in x microseconds
   bufferOW[69] = Read();
   bufferOW[70] = Read();
 	Write(0xAA);
-	us_delay(100);
+	us_delay(200);
 	
 }
 
@@ -346,8 +346,6 @@ int16_t run_OW(void)
 		Check(5);
 		Run_Sequencer();
 		us_delay(1000);
-	
-
 		uint16_t data10 = bufferOW[38]; // High byte
 		uint16_t data11 = bufferOW[39]; // Low byte
 

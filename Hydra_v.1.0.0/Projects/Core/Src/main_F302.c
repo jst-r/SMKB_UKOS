@@ -194,7 +194,7 @@ int main(void) {
 							anal2.scoreImag = 0;
 							HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET); //	ENABLE Motor VCC Bus
 							motor_enable = 1;
-							MC_Set_Direction(0);
+							MC_Set_Direction(1);
 							MC_StartMotor();						
 						}	
 			} else if (motor_enable == 1){							//	If stall occurs this func re-launch motor
@@ -252,7 +252,7 @@ void SystemClock_Config(void) {
     RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
     RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
     RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
-
+		
     if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK) {
         _Error_Handler(__FILE__, __LINE__);
     }
@@ -516,7 +516,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 				for(uint32_t i; i<=7200000; i++)
 				{
 				}
-			
+				NVIC_SystemReset();
+				
     } else if (GPIO_Pin == GPIO_PIN_2) {
         HAL_UART_Transmit(&huart3, (uint8_t *)huart2buffer,
                           sprintf(huart2buffer, "Stop Motor pos 2\n"), 200);
@@ -533,6 +534,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 				for(uint32_t i; i<=7200000; i++)
 				{
 				}
+				NVIC_SystemReset();
     }
 }
 
