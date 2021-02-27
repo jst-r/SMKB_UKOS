@@ -18,7 +18,7 @@ freqAnaliser initAnaliser(float freq){
 }
 
 void processSet(freqAnaliser * a, float resetLenght){
-	a->time += resetLenght / 1000.;
+	a->time += resetLenght / 1000;
 	a->time = fmod(a->time, a->period);
 	a->scoreReal += cosf(a->time * a->convConst);
 	a->scoreImag += sinf(a->time * a->convConst);

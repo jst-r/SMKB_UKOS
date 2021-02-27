@@ -193,7 +193,7 @@ void MC_StartMotor(void);
 void MC_StopMotor(void);
 void MC_Set_Speed(uint16_t);
 void MC_EXT_button_SixStep(void);
-void MC_Set_Direction(void);
+void MC_Set_Direction(int);
 int MC_Get_Direction(void);
 void MC_TIMx_SixStep_timebase(void);
 uint8_t MC_MotorState(void);

@@ -182,7 +182,7 @@ int main(void) {
 							anal2.scoreImag = 0;
 							HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET); //  ENABLE Motor VCC Bus
 							motor_enable = 1;
-							MC_SixStep_Change_Direction();
+							MC_Set_Direction(1);
 							MC_StartMotor();				
 						}
 					/***********FIRST CALIBRATION STEP********/
@@ -194,7 +194,7 @@ int main(void) {
 							anal2.scoreImag = 0;
 							HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET); //	ENABLE Motor VCC Bus
 							motor_enable = 1;
-							MC_SixStep_Change_Direction();
+							MC_Set_Direction(0);
 							MC_StartMotor();						
 						}	
 			} else if (motor_enable == 1){							//	If stall occurs this func re-launch motor
@@ -509,7 +509,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 				motor_enable = 0;
 			  HAL_Delay(500);
 				HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
-				
+				init_OW();
+			
     } else if (GPIO_Pin == GPIO_PIN_2) {
         HAL_UART_Transmit(&huart3, (uint8_t *)huart2buffer,
                           sprintf(huart2buffer, "Stop Motor pos 2\n"), 200);
@@ -519,7 +520,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 				motor_enable = 0;
         HAL_Delay(500);
 				HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
-				
+				init_OW();
     }
 }
 
