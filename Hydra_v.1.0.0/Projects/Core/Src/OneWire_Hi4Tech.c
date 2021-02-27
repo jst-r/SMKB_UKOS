@@ -99,7 +99,7 @@ void Write(uint8_t data)
 				us_delay(60);
 				
 				Set_Pin_Input(DS28E18_PORT, DS28E18_PIN);
-						//	delay(100);
+				us_delay(100);
 			}
 		}
 	}
