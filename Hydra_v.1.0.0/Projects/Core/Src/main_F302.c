@@ -49,7 +49,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc1;
-
+RTC_HandleTypeDef hrtc;
 TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim6;
 UART_HandleTypeDef huart3;
@@ -78,7 +78,7 @@ static void MX_GPIO_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_TIM1_Init(void);
 static void MX_TIM6_Init(void);
-
+static void MX_RTC_Init(void);
 static void MX_USART3_UART_Init(void);
 
 void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
@@ -119,7 +119,7 @@ int main(void) {
     MX_ADC1_Init();
     MX_TIM1_Init();
     MX_TIM6_Init();
-
+	  MX_RTC_Init();
     MX_USART3_UART_Init();
 
     /* USER CODE BEGIN 2 */
@@ -138,7 +138,7 @@ int main(void) {
     anal = initAnaliser(60. / 60.);
     anal2 = initAnaliser(75. / 60.);
     init_OW();
-
+		position = HAL_RTCEx_BKUPRead(&hrtc, RTC_BKP_DR1);
     /* USER CODE END 2 */
 
     /* Infinite loop */
@@ -279,6 +279,13 @@ void SystemClock_Config(void) {
     HAL_NVIC_SetPriority(SysTick_IRQn, 2, 0);
 }
 
+
+/*
+	__HAL_RCC_PWR_CLK_ENABLE();
+	HAL_PWR_EnableBkUpAccess();
+	__HAL_RCC_RTC_CONFIG(RCC_RTCCLKSOURCE_LSI);
+	__HAL_RCC_RTC_ENABLE(); 
+}  */
 /* ADC1 init function */
 static void MX_ADC1_Init(void) {
     ADC_ChannelConfTypeDef sConfig;
@@ -434,6 +441,35 @@ static void MX_TIM6_Init(void) {
     }
 }
 
+static void MX_RTC_Init(void)
+{
+
+  /* USER CODE BEGIN RTC_Init 0 */
+
+  /* USER CODE END RTC_Init 0 */
+
+  /* USER CODE BEGIN RTC_Init 1 */
+
+  /* USER CODE END RTC_Init 1 */
+  /** Initialize RTC Only
+  */
+  hrtc.Instance = RTC;
+  hrtc.Init.HourFormat = RTC_HOURFORMAT_24;
+  hrtc.Init.AsynchPrediv = 127;
+  hrtc.Init.SynchPrediv = 255;
+  hrtc.Init.OutPut = RTC_OUTPUT_DISABLE;
+  hrtc.Init.OutPutPolarity = RTC_OUTPUT_POLARITY_HIGH;
+  hrtc.Init.OutPutType = RTC_OUTPUT_TYPE_OPENDRAIN;
+  if (HAL_RTC_Init(&hrtc) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN RTC_Init 2 */
+
+  /* USER CODE END RTC_Init 2 */
+
+}
+
 /* USART3 init function */
 static void MX_USART3_UART_Init(void) {
     huart3.Instance = USART3;
@@ -516,7 +552,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 				for(uint32_t i; i<=7200000; i++)
 				{
 				}
-			
+				HAL_RTCEx_BKUPWrite(&hrtc, RTC_BKP_DR1, position);
+				
     } else if (GPIO_Pin == GPIO_PIN_2) {
         HAL_UART_Transmit(&huart3, (uint8_t *)huart2buffer,
                           sprintf(huart2buffer, "Stop Motor pos 2\n"), 200);
@@ -533,6 +570,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 				for(uint32_t i; i<=7200000; i++)
 				{
 				}
+				HAL_RTCEx_BKUPWrite(&hrtc, RTC_BKP_DR1, position);
     }
 }
 
