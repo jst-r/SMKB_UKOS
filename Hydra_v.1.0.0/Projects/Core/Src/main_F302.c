@@ -135,8 +135,8 @@ int main(void) {
     HAL_NVIC_EnableIRQ(EXTI1_IRQn);
     HAL_NVIC_EnableIRQ(EXTI2_TSC_IRQn);
     uint32_t t0 = HAL_GetTick();
-    anal = initAnaliser(60. / 60.);
-    anal2 = initAnaliser(75. / 60.);
+    anal = initAnaliser(1.008);
+    anal2 = initAnaliser(1.4264);
 		HAL_PWR_EnableBkUpAccess();
 	  position = HAL_RTCEx_BKUPRead(&hrtc, RTC_BKP_DR1);
     init_OW();
@@ -158,11 +158,11 @@ int main(void) {
 									sprintf(huart2buffer, "dt=%u\nval=%u\n", t1 - t0, val), 20);
 							t0 = t1;
 							HAL_UART_Transmit(&huart3, (uint8_t *)huart2buffer,
-																sprintf(huart2buffer, "filter60  = %f\n",
+																sprintf(huart2buffer, "filter 1.008  = %f\n",
 																				getScoreSquare(&anal)),
 																20);
 							HAL_UART_Transmit(&huart3, (uint8_t *)huart2buffer,
-																sprintf(huart2buffer, "filter75  = %f\n",
+																sprintf(huart2buffer, "filter 1.4264  = %f\n",
 																				getScoreSquare(&anal2)),
 																20);
 					}
@@ -176,7 +176,7 @@ int main(void) {
 																sprintf(huart2buffer, "Restarted filters\n"),
 																20);
 					}
-					if(getScoreSquare(&anal) > 100 & position == 1) 			 // 	IF command 60./60 and VALVE CLOSED
+					if(getScoreSquare(&anal) > 200 & position == 1) 			 // 	IF command 60./60 and VALVE CLOSED
 						{
 							anal.scoreImag = 0;
 							anal.scoreReal = 0;
@@ -188,7 +188,7 @@ int main(void) {
 							MC_StartMotor();				
 						}
 					/***********FIRST CALIBRATION STEP********/
-					else if(getScoreSquare(&anal2) > 100 & position != 1)  	//	IF command 75./60 and VALVE OPENED FIRST STEP
+					else if(getScoreSquare(&anal2) > 200 & position != 1)  	//	IF command 75./60 and VALVE OPENED FIRST STEP
 						{
 							anal.scoreImag = 0;
 							anal.scoreReal = 0;
