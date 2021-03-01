@@ -38,7 +38,7 @@
   */
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f3xx_hal.h"
-
+#include "main_F302.h"
 extern void _Error_Handler(char *, int);
 /* USER CODE BEGIN 0 */
 
@@ -71,11 +71,54 @@ void HAL_MspInit(void)
   HAL_NVIC_SetPriority(PendSV_IRQn, 0, 0);
   /* SysTick_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(SysTick_IRQn, 2, 0);
+	
 
   /* USER CODE BEGIN MspInit 1 */
 
   /* USER CODE END MspInit 1 */
 }
+void HAL_RTC_MspInit(RTC_HandleTypeDef* hrtc)
+{
+  if(hrtc->Instance==RTC)
+  {
+  /* USER CODE BEGIN RTC_MspInit 0 */
+
+  /* USER CODE END RTC_MspInit 0 */
+    /* Peripheral clock enable */
+    __HAL_RCC_RTC_ENABLE();
+  /* USER CODE BEGIN RTC_MspInit 1 */
+
+  /* USER CODE END RTC_MspInit 1 */
+  }
+
+}
+/**
+* @brief RTC MSP De-Initialization
+* This function freeze the hardware resources used in this example
+* @param hrtc: RTC handle pointer
+* @retval None
+*/
+void HAL_RTC_MspDeInit(RTC_HandleTypeDef* hrtc)
+{
+  if(hrtc->Instance==RTC)
+  {
+  /* USER CODE BEGIN RTC_MspDeInit 0 */
+
+  /* USER CODE END RTC_MspDeInit 0 */
+    /* Peripheral clock disable */
+    __HAL_RCC_RTC_DISABLE();
+  /* USER CODE BEGIN RTC_MspDeInit 1 */
+HAL_NVIC_DisableIRQ(RTC_Alarm_IRQn);
+  /* USER CODE END RTC_MspDeInit 1 */
+  }
+
+}
+
+
+
+
+
+
 
 void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
 {

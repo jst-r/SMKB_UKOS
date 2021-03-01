@@ -49,7 +49,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc1;
-
+RTC_HandleTypeDef hrtc;
 TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim6;
 UART_HandleTypeDef huart3;
@@ -58,7 +58,7 @@ UART_HandleTypeDef huart3;
 /* Private variables ---------------------------------------------------------*/
 
 /*somehow make first hold through reset state*/
-uint8_t position = 0;  // Current motor position
+uint32_t position = 0;  // Current motor position
 uint8_t prev_position = 0;
 // How much attempts will motor make on the way to end_position
 uint8_t will = 10;
@@ -78,7 +78,7 @@ static void MX_GPIO_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_TIM1_Init(void);
 static void MX_TIM6_Init(void);
-
+static void MX_RTC_Init(void);
 static void MX_USART3_UART_Init(void);
 
 void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
@@ -119,7 +119,8 @@ int main(void) {
     MX_ADC1_Init();
     MX_TIM1_Init();
     MX_TIM6_Init();
-
+	  MX_RTC_Init();
+		if(!(*(volatile uint32_t *) (BDCR_RTCEN_BB)))__HAL_RCC_RTC_ENABLE();
     MX_USART3_UART_Init();
 
     /* USER CODE BEGIN 2 */
@@ -133,10 +134,11 @@ int main(void) {
     HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);			//DISABLE Motor VCC Bus
     HAL_NVIC_EnableIRQ(EXTI1_IRQn);
     HAL_NVIC_EnableIRQ(EXTI2_TSC_IRQn);
-
     uint32_t t0 = HAL_GetTick();
     anal = initAnaliser(60. / 60.);
     anal2 = initAnaliser(75. / 60.);
+		HAL_PWR_EnableBkUpAccess();
+	  position = HAL_RTCEx_BKUPRead(&hrtc, RTC_BKP_DR1);
     init_OW();
 
     /* USER CODE END 2 */
@@ -233,10 +235,11 @@ void SystemClock_Config(void) {
     /**Initializes the CPU, AHB and APB busses clocks
      */
 
-    RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+    RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE|RCC_OSCILLATORTYPE_LSI;
     RCC_OscInitStruct.HSEState = RCC_HSE_ON;
     RCC_OscInitStruct.HSEPredivValue = RCC_HSE_PREDIV_DIV1;
     RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+		RCC_OscInitStruct.LSIState = RCC_LSI_ON;
     RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
     RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
     RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL9;
@@ -258,11 +261,11 @@ void SystemClock_Config(void) {
     }
 
     PeriphClkInit.PeriphClockSelection =
-        RCC_PERIPHCLK_TIM1 | RCC_PERIPHCLK_TIM16 | RCC_PERIPHCLK_ADC1;
+        RCC_PERIPHCLK_TIM1 | RCC_PERIPHCLK_TIM16 | RCC_PERIPHCLK_ADC1 |RCC_PERIPHCLK_RTC;
     PeriphClkInit.Tim1ClockSelection = RCC_TIM1CLK_HCLK;
     PeriphClkInit.Tim16ClockSelection = RCC_TIM16CLK_HCLK;
     PeriphClkInit.Adc1ClockSelection = RCC_ADC1PLLCLK_DIV1;
-
+		PeriphClkInit.RTCClockSelection = RCC_RTCCLKSOURCE_LSI;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK) {
         _Error_Handler(__FILE__, __LINE__);
     }
@@ -314,6 +317,35 @@ static void MX_ADC1_Init(void) {
     if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK) {
         _Error_Handler(__FILE__, __LINE__);
     }
+}
+
+static void MX_RTC_Init(void)
+{
+
+  /* USER CODE BEGIN RTC_Init 0 */
+
+  /* USER CODE END RTC_Init 0 */
+
+  /* USER CODE BEGIN RTC_Init 1 */
+
+  /* USER CODE END RTC_Init 1 */
+  /** Initialize RTC Only
+  */
+  hrtc.Instance = RTC;
+  hrtc.Init.HourFormat = RTC_HOURFORMAT_24;
+  hrtc.Init.AsynchPrediv = 127;
+  hrtc.Init.SynchPrediv = 255;
+  hrtc.Init.OutPut = RTC_OUTPUT_DISABLE;
+  hrtc.Init.OutPutPolarity = RTC_OUTPUT_POLARITY_HIGH;
+  hrtc.Init.OutPutType = RTC_OUTPUT_TYPE_OPENDRAIN;
+  if (HAL_RTC_Init(&hrtc) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN RTC_Init 2 */
+
+  /* USER CODE END RTC_Init 2 */
+
 }
 
 /* TIM1 init function */
@@ -516,6 +548,11 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 				for(uint32_t i; i<=7200000; i++)
 				{
 				}
+				HAL_PWR_EnableBkUpAccess();
+				HAL_RTCEx_BKUPWrite(&hrtc, RTC_BKP_DR1, position);
+				for(uint32_t i; i<=7200000; i++)
+				{
+				}
 				NVIC_SystemReset();
 				
     } else if (GPIO_Pin == GPIO_PIN_2) {
@@ -531,6 +568,11 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 				{
 				}
 				init_OW();
+				for(uint32_t i; i<=7200000; i++)
+				{
+				}
+				HAL_PWR_EnableBkUpAccess();
+				HAL_RTCEx_BKUPWrite(&hrtc, RTC_BKP_DR1, position);
 				for(uint32_t i; i<=7200000; i++)
 				{
 				}
