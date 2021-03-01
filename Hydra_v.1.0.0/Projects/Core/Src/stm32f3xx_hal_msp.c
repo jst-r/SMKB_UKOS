@@ -133,12 +133,9 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
     __HAL_RCC_ADC1_CLK_ENABLE();
   
     /**ADC1 GPIO Configuration    
-    PC1     ------> ADC1_IN7
     PC3     ------> ADC1_IN9
-    PA1     ------> ADC1_IN2
     PA7     ------> ADC1_IN15
     PB0     ------> ADC1_IN11
-    PB1     ------> ADC1_IN12 
     */
     GPIO_InitStruct.Pin = GPIO_PIN_3;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
@@ -177,13 +174,9 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* hadc)
     __HAL_RCC_ADC1_CLK_DISABLE();
   
     /**ADC1 GPIO Configuration    
-    PC1     ------> ADC1_IN7
-    PC2     ------> ADC1_IN8
     PC3     ------> ADC1_IN9
-    PA1     ------> ADC1_IN2
     PA7     ------> ADC1_IN15
-    PB0     ------> ADC1_IN11
-    PB1     ------> ADC1_IN12 
+    PB0     ------> ADC1_IN11 
     */
     HAL_GPIO_DeInit(GPIOC, GPIO_PIN_3);
 
@@ -366,9 +359,9 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
   GPIO_InitTypeDef GPIO_InitStruct;
   if(huart->Instance==USART3)
   {
-  /* USER CODE BEGIN USART2_MspInit 0 */
+  /* USER CODE BEGIN USART3_MspInit 0 */
 
-  /* USER CODE END USART2_MspInit 0 */
+  /* USER CODE END USART3_MspInit 0 */
     /* Peripheral clock enable */
     __HAL_RCC_USART3_CLK_ENABLE();
   
@@ -386,9 +379,9 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
     /* USART2 interrupt Init */
     HAL_NVIC_SetPriority(USART3_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(USART3_IRQn);
-  /* USER CODE BEGIN USART2_MspInit 1 */
+  /* USER CODE BEGIN USART3_MspInit 1 */
 
-  /* USER CODE END USART2_MspInit 1 */
+  /* USER CODE END USART3_MspInit 1 */
   }
 
 }

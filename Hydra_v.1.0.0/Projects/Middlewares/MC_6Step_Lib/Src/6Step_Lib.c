@@ -872,7 +872,6 @@ void MC_StartMotor()
   HAL_TIM_Base_Start_IT(&LF_TIMx);  
   HAL_ADC_Start_IT(&ADCx);
   SIXSTEP_parameters.RUN_Motor = 1;
-  HAL_GPIO_WritePin(GPIOB,GPIO_PIN_2,GPIO_PIN_SET); //LED ON
 }
 /**
   * @} 
@@ -894,7 +893,6 @@ void MC_StopMotor()
   MC_SixStep_DisableInput_CH1_D_CH2_D_CH3_D();
   HAL_TIM_Base_Stop_IT(&LF_TIMx);  
   HAL_ADC_Stop_IT(&ADCx);
- //HAL_GPIO_WritePin(GPIOB,GPIO_PIN_2,GPIO_PIN_RESET); //LED OFF
   MC_SixStep_RESET();
 }
 
