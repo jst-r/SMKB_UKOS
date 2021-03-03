@@ -135,8 +135,8 @@ int main(void) {
     HAL_NVIC_EnableIRQ(EXTI1_IRQn);
     HAL_NVIC_EnableIRQ(EXTI2_TSC_IRQn);
     uint32_t t0 = HAL_GetTick();
-    anal = initAnaliser(1.008);
-    anal2 = initAnaliser(1.4264);
+    anal = initAnaliser(1);
+    anal2 = initAnaliser(1/1.41);
 		HAL_PWR_EnableBkUpAccess();
 	  position = HAL_RTCEx_BKUPRead(&hrtc, RTC_BKP_DR1);
     init_OW();
@@ -149,7 +149,7 @@ int main(void) {
         if(motor_enable == 0)				// Motor is OFF, wait for command STATE
 				{		
 					int16_t val = run_OW();
-					if (val<2000 & val> 0) {
+					if (val<2800 & val> 0) {
 							uint32_t t1 = HAL_GetTick();
 							processSet(&anal, t1 - t0);
 							processSet(&anal2, t1 - t0);
@@ -176,7 +176,7 @@ int main(void) {
 																sprintf(huart2buffer, "Restarted filters\n"),
 																20);
 					}
-					if(getScoreSquare(&anal) > 200 & position == 1) 			 // 	IF command 60./60 and VALVE CLOSED
+					if(getScoreSquare(&anal) > 150 & position == 1) 			 // 	IF command 60./60 and VALVE CLOSED
 						{
 							anal.scoreImag = 0;
 							anal.scoreReal = 0;
@@ -186,9 +186,14 @@ int main(void) {
 							motor_enable = 1;
 							MC_Set_Direction(1);
 							MC_StartMotor();				
+						} else if (getScoreSquare(&anal) > 150 & position != 1) {
+							anal.scoreImag = 0;
+							anal.scoreReal = 0;
+							anal2.scoreReal = 0;
+							anal2.scoreImag = 0;
 						}
 					/***********FIRST CALIBRATION STEP********/
-					else if(getScoreSquare(&anal2) > 200 & position != 1)  	//	IF command 75./60 and VALVE OPENED FIRST STEP
+					else if(getScoreSquare(&anal2) > 150 & position != 1)  	//	IF command 75./60 and VALVE OPENED FIRST STEP
 						{
 							anal.scoreImag = 0;
 							anal.scoreReal = 0;
@@ -198,7 +203,12 @@ int main(void) {
 							motor_enable = 1;
 							MC_Set_Direction(1);
 							MC_StartMotor();						
-						}	
+						}	else if (getScoreSquare(&anal2) > 150 & position == 1) {
+							anal.scoreImag = 0;
+							anal.scoreReal = 0;
+							anal2.scoreReal = 0;
+							anal2.scoreImag = 0;
+						}
 			} else if (motor_enable == 1){							//	If stall occurs this func re-launch motor
 				if (attempt < will){											//	Not more than "will" - defined re-launches
 					if (MC_MotorState() == 0){
