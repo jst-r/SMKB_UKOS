@@ -64,7 +64,7 @@ uint8_t Start(void)
 	{
 		 Set_Pin_Output(DS28E18_PORT,DS28E18_PIN);											//	set the pin as output
 		 HAL_GPIO_WritePin(DS28E18_PORT, DS28E18_PIN, GPIO_PIN_RESET); 	//	pull the pin low
-		 us_delay(490);
+		 us_delay(480);
 		 Set_Pin_Input(DS28E18_PORT, DS28E18_PIN);
 		 us_delay(65);
 		 if((HAL_GPIO_ReadPin(DS28E18_PORT, DS28E18_PIN)== GPIO_PIN_RESET)) 
@@ -72,7 +72,7 @@ uint8_t Start(void)
 			 Response = 1;
 			 }
 		 else Response = 2;
-		 us_delay(550);
+		 us_delay(400);
 		 return Response;
 	}
 	
@@ -89,7 +89,7 @@ void Write(uint8_t data)
 				HAL_GPIO_WritePin(DS28E18_PORT, DS28E18_PIN,GPIO_PIN_RESET);
 				us_delay(1);
 				Set_Pin_Input(DS28E18_PORT, DS28E18_PIN);
-				us_delay(90); 				
+				us_delay(65); 				
 			}	
 			else 																					//	if the bus bit is low
 			{
