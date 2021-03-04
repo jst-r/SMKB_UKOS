@@ -148,9 +148,10 @@ int main(void) {
     while (1) {
         if(motor_enable == 0)				// Motor is OFF, wait for command STATE
 				{		
-					int16_t val = run_OW();
-					if (val<2800 & val> 0) {
+					uint16_t val = run_OW();
+					if (val<8000 & val> 0) {
 							uint32_t t1 = HAL_GetTick();
+						if((t1-t0)>150){				//	Aimed to reduce filter rise due to noise
 							processSet(&anal, t1 - t0);
 							processSet(&anal2, t1 - t0);
 							HAL_UART_Transmit(
@@ -165,8 +166,9 @@ int main(void) {
 																sprintf(huart2buffer, "filter 1.4264  = %f\n",
 																				getScoreSquare(&anal2)),
 																20);
+						}
 					}
-					if (HAL_GetTick() - t0 > 0xff00) {
+					if (HAL_GetTick() - t0 > 20000) {
 							t0 = HAL_GetTick();
 							anal.scoreImag = 0;
 							anal.scoreReal = 0;
@@ -176,7 +178,7 @@ int main(void) {
 																sprintf(huart2buffer, "Restarted filters\n"),
 																20);
 					}
-					if(getScoreSquare(&anal) > 150 & position == 1) 			 // 	IF command 60./60 and VALVE CLOSED
+					if(getScoreSquare(&anal) > 150 & position == 1) 			 // 	IF command 60/60 and VALVE CLOSED
 						{
 							anal.scoreImag = 0;
 							anal.scoreReal = 0;
@@ -193,7 +195,7 @@ int main(void) {
 							anal2.scoreImag = 0;
 						}
 					/***********FIRST CALIBRATION STEP********/
-					else if(getScoreSquare(&anal2) > 150 & position != 1)  	//	IF command 75./60 and VALVE OPENED FIRST STEP
+					else if(getScoreSquare(&anal2) > 150 & position != 1)  	//	IF command 75/60 and VALVE OPENED FIRST STEP
 						{
 							anal.scoreImag = 0;
 							anal.scoreReal = 0;

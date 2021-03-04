@@ -261,19 +261,21 @@ void Write_Sequencer(void) //check seq = 6
 	Start();
 	Write(0xCC);	//	SKIP ROM
 	Write(0x66);  //	Command Start
-	Write(0x0C);	//	Len
+	Write(0x0E);	//	Len
 	Write(0x11);  //	Write Sequencer
 	Write(0x00);  //	ADDR_LO
 	Write(0x00);  //	ADDR_Hi
+	Write(0x01);  //  ~CS High       	           Experimental
 	Write(0xCC);  // 	SENS_VDD_ON
-	Write(0xBB);	//  SENS_VDD_OFF
-	Write(0xCC);	// 	SENS_VDD_ON
+	Write(0xDD);  //  Delay for ADC to charge    Experimental 
+  Write(0x01);  //  2 ms Delay                 Experimental
 	Write(0x80);  //	~CS LOW
 	Write(0xC0);  //	SPI Write/Read byte
 	Write(0x00);  //	Lenght of Write
 	Write(0x02);	//	Len of Read (bytes)
 	Write(0xFF);  //	bufferOW, ADDR = 0x0A
 	Write(0xFF);  //	bufferOW  ADDR = 0x0B
+	Write(0xBB);	//  SENS_VDD_OFF							 Experimental
 	bufferOW[44] = Read();
 	bufferOW[45] = Read();
 	Write(0xAA);
@@ -305,12 +307,10 @@ void Run_Sequencer(void) //  check seq = 4
 	Write(0x00);  //	Start ROM ADDR
 	Write(0x34);	//	Finish ROM ADDR
 	Write(0x00);  //	Just cause
-	us_delay(100);//	Allow to Perform the sequence in x microseconds
   bufferOW[69] = Read();
   bufferOW[70] = Read();
 	Write(0xAA);
-	us_delay(200);
-	
+	us_delay(3000);
 }
 
 void Clear_POR(void) // Check seq = 8
@@ -342,13 +342,11 @@ void init_OW(void)
 	
 int16_t run_OW(void)
 {
-		Read_Sequencer();
-		Check(5);
-		Run_Sequencer();
-		us_delay(1000);
-		uint16_t data10 = bufferOW[38]; // High byte
-		uint16_t data11 = bufferOW[39]; // Low byte
-
-		int16_t datafin0 = ((data10 << 8) & 0xFF00) | data11;
-		return datafin0;
+	Run_Sequencer();		
+	Read_Sequencer();
+	Check(5);		
+	uint16_t data10 = bufferOW[39]; // High byte
+	uint16_t data11 = bufferOW[40]; // Low byte
+	uint16_t datafin0 = (((data10 << 8) & 0xFF00) | data11);
+	return datafin0;
 }
