@@ -166,48 +166,38 @@ int main(void) {
 																				getScoreSquare(&anal2)),
 																20);
 					}
-					if (HAL_GetTick() - t0 > 0xff00) {
+					if (HAL_GetTick() - t0 > 10000U) {
 							t0 = HAL_GetTick();
-							anal.scoreImag = 0;
-							anal.scoreReal = 0;
-							anal2.scoreReal = 0;
-							anal2.scoreImag = 0;
+                            resetScore(&anal);
+                            resetScore(&anal2);
 							HAL_UART_Transmit(&huart3, (uint8_t *)huart2buffer,
 																sprintf(huart2buffer, "Restarted filters\n"),
 																20);
 					}
 					if(getScoreSquare(&anal) > 150 & position == 1) 			 // 	IF command 60./60 and VALVE CLOSED
 						{
-							anal.scoreImag = 0;
-							anal.scoreReal = 0;
-							anal2.scoreReal = 0;
-							anal2.scoreImag = 0;
+							resetScore(&anal);
+                            resetScore(&anal2);
 							HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET); //  ENABLE Motor VCC Bus
 							motor_enable = 1;
 							MC_Set_Direction(1);
 							MC_StartMotor();				
 						} else if (getScoreSquare(&anal) > 150 & position != 1) {
-							anal.scoreImag = 0;
-							anal.scoreReal = 0;
-							anal2.scoreReal = 0;
-							anal2.scoreImag = 0;
+							resetScore(&anal);
+                            resetScore(&anal2);
 						}
 					/***********FIRST CALIBRATION STEP********/
 					else if(getScoreSquare(&anal2) > 150 & position != 1)  	//	IF command 75./60 and VALVE OPENED FIRST STEP
 						{
-							anal.scoreImag = 0;
-							anal.scoreReal = 0;
-							anal2.scoreReal = 0;
-							anal2.scoreImag = 0;
+							resetScore(&anal);
+                            resetScore(&anal2);
 							HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET); //	ENABLE Motor VCC Bus
 							motor_enable = 1;
 							MC_Set_Direction(1);
 							MC_StartMotor();						
 						}	else if (getScoreSquare(&anal2) > 150 & position == 1) {
-							anal.scoreImag = 0;
-							anal.scoreReal = 0;
-							anal2.scoreReal = 0;
-							anal2.scoreImag = 0;
+							resetScore(&anal);
+                            resetScore(&anal2);
 						}
 			} else if (motor_enable == 1){							//	If stall occurs this func re-launch motor
 				if (attempt < will){											//	Not more than "will" - defined re-launches

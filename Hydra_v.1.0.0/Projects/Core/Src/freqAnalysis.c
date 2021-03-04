@@ -27,3 +27,8 @@ void processSet(freqAnaliser * a, float resetLenght){
 float getScoreSquare(freqAnaliser * a){
 	return powf(a->scoreReal, 2) + powf(a->scoreImag, 2);
 }
+
+void resetScore(freqAnaliser * a){
+	a->scoreReal = 0;
+	a->scoreImag = 0;
+}
