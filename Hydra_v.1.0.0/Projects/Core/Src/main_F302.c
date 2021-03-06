@@ -149,9 +149,9 @@ int main(void) {
         if(motor_enable == 0)				// Motor is OFF, wait for command STATE
 				{		
 					uint16_t val = run_OW();
-					if (val<8000 & val> 0) {
+					if (val<12000 & val> 0) {
 							uint32_t t1 = HAL_GetTick();
-						if((t1-t0)>150){				//	Aimed to reduce filter rise due to noise
+						if((t1-t0)>50){				//	Aimed to reduce filter rise due to noise
 							processSet(&anal, t1 - t0);
 							processSet(&anal2, t1 - t0);
 							HAL_UART_Transmit(
@@ -551,7 +551,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
         attempt = 0;
         MC_StopMotor();
 				motor_enable = 0;
-			 // HAL_Delay(500);
 				HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
 				for(uint32_t i; i<=7200000; i++)
 				{
@@ -574,7 +573,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
         attempt = 0;
         MC_StopMotor();
 				motor_enable = 0;
-       // HAL_Delay(500);
 				HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
 				for(uint32_t i; i<=7200000; i++)
 				{
