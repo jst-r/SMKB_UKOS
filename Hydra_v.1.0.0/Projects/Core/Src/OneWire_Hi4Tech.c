@@ -25,7 +25,8 @@ void Set_Pin_Output(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
 		 HAL_GPIO_Init(GPIOx, &GPIO_InitStruct);
 	}
 	
-//Set GPIOx Pin as Input
+//	Set GPIOx Pin as Input
+	
 void Set_Pin_Input(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
 	{
 		 GPIO_InitTypeDef GPIO_InitStruct = {0};
@@ -35,8 +36,7 @@ void Set_Pin_Input(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
 		 HAL_GPIO_Init(GPIOx, &GPIO_InitStruct);
 	}
 			 
-//	Set delay in microseconds
-	
+//	Set delay in microseconds	
 	
 /******************DWT_START*********************/
 #define    DWT_CYCCNT    *(volatile unsigned long *)0xE0001004
@@ -58,19 +58,19 @@ void us_delay (uint32_t us)
 }
 /******************DWT_END************************/
 
-
 // Start OneWire Function Definition	
 uint8_t Start(void)
 	{
-		 Set_Pin_Output(DS28E18_PORT,DS28E18_PIN);											//	set the pin as output
-		 HAL_GPIO_WritePin(DS28E18_PORT, DS28E18_PIN, GPIO_PIN_RESET); 	//	pull the pin low
-		 us_delay(490);
-		 Set_Pin_Input(DS28E18_PORT, DS28E18_PIN);
-		 us_delay(65);
-		 if((HAL_GPIO_ReadPin(DS28E18_PORT, DS28E18_PIN)== GPIO_PIN_RESET)) 
-			 {
-			 Response = 1;
-			 }
+		Set_Pin_Output(DS28E18_PORT, PullUp_Pin);												//	configure PullUp_Pin
+		Set_Pin_Output(DS28E18_PORT,DS28E18_PIN);												//	set the pin as output
+		HAL_GPIO_WritePin(DS28E18_PORT, DS28E18_PIN, GPIO_PIN_RESET); 	//	pull the pin low
+		us_delay(490);
+		Set_Pin_Input(DS28E18_PORT, DS28E18_PIN);
+		us_delay(65);
+		if((HAL_GPIO_ReadPin(DS28E18_PORT, DS28E18_PIN)== GPIO_PIN_RESET)) 
+			{
+			Response = 1;
+			}
 		 else Response = 2;
 		 us_delay(550);
 		 return Response;
@@ -261,19 +261,21 @@ void Write_Sequencer(void) //check seq = 6
 	Start();
 	Write(0xCC);	//	SKIP ROM
 	Write(0x66);  //	Command Start
-	Write(0x0C);	//	Len
+	Write(0x0E);	//	Len
 	Write(0x11);  //	Write Sequencer
 	Write(0x00);  //	ADDR_LO
 	Write(0x00);  //	ADDR_Hi
+	Write(0x01);  //  ~CS High       	           Experimental
 	Write(0xCC);  // 	SENS_VDD_ON
-	Write(0xBB);	//  SENS_VDD_OFF
-	Write(0xCC);	// 	SENS_VDD_ON
+	Write(0xDD);  //  Delay for ADC to charge    Experimental 
+  Write(0x01);  //  2 ms Delay                 Experimental
 	Write(0x80);  //	~CS LOW
 	Write(0xC0);  //	SPI Write/Read byte
 	Write(0x00);  //	Lenght of Write
 	Write(0x02);	//	Len of Read (bytes)
 	Write(0xFF);  //	bufferOW, ADDR = 0x0A
 	Write(0xFF);  //	bufferOW  ADDR = 0x0B
+	Write(0xBB);	//  SENS_VDD_OFF							 Experimental
 	bufferOW[44] = Read();
 	bufferOW[45] = Read();
 	Write(0xAA);
@@ -305,12 +307,9 @@ void Run_Sequencer(void) //  check seq = 4
 	Write(0x00);  //	Start ROM ADDR
 	Write(0x34);	//	Finish ROM ADDR
 	Write(0x00);  //	Just cause
-	us_delay(100);//	Allow to Perform the sequence in x microseconds
   bufferOW[69] = Read();
   bufferOW[70] = Read();
 	Write(0xAA);
-	us_delay(200);
-	
 }
 
 void Clear_POR(void) // Check seq = 8
@@ -342,13 +341,15 @@ void init_OW(void)
 	
 int16_t run_OW(void)
 {
-		Read_Sequencer();
-		Check(5);
-		Run_Sequencer();
-		us_delay(1000);
-		uint16_t data10 = bufferOW[38]; // High byte
-		uint16_t data11 = bufferOW[39]; // Low byte
-
-		int16_t datafin0 = ((data10 << 8) & 0xFF00) | data11;
-		return datafin0;
+	Run_Sequencer();
+	HAL_GPIO_WritePin(DS28E18_PORT, PullUp_Pin, GPIO_PIN_RESET);
+	us_delay(2000);
+	HAL_GPIO_WritePin(DS28E18_PORT, PullUp_Pin, GPIO_PIN_SET);
+	us_delay(1000);
+	Read_Sequencer();
+	Check(5);		
+	uint16_t data10 = bufferOW[39]; // High byte
+	uint16_t data11 = bufferOW[40]; // Low byte
+	uint16_t datafin0 = (((data10 << 8) & 0xFF00) | data11);
+	return datafin0;
 }
